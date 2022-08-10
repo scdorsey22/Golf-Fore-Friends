@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 // material-ui
 import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery, Card, Box } from '@mui/material';
-import Login from './Login';
-import LoginWrapper1 from './LoginWrapper1';
+import RegisterForm from './RegisterForm';
+import LoginWrapper1 from './AuthWrapper1';
 
-function LoginPage() {
+function RegisterPage() {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -49,7 +49,7 @@ function LoginPage() {
                                                         gutterBottom
                                                         variant={matchDownSM ? 'h3' : 'h2'}
                                                     >
-                                                        Hi, Welcome Back
+                                                        Sign Up
                                                     </Typography>
                                                     <Typography
                                                         variant="caption"
@@ -63,7 +63,7 @@ function LoginPage() {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <Login />
+                                        <RegisterForm />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Divider />
@@ -72,11 +72,11 @@ function LoginPage() {
                                         <Grid item container direction="column" alignItems="center" xs={12}>
                                             <Typography
                                                 component={Link}
-                                                to="/pages/CreateAccount"
+                                                to="/login"
                                                 variant="subtitle1"
                                                 sx={{ textDecoration: 'none' }}
                                             >
-                                                Don&apos;t have an account?
+                                               Already have an account?
                                             </Typography>
                                         </Grid>
                                     </Grid>
@@ -93,4 +93,4 @@ function LoginPage() {
 
 }
 
-export default LoginPage
+export default RegisterPage
