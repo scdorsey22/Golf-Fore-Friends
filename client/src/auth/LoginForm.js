@@ -28,10 +28,50 @@ import { Formik } from 'formik';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
-function Login() {
+const initialForm = {
+    username: "",
+    password: "",
+  }
+
+function LoginForm({ onCreateOrLog, responseFromAccountOrLogged }) {
     const theme = useTheme();
     const [checked, setChecked] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
+
+    const [loginAccount, setLoginAccount] = useState(initialForm);
+    const [errors, setErrors] = useState(null);
+
+  function handleLoginChange(e) {
+    const target = e.target.name;
+    const value = e.target.value;
+    setLoginAccount({ ...loginAccount, [target]: value });
+  }
+
+  function handleLoginSubmit(e) {
+    e.preventDefault();
+
+    fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+      },
+      body: JSON.stringify(loginAccount),
+    }).then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          setErrors(null);
+          setLoginAccount(initialForm);
+          onCreateOrLog(user);
+        });
+      } else {
+        r.json().then((err) => {
+          setLoginAccount(initialForm);
+          setErrors(err);
+        });
+      }
+    });
+  }
 
 
     const handleClickShowPassword = () => {
@@ -49,20 +89,21 @@ function Login() {
             
             <Formik>
                     <form>
-                        <FormControl fullWidth sx={{ ...theme.typography.customInput }}>
-                            <InputLabel htmlFor="outlined-adornment-email-login">Email Address / Username</InputLabel>
+                        <FormControl fullWidth >
+                            <InputLabel htmlFor="outlined-adornment-username-login">Username</InputLabel>
                             <OutlinedInput
-                                id="outlined-adornment-email-login"
-                                type="email"
-                                name="email"
-                                label="Email Address / Username"
+                                id="outlined-adornment-username-login"
+                                type="username"
+                                name="username"
+                                label="Username"
                                 inputProps={{}}
+                                value={loginAccount.username}
+                                onChange={handleLoginChange}
+                                sx={{ borderRadius: '12px',
+                                    padding: '2px'  }}
                             />
                         </FormControl>
-                        <FormControl
-                            fullWidth
-                            sx={{ ...theme.typography.customInput }}
-                        >
+                        <FormControl fullWidth >
                             <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password-login"
@@ -75,14 +116,18 @@ function Login() {
                                             onClick={handleClickShowPassword}
                                             onMouseDown={handleMouseDownPassword}
                                             edge="end"
-                                            size="large"
+                                            size="small"
                                         >
                                             {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
                                         </IconButton>
                                     </InputAdornment>
                                 }
                                 label="Password"
+                                value={loginAccount.password}
+                                onChange={handleLoginChange}
                                 inputProps={{}}
+                                sx={{ borderRadius: '12px',
+                                    padding: '2px'  }}
                             />
                             </FormControl>
                             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
@@ -100,6 +145,8 @@ function Login() {
                                     type="submit"
                                     variant="contained"
                                     color="success"
+                                    borderRadius= '12px'
+                                    onClick={handleLoginSubmit}
                                 >
                                     Sign in
                                 </Button>
@@ -116,4 +163,4 @@ function Login() {
 
 }
 
-export default Login
+export default LoginForm

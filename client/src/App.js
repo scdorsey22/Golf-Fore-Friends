@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
 import './App.css';
-import LoginPage from "./pages/LoginPage";
+import LoginPage from './auth/LoginPage'
+import RegisterPage from "./auth/RegisterPage";
+import MainPage from "./pages/MainPage";
+import Header from "./pages/Header";
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(null);
@@ -54,11 +57,11 @@ function App() {
       {loggedUser ? (
         <Switch>
           <Route exact path="/">
-          {/* <Header
+            <Header 
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
-          /> */}
-            {/* <MainPage/> */}
+            />
+            <MainPage/>
           </Route>
           <Route exact path="*">
             <h2>404 Error Not Found</h2>
@@ -78,12 +81,12 @@ function App() {
                 responseFromAccountOrLogged={responseFromAccountOrLogged}
               />
             </Route>
-            {/* <Route exact path="/create-account">
-              <CreateAnAccount
+            <Route exact path="/regsiter">
+              <RegisterPage
                 onCreateOrLog={handleCreateOrLog}
                 responseFromAccountOrLogged={responseFromAccountOrLogged}
               />
-            </Route> */}
+            </Route>
             <Route exact path="*">
               <h2>404 Error Not Found</h2>
             </Route>
