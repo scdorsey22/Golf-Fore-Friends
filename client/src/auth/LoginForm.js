@@ -89,7 +89,7 @@ function LoginForm({ onCreateOrLog, responseFromAccountOrLogged }) {
             
             <Formik>
                     <form>
-                        <FormControl fullWidth >
+                        <FormControl fullWidth sx={{padding: '2px'}} >
                             <InputLabel htmlFor="outlined-adornment-username-login">Username</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-username-login"
@@ -99,11 +99,10 @@ function LoginForm({ onCreateOrLog, responseFromAccountOrLogged }) {
                                 inputProps={{}}
                                 value={loginAccount.username}
                                 onChange={handleLoginChange}
-                                sx={{ borderRadius: '12px',
-                                    padding: '2px'  }}
+                               
                             />
                         </FormControl>
-                        <FormControl fullWidth >
+                        <FormControl fullWidth sx={{padding: '2px'}} >
                             <InputLabel htmlFor="outlined-adornment-password-login">Password</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password-login"
@@ -126,10 +125,10 @@ function LoginForm({ onCreateOrLog, responseFromAccountOrLogged }) {
                                 value={loginAccount.password}
                                 onChange={handleLoginChange}
                                 inputProps={{}}
-                                sx={{ borderRadius: '12px',
-                                    padding: '2px'  }}
+                                
                             />
                             </FormControl>
+                            {errors ? <p>{errors.error}</p> : null}
                             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                             <Typography variant="subtitle1" color="success.light" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
                                 Forgot Password?

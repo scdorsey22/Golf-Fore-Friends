@@ -31,34 +31,22 @@ import { Formik } from 'formik';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
 
+const initialForm = {
+    first_name: "",
+    last_name: "",
+    email: "",
+    username: "",
+    password: "",
+  }
 
-function RegisterForm() {
+
+function RegisterForm({ onCreateOrLog, responseFromAccountOrLogged }) {
     const theme = useTheme();
-    const [checked, setChecked] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
-
-    const customInput = {
-        marginTop: 1,
-        marginBottom: 1,
-        '& > label': {
-            top: 23,
-            left: 0,
-            color: theme.grey500,
-            '&[data-shrink="false"]': {
-                top: 5
-            }
-        },
-        '& > div > input': {
-            padding: '30.5px 14px 11.5px !important'
-        },
-        '& legend': {
-            display: 'none'
-        },
-        '& fieldset': {
-            top: 0
-        }
-    }
-
+    const [createAccountForm, setCreateAccountForm] = useState(initialForm);
+    const [errors, setErrors] = useState(null);
+  
+    
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -68,26 +56,56 @@ function RegisterForm() {
         event.preventDefault();
     };
 
+    function handleCreateChange(e) {
+        const target = e.target.name;
+        const value = e.target.value;
+        setCreateAccountForm({ ...createAccountForm, [target]: value });
+      }
 
-
+    function handleCreateSubmit(e) {
+        e.preventDefault();
+    
+        fetch("/api/users", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+          },
+          body: JSON.stringify(createAccountForm),
+        }).then((r) => {
+          if (r.ok) {
+            r.json().then((user) => {
+              setErrors(null);
+              setCreateAccountForm(initialForm);
+              onCreateOrLog(user);
+            });
+          } else {
+            r.json().then((err) => {
+              setCreateAccountForm(initialForm);
+              setErrors(err);
+            });
+          }
+        });
+      }
+    
+   
     return (
         <>
             
             <Formik>
-                    <form>
-                    <Grid container spacing={1} sx={{ 
-                                        borderRadius: '24x',
-                                        padding: '2px'
-                                    }}>
+                    <form noValidate onSubmit={handleCreateSubmit} >
+                    <Grid container spacing={1} sx={{padding: '4px'}}>
                             <Grid item xs={12} sm={6} >
                                 <TextField
                                     fullWidth
                                     label="First Name"
                                     margin="normal"
-                                    name="fname"
+                                    name="first_name"
                                     type="text"
                                     defaultValue=""
                                     sx={{ ...theme.typography.customInput }}
+                                    value={createAccountForm.first_name}
+                                    onChange={handleCreateChange}
                     
                                 />
                             </Grid>
@@ -96,42 +114,42 @@ function RegisterForm() {
                                     fullWidth
                                     label="Last Name"
                                     margin="normal"
-                                    name="lname"
+                                    name="last_name"
                                     type="text"
                                     defaultValue=""
                                     sx={{ ...theme.typography.customInput }}
+                                    value={createAccountForm.last_name}
+                                    onChange={handleCreateChange}
                                     />
                             </Grid>
                         </Grid>
                         
-                            <FormControl fullWidth sx={{
-                         padding: '2px'  }} >
+                            <FormControl fullWidth sx={{padding: '4px'}} >
                              <InputLabel >Email</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-register"
                                 type="email"
                                 name="email"
                                 label="Email Address"
-                                inputProps={{}}
-                                sx={{ borderRadius: '12px',
-                               }}
+                                value={createAccountForm.email}
+                                onChange={handleCreateChange}
+                                
                             />
                             </FormControl>
 
-                        <FormControl fullWidth x={{
-                         padding: '2px'  }}>
+                        <FormControl fullWidth sx={{padding: '4px'}}>
                             <InputLabel htmlFor="outlined-adornment-email-register">Username</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-email-register"
-                                type="email"
-                                name="email"
-                                label="Email Address / Username"
-                                inputProps={{}}
-                                sx={{ borderRadius: '12px', padding: '2px'}}
+                                type="username"
+                                name="username"
+                                label="Username"
+                                value={createAccountForm.username}
+                                onChange={handleCreateChange}
+                                
                             />
                         </FormControl>
-                        <FormControl fullWidth x={{
-                         padding: '2px'  }}>
+                        <FormControl fullWidth sx={{padding: '4px'}}>
                             <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
                             <OutlinedInput
                                 id="outlined-adornment-password-register"
@@ -151,10 +169,11 @@ function RegisterForm() {
                                     </InputAdornment>
                                 }
                                 label="Password"
-                                inputProps={{}}
-                                sx={{ padding: '2px'}}
+                                value={createAccountForm.password}
+                                onChange={handleCreateChange}
                             />
                             </FormControl>
+                            {errors ? <p>{errors.error}</p> : null}
                             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                             <Typography variant="subtitle1" color="success.light" sx={{ textDecoration: 'none', cursor: 'pointer', padding: '2px' }}>
                                 Forgot Password?
