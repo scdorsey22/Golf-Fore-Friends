@@ -90,3 +90,8 @@ h1{
     transform: rotate(360deg);
   }
 }
+
+.successLight {color: #b9f6ca }
+.success200 {color: #69f0ae}
+.successMain {color: #00e676}
+.successDark {color: #00c853}
