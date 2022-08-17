@@ -174,11 +174,6 @@ function RegisterForm({ onCreateOrLog, responseFromAccountOrLogged }) {
                             />
                             </FormControl>
                             {errors ? <p>{errors.error}</p> : null}
-                            <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-                            <Typography variant="subtitle1" color="success.light" sx={{ textDecoration: 'none', cursor: 'pointer', padding: '2px' }}>
-                                Forgot Password?
-                            </Typography>
-                        </Stack>
                         
                         <Box sx={{ mt: 2 }}>
                             

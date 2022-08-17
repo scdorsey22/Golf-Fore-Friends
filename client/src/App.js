@@ -1,10 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
+import { ThemeProvider } from '@mui/material/styles';
+import { CssBaseline, StyledEngineProvider } from '@mui/material';
 import './App.css';
+
+
+
 import LoginPage from './auth/LoginPage'
 import RegisterPage from "./auth/RegisterPage";
 import MainPage from "./pages/MainPage";
-import Header from "./pages/Header";
+import Layout from "./components/Layout";
+import GolfBuddies from "./pages/GolfBuddies";
+import Profile from "./pages/Profile";
+import ForgotPasswordPage from './auth/ForgotPasswordPage'
+
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(null);
@@ -34,6 +43,7 @@ function App() {
         setLoggedUser(null);
         setResponseFromAccountOrLogged(false);
         history.push("/");
+        console.log('click')
       }
     });
   }
@@ -57,11 +67,28 @@ function App() {
       {loggedUser ? (
         <Switch>
           <Route exact path="/">
-            <Header 
+            <Layout 
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
-            />
-            <MainPage/>
+            >
+             <MainPage loggedUser={loggedUser}/>
+            </Layout>
+          </Route>
+          <Route exact path="/friends">
+            <Layout 
+            loggedUser={loggedUser}
+            onLogOut={handleLogOut}
+            >
+             <GolfBuddies loggedUser={loggedUser}/>
+            </Layout>
+          </Route>
+          <Route exact path="/profile">
+            <Layout 
+            loggedUser={loggedUser}
+            onLogOut={handleLogOut}
+            >
+             <Profile loggedUser={loggedUser}/>
+            </Layout>
           </Route>
           <Route exact path="*">
             <h2>404 Error Not Found</h2>
@@ -87,12 +114,15 @@ function App() {
                 responseFromAccountOrLogged={responseFromAccountOrLogged}
               />
             </Route>
+            <Route exact path="/forgotpassword">
+              <ForgotPasswordPage/>
+            </Route>
             <Route exact path="*">
               <h2>404 Error Not Found</h2>
             </Route>
           </Switch>
         )}
-    </div>
+</div>
   );
 }
 

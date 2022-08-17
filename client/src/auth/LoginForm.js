@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useTheme} from '@mui/material/styles'
+import { Link } from "react-router-dom";
 
 //material-ui
 
@@ -130,7 +131,13 @@ function LoginForm({ onCreateOrLog, responseFromAccountOrLogged }) {
                             </FormControl>
                             {errors ? <p>{errors.error}</p> : null}
                             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
-                            <Typography variant="subtitle1" color="success.light" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
+                            <Typography 
+                            component={Link}
+                            to="/forgotpassword" 
+                            variant="subtitle1" 
+                            color="success.light" 
+                            sx={{ textDecoration: 'none', cursor: 'pointer' }}
+                            >
                                 Forgot Password?
                             </Typography>
                         </Stack>
