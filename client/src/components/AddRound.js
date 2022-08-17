@@ -3,7 +3,7 @@ import { Box, useTheme } from "@mui/system";
 import React, { useState } from "react";
 
 
-export default function AddRound() {
+export default function AddRound({loggedUser}) {
  
   const theme = useTheme();
   
@@ -11,7 +11,7 @@ export default function AddRound() {
     <Box padding="1rem 1rem 0 1rem" borderBottom="1px solid #ccc">
       <Grid container>
         <Grid item sx={{ paddingRight: "1rem" }}>
-          <img src='https://iconape.com/wp-content/png_logo_vector/avatar-4.png' alt="lgogo" width="50px" />
+          <img src={loggedUser.profile_pic} alt="lgogo" width="50px" />
         </Grid>
         <Grid item flexGrow="1">
           <Box padding=".5rem 0">
@@ -39,7 +39,7 @@ export default function AddRound() {
                 fontSize: "12px",
               }}
             >
-              Post Upcoming Round
+              Post
             </Button>
           </Box>
         </Grid>

@@ -110,17 +110,13 @@ import {
                     >
                       <ChatBubbleOutlineIcon fontSize="small" />
                     </IconButton>
-                    <IconButton size="small">
-                      <SyncIcon fontSize="small" />
-                    </IconButton>
+                
                     <IconButton  size="small">
                       
                         <FavoriteIcon fontSize="small" />
                 
                     </IconButton>
-                    <IconButton size="small">
-                      <IosShareIcon fontSize="small" />
-                    </IconButton>
+                    
                   </Box>
                 </Box>
               </Grid>

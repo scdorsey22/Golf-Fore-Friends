@@ -1,16 +1,54 @@
 import { Search } from "@mui/icons-material";
 import { Input, Typography, Grid, CircularProgress } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FriendsSearch from "./FriendSearch";
 
 
-function RightSidebar() {
+function RightSidebar({loggedUser}) {
+    const [search, setSearch]=useState("")
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        fetch("/api/users")
+        .then((r) => {
+            if (r.ok) {
+              r.json().then(setUsers)
+            }
+          });
+    }, [])
+
+
+    function handleChange(e){
+        setSearch(e.target.value)
+    }
+
+    function allUsers(){
+        
+        let allUsersArray = []
+        const matchingUsers = users.filter(user => {
+            return user.first_name.toLowerCase().includes(search.toLowerCase())
+        })
+
+
+        allUsersArray = matchingUsers
+
+        const renderUsers = allUsersArray?.map(user => {
+            return <FriendsSearch 
+            key={user.id} 
+            user={user} 
+            loggedUser={loggedUser} 
+            />
+            })
+        return renderUsers
+        }
+
 
 
 return (
-    <Box sx={{ height: "100%" }}>
+    <Box sx={{ height: "100%", width: '100%'
+    }}>
       <Box paddingTop="10px">
         <Box
           width="100%"
@@ -51,8 +89,8 @@ return (
             Friends Search
           </Typography>
     
-            <FriendsSearch />
-            <FriendsSearch />
+
+          {allUsers()}
   
         </Box>
       </Box>

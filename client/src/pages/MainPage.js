@@ -8,7 +8,7 @@ import AddRound from "../components/AddRound";
 
 
 
-function MainPage () {
+function MainPage ({loggedUser}) {
 
     return (
         <Box>
@@ -20,7 +20,7 @@ function MainPage () {
           </Grid>
         </Box>
         <Box height="92vh" sx={{ overflowY: "scroll" }}>
-        <AddRound />
+        <AddRound loggedUser={loggedUser}/>
           <Box textAlign="center" marginTop="1rem">
            <Rounds />
            <Rounds />

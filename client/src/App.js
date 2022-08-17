@@ -12,6 +12,8 @@ import MainPage from "./pages/MainPage";
 import Layout from "./components/Layout";
 import GolfBuddies from "./pages/GolfBuddies";
 import Profile from "./pages/Profile";
+import ForgotPasswordPage from './auth/ForgotPasswordPage'
+
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(null);
@@ -69,7 +71,7 @@ function App() {
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
             >
-             <MainPage/>
+             <MainPage loggedUser={loggedUser}/>
             </Layout>
           </Route>
           <Route exact path="/friends">
@@ -77,7 +79,7 @@ function App() {
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
             >
-             <GolfBuddies/>
+             <GolfBuddies loggedUser={loggedUser}/>
             </Layout>
           </Route>
           <Route exact path="/profile">
@@ -85,7 +87,7 @@ function App() {
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
             >
-             <Profile/>
+             <Profile loggedUser={loggedUser}/>
             </Layout>
           </Route>
           <Route exact path="*">
@@ -111,6 +113,9 @@ function App() {
                 onCreateOrLog={handleCreateOrLog}
                 responseFromAccountOrLogged={responseFromAccountOrLogged}
               />
+            </Route>
+            <Route exact path="/forgotpassword">
+              <ForgotPasswordPage/>
             </Route>
             <Route exact path="*">
               <h2>404 Error Not Found</h2>

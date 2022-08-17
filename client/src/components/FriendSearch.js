@@ -1,48 +1,42 @@
 import { Typography, useTheme } from "@mui/material";
 import { Button, Grid } from "@mui/material";
-import { Box } from "@mui/system";
-import React from "react";
+import { Box } from "@mui/system"
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 
 
-function FriendsSearch() {
-  const theme = useTheme();
+
+function FriendsSearch({user, loggedUser}) {
+    const theme = useTheme();
+    const [searchDisabled, setSearchDisabled] = useState(false)
+    const [friendDisabled, setFriendDisabled] = useState(false)
+
+
   
 
   return (
-    <Box margin="1rem 0">
+    <Box key={user.id} margin="1rem 0">
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
           <Grid container>
             <Link to='/'>
-              <Grid item sx={{ paddingRight: "12px" }}>
-                <img src='https://iconape.com/wp-content/png_logo_vector/avatar-4.png' width="50px" alt="avatar" />
+              <Grid item sx={{ paddingRight: "1px" }}>
+                <img src={user.profile_pic} width="50px" alt="avatar" />
               </Grid>
             </Link>
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
                   <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
-                    Name
+                    {user.first_name} {user.last_name}
                   </Typography>
                   <Box display="flex" alignItems="center">
                     <Typography
                       sx={{ fontSize: "14px", mr: "6px", color: "#555" }}
                     >
-                        Username
+                        {user.username}
                     </Typography>
-                    {/* <Typography
-                      sx={{
-                        fontSize: "12px",
-                        background: "#ccc",
-                        borderRadius: theme.shape.borderRadius,
-                        padding: "0 6px",
-                        color: "#777",
-                      }}
-                    >
-                      follows you
-                    </Typography> */}
                   </Box>
                 </Grid>
               </Grid>
@@ -51,7 +45,18 @@ function FriendsSearch() {
         </Grid>
         <Grid item>
           <Button
-            
+            disabled={friendDisabled}
+            onClick={function handleAddFriend(){
+                fetch(`/api/golf_buddies`, {
+                    method: 'POST',
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({user_id: loggedUser.id, friend_id: user.id}),
+                })
+                setFriendDisabled(currentState => !currentState)
+            }}
             size="small"
             sx={{
               borderRadius: theme.shape.borderRadius,
@@ -65,7 +70,7 @@ function FriendsSearch() {
             variant="contained"
             color="success"
           >
-            Add Friend
+            {friendDisabled ? "Added" : "Friend"}
           </Button>
         </Grid>
       </Grid>

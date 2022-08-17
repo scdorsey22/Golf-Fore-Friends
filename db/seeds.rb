@@ -16,6 +16,19 @@ puts "seeding Users"
     )
 end
 
+User.create(
+        first_name: 'Shane', 
+        last_name: 'Dorsey', 
+        email: 'scdorsey22@gmail.com', 
+        city: 'San Diego', 
+        state: 'CA', 
+        handicap: '10',
+        profile_pic: 'https://i.imgur.com/KUJ5ZoO.jpg',
+        username: 'scdorsey22', 
+        password: 'golfer22' ,
+
+)
+
 puts "seeding GolfBuddies"
 
 GolfBuddy.create([
@@ -29,7 +42,9 @@ GolfBuddy.create([
     { user_id: 7, friend_id: 10 },
     { user_id: 8, friend_id: 9 },
     { user_id: 9, friend_id: 3 },
-    { user_id: 10, friend_id: 5 }
+    { user_id: 10, friend_id: 5 },
+    {user_id: 11, friend_id: 10 },
+    {user_id: 11, friend_id: 3 }
 ])
 
 

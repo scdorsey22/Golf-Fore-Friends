@@ -1,12 +1,12 @@
 class Api::UsersController < ApplicationController
-  skip_before_action :authorize, only: [:create, :index]
+  skip_before_action :authorize, only: [:create, :index, :show]
 
   # GET /users
-  # def index
-  #   users = User.all
+  def index
+    users = User.all
 
-  #   render json: users
-  # end
+    render json: users
+  end
 
   # GET /users/1
   def show

@@ -1,30 +1,6 @@
 
-import { Box } from "@mui/system";
-import {
-  Button,
-  CircularProgress,
-  Grid,
-  IconButton,
-  Link,
-  Typography,
-  useTheme,
-  Avatar
-} from "@mui/material";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import InsertLinkIcon from "@mui/icons-material/InsertLink";
-import DateRangeIcon from "@mui/icons-material/DateRange";
 
-import Rounds from "../components/Rounds";
-
-
-
-import { Link as RouteLink } from "react-router-dom";
-
-
- function Profile({loggedUser}) {
+function Profile({loggedUser}) {
     const theme = useTheme();
     
     console.log(loggedUser)
@@ -47,6 +23,9 @@ import { Link as RouteLink } from "react-router-dom";
                 <Typography variant="h6">
                   {loggedUser.first_name} {loggedUser.last_name}
                 </Typography>
+                <Typography sx={{ fontSize: "12px", color: "#555" }}>
+                  Posts
+                </Typography>{" "}
               </Grid>
           
           </Grid>
@@ -57,36 +36,72 @@ import { Link as RouteLink } from "react-router-dom";
               <img
                 width="100%"
                 height='10%'
-                src='https://static.vecteezy.com/system/resources/thumbnails/002/381/123/small/golf-club-realistic-background-free-vector.jpg'
+                src='https://static7.depositphotos.com/1117454/698/i/600/depositphotos_6986182-stock-photo-golf.jpg'
                 alt="background"
               />
               <Box
                 sx={{
                   position: "absolute",
-                  top: 200,
-                  left: 30,
+                  top: 350,
+                  left: 15,
                   background: "#eee",
                   borderRadius: "50%",
-                
                 }}
               >
-                <img width='150px' src={loggedUser.profile_pic} alt="profile" />
+                <img width="150px" src='https://iconape.com/wp-content/png_logo_vector/avatar-4.png' alt="profile" />
               </Box>
             </Box>
             <Box textAlign="right" padding="10px 20px">
               <IconButton>
                 <MoreHorizIcon />
               </IconButton>
+              <IconButton>
+                <MailOutlineIcon />
+              </IconButton>
+        
+                <Button
+                  
+                  size="small"
+                  sx={{
+                    borderRadius: theme.shape.borderRadius,
+                    textTransform: "capitalize",
+                    padding: "6px 20px",
+                    background: "black",
+                    "&:hover": {
+                      background: "#333",
+                    },
+                  }}
+                  variant="contained"
+                >
+                  Friend
+                </Button>
+              
+                <Button
+                  
+                  size="small"
+                  sx={{
+                    borderRadius: theme.shape.borderRadius,
+                    textTransform: "capitalize",
+                    padding: "6px 20px",
+                    background: "black",
+                    "&:hover": {
+                      background: "#333",
+                    },
+                  }}
+                  variant="contained"
+                >
+                  Unfriend
+                </Button>
             </Box>
             <Box padding="10px 20px">
               <Typography variant="h6" sx={{ fontWeight: "500" }}>
-              {loggedUser.first_name} {loggedUser.last_name}
+               Name
               </Typography>
               <Typography sx={{ fontSize: "14px", color: "#555" }}>
-                @{loggedUser.username}
+                @username
               </Typography>
               <Typography fontSize="16px" color="#333" padding="10px 0">
-                {loggedUser.handicap} HDCP
+                Bio
               </Typography>
               <Box
                 display="flex"
@@ -97,7 +112,7 @@ import { Link as RouteLink } from "react-router-dom";
                 <Box display="flex">
                   <LocationOnIcon htmlColor="#555" />
                   <Typography sx={{ ml: "6px", color: "#555" }}>
-                    {loggedUser.city}, {loggedUser.state}
+                    Location
                   </Typography>
                 </Box>
               </Box>
@@ -127,5 +142,3 @@ import { Link as RouteLink } from "react-router-dom";
         
     )
  }
-
- export default Profile

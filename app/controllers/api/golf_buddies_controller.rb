@@ -1,5 +1,5 @@
-class GolfBuddiesController < ApplicationController
-  skip_before_action :authorize , only: [:show, :update, :destroy]
+class Api::GolfBuddiesController < ApplicationController
+  skip_before_action :authorize , only: [:index, :show, :update, :destroy]
 
   # GET /golf_buddies
   def index
@@ -10,7 +10,7 @@ class GolfBuddiesController < ApplicationController
 
   # GET /golf_buddies/1
   def show
-    render json: @golf_buddy
+    render json: set_golf_buddy
   end
 
   # POST /golf_buddies
@@ -24,7 +24,7 @@ class GolfBuddiesController < ApplicationController
 
   # DELETE /golf_buddies/1
   def destroy
-    @golf_buddy.destroy
+    set_golf_buddy.destroy
     head :no_content
   end
 

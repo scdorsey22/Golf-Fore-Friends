@@ -35,7 +35,7 @@ function Layout ({ children, loggedUser, onLogOut }) {
             </Grid>
             <Hidden lgDown>
               <Grid item lg={4} sx={{ height: "100vh" }}>
-                <RightSidebar />
+                <RightSidebar loggedUser={loggedUser}/>
               </Grid>
             </Hidden>
           </Grid>
