@@ -1,7 +1,7 @@
 import { Typography, useTheme } from "@mui/material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system";
-import  {useEffect, useState} from "react";
+import  { useState } from "react";
 import { Link } from "react-router-dom";
 
 

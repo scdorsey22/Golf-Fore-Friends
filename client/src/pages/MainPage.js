@@ -1,8 +1,5 @@
-import { CircularProgress, Grid, IconButton, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
-import AssistantIcon from "@mui/icons-material/Assistant";
-import FriendsList from "../components/FriendsList";
 import Rounds from "../components/Rounds";
 import AddRound from "../components/AddRound";
 

@@ -1,8 +1,7 @@
 import { Search } from "@mui/icons-material";
-import { Input, Typography, Grid, CircularProgress } from "@mui/material";
+import { Input, Typography} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import FriendsSearch from "./FriendSearch";
 
 

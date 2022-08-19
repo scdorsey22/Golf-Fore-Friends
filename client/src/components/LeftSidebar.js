@@ -7,17 +7,12 @@ import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import {
   Button,
-  Grid,
   Hidden,
-  IconButton,
-  Input,
   useTheme,
 } from "@mui/material";
-import BookmarkIcon from "@mui/icons-material/Bookmark";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import LogoutIcon from "@mui/icons-material/Logout";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import { Link, NavLink } from "react-router-dom";
 
 function LeftSidebar({loggedUser, onLogOut}) {

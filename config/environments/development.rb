@@ -33,8 +33,8 @@ Rails.application.configure do
   #added settings
   config.action_mailer.perform_deliveries = true
   config.action_mailer.raise_delivery_errors = true
-
   config.action_mailer.delivery_method = :smtp
+
   host = 'localhost:3000'
   config.action_mailer.default_url_options = { :host => 'localhost:3000', protocol: 'http' }
 
@@ -44,8 +44,8 @@ Rails.application.configure do
     :port                 => 587,
     :user_name            => ENV["GMAIL_ACCOUNT"],
     :password             => ENV["GMAIL_PASSWORD"],
-    :authentication       => "plain",
-    :enable_starttls_auto => true
+    :authentication       => 'plain',
+    :enable_starttls_auto =>  true
   }
 
   config.action_mailer.perform_caching = false

@@ -1,21 +1,14 @@
 
 import { Box } from "@mui/system";
 import {
-  Button,
-  CircularProgress,
   Grid,
   IconButton,
-  Link,
   Typography,
   useTheme,
-  Avatar
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import MailOutlineIcon from "@mui/icons-material/MailOutline";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-import InsertLinkIcon from "@mui/icons-material/InsertLink";
-import DateRangeIcon from "@mui/icons-material/DateRange";
 
 import Rounds from "../components/Rounds";
 

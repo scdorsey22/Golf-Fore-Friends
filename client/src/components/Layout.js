@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import { Box, Grid, Hidden } from "@mui/material";
 import { useTheme } from "@mui/material";
 import LeftSidebar from "./LeftSidebar";

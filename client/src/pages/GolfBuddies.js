@@ -3,7 +3,7 @@ import { Grid, Box, Typography } from "@mui/material"
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FriendsList from "../components/FriendsList";
-import FriendsSearch from "../components/FriendSearch";
+
 
 import { Link as RouteLink } from "react-router-dom";
 
