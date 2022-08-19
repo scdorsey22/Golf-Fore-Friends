@@ -1,5 +1,4 @@
 import { useState } from "react";
-import {useTheme} from '@mui/material/styles'
 import { Link } from "react-router-dom";
 
 //material-ui
@@ -7,10 +6,7 @@ import { Link } from "react-router-dom";
 import {
     Box,
     Button,
-    Checkbox,
     FormControl,
-    FormControlLabel,
-    FormHelperText,
     IconButton,
     InputAdornment,
     InputLabel,
@@ -21,9 +17,7 @@ import {
 
 //third party
 
-import * as Yup from 'yup';
 import { Formik } from 'formik';
-
 
 //assets
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -35,10 +29,7 @@ const initialForm = {
   }
 
 function LoginForm({ onCreateOrLog, responseFromAccountOrLogged }) {
-    const theme = useTheme();
-    const [checked, setChecked] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
-
     const [loginAccount, setLoginAccount] = useState(initialForm);
     const [errors, setErrors] = useState(null);
 
@@ -133,7 +124,7 @@ function LoginForm({ onCreateOrLog, responseFromAccountOrLogged }) {
                             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                             <Typography 
                             component={Link}
-                            to="/forgotpassword" 
+                            to="/forgot_password" 
                             variant="subtitle1" 
                             color="success.light" 
                             sx={{ textDecoration: 'none', cursor: 'pointer' }}

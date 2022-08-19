@@ -1,19 +1,14 @@
 import {
     Grid,
     IconButton,
-    Input,
     Typography,
     Menu,
     MenuItem,
   } from "@mui/material";
   import { Box } from "@mui/system";
-  import React, { useState } from "react";
   import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
   import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-  import SyncIcon from "@mui/icons-material/Sync";
-  import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
   import FavoriteIcon from "@mui/icons-material/Favorite";
-  import IosShareIcon from "@mui/icons-material/IosShare";
   import { Link } from "react-router-dom";
 
 

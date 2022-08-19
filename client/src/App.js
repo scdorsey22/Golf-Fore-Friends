@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
-import { ThemeProvider } from '@mui/material/styles';
-import { CssBaseline, StyledEngineProvider } from '@mui/material';
 import './App.css';
 
 
@@ -13,6 +11,7 @@ import Layout from "./components/Layout";
 import GolfBuddies from "./pages/GolfBuddies";
 import Profile from "./pages/Profile";
 import ForgotPasswordPage from './auth/ForgotPasswordPage'
+import ResetPasswordPage from "./auth/ResetPasswordPage";
 
 
 function App() {
@@ -114,8 +113,14 @@ function App() {
                 responseFromAccountOrLogged={responseFromAccountOrLogged}
               />
             </Route>
-            <Route exact path="/forgotpassword">
+            <Route exact path="/forgot_password">
               <ForgotPasswordPage/>
+            </Route>
+            <Route exact path="/reset_password">
+              <ResetPasswordPage
+              onCreateOrLog={handleCreateOrLog}
+              responseFromAccountOrLogged={responseFromAccountOrLogged}
+              />
             </Route>
             <Route exact path="*">
               <h2>404 Error Not Found</h2>
