@@ -1,5 +1,11 @@
 User.destroy_all
+User.reset_pk_sequence
 GolfBuddy.destroy_all
+GolfBuddy.reset_pk_sequence
+Round.destroy_all
+Round.reset_pk_sequence
+Comment.destroy_all
+Comment.reset_pk_sequence
 
 puts "seeding Users"
 10.times do
@@ -46,6 +52,44 @@ GolfBuddy.create([
     {user_id: 11, friend_id: 10 },
     {user_id: 11, friend_id: 3 }
 ])
+
+puts "Adding Rounds..."
+5.times do
+    Round.create(
+        description: Faker::Lorem.sentence, 
+        date: Faker::Date.forward(days: 23),
+        course: "Torrey Pines",
+        user_id: User.ids.sample,
+    )
+end
+
+5.times do
+    Round.create(
+        description: Faker::Lorem.sentence, 
+        date: Faker::Date.forward(days: 23),
+        course: "Encinitas Ranch",
+        user_id: User.ids.sample,
+    )
+end
+
+5.times do
+    Round.create(
+        description: Faker::Lorem.sentence, 
+        date: Faker::Date.forward(days: 23),
+        course: "Aviara",
+        user_id: User.ids.sample,
+    )
+end
+
+
+puts "Adding Comments..."
+20.times do
+    Comment.create(
+        comment: Faker::Lorem.sentence, 
+        user_id: User.ids.sample,
+        round_id: Round.ids.sample,
+    )
+end
 
 
 

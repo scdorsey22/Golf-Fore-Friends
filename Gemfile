@@ -53,3 +53,5 @@ gem "active_model_serializers", "~> 0.10.12"
 gem 'faker'
 
 gem 'dotenv-rails', groups: [:development, :test]
+
+gem 'activerecord-reset-pk-sequence'
