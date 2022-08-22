@@ -19,6 +19,9 @@ import { Link as RouteLink } from "react-router-dom";
 
  function Profile({loggedUser}) {
     const theme = useTheme();
+
+
+    
     
     console.log(loggedUser)
 

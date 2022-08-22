@@ -20,7 +20,7 @@ function FriendsSearch({user, loggedUser}) {
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
           <Grid container>
-            <Link to='/'>
+            <Link to={`/profile/${user._id}`}>
               <Grid item sx={{ paddingRight: "1px" }}>
                 <img src={user.profile_pic} width="50px" alt="avatar" />
               </Grid>

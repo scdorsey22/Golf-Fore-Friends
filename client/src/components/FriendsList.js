@@ -26,7 +26,7 @@ function FriendsList ( {loggedUser, friend, golfBuddies}) {
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
                     <Grid container>
-                        <Link to='/'>
+                        <Link to='/profile'>
                         <Grid item sx={{ paddingRight: "12px" }}>
                             <img src={friend.profile_pic} width="50px" alt="avatar" />
                         </Grid>
