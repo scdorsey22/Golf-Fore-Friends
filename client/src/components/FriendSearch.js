@@ -1,26 +1,26 @@
 import { Typography, useTheme } from "@mui/material";
 import { Button, Grid } from "@mui/material";
 import { Box } from "@mui/system"
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 
 
 
 function FriendsSearch({user, loggedUser}) {
+  const { id } = useParams();
     const theme = useTheme();
     const [searchDisabled, setSearchDisabled] = useState(false)
     const [friendDisabled, setFriendDisabled] = useState(false)
 
 
-  
 
   return (
     <Box key={user.id} margin="1rem 0">
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
           <Grid container>
-            <Link to={`/profile/${user._id}`}>
+            <Link to={`/profile/${user.id}`}>
               <Grid item sx={{ paddingRight: "1px" }}>
                 <img src={user.profile_pic} width="50px" alt="avatar" />
               </Grid>

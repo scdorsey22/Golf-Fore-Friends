@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
 import './App.css';
-
-
+import { useParams } from "react-router-dom";
 
 import LoginPage from './auth/LoginPage'
 import RegisterPage from "./auth/RegisterPage";
@@ -12,17 +11,20 @@ import GolfBuddies from "./pages/GolfBuddies";
 import Profile from "./pages/Profile";
 import ForgotPasswordPage from './auth/ForgotPasswordPage'
 import ResetPasswordPage from "./auth/ResetPasswordPage";
-
+import RoundDetails from "./pages/RoundDetails";
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(null);
   const [responseFromAccountOrLogged, setResponseFromAccountOrLogged] = useState(false);
   const [authorize, setAuthorize] = useState(false);
+  const [rounds, setRounds] =useState([])
+  const [user, setUser] =useState([])
+  const { id } = useParams();
 
   const history = useHistory();
 
   useEffect(() => {
-    fetch("/api/users/show").then((r) => {
+    fetch("/api/me").then((r) => {
       if (r.ok) {
         r.json().then((user) => {
           setLoggedUser(user);
@@ -33,6 +35,32 @@ function App() {
       }
     });
   }, []);
+
+//   useEffect(() => {
+//     fetch(`/api/users/${id}`)
+//         .then((r) => {
+//             if (r.ok) {
+//               r.json().then((user) => 
+//               setUser(user)
+//               );
+//             }
+//     });
+//  }, [id])
+
+
+
+  useEffect(() => {
+    fetch("/rounds").then((r) => {
+      if (r.ok) {
+        r.json().then((res) => {
+          setRounds(res);
+        });
+      } 
+    });
+  }, []);
+
+
+
 
   function handleLogOut(e) {
     fetch("/api/logout", {
@@ -69,6 +97,7 @@ function App() {
             <Layout 
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
+            user={user}
             >
              <MainPage loggedUser={loggedUser}/>
             </Layout>
@@ -77,16 +106,29 @@ function App() {
             <Layout 
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
+            user={user}
             >
              <GolfBuddies loggedUser={loggedUser}/>
             </Layout>
           </Route>
-          <Route exact path="/profile">
+          <Route exact path="/profile/:id">
             <Layout 
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
+            user={user}
             >
-             <Profile loggedUser={loggedUser}/>
+             <Profile 
+             loggedUser={loggedUser}
+             />
+            </Layout>
+          </Route>
+          <Route exact path="/rounds/:id">
+            <Layout 
+            loggedUser={loggedUser}
+            onLogOut={handleLogOut}
+            user={user}
+            >
+             <RoundDetails loggedUser={loggedUser}/>
             </Layout>
           </Route>
           <Route exact path="*">

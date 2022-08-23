@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import FriendsSearch from "./FriendSearch";
 
 
-function RightSidebar({loggedUser}) {
+function RightSidebar({loggedUser, user}) {
     const [search, setSearch]=useState("")
     const [users, setUsers] = useState([])
 
@@ -17,6 +17,7 @@ function RightSidebar({loggedUser}) {
             }
           });
     }, [])
+
 
 
     function handleChange(e){
@@ -38,6 +39,7 @@ function RightSidebar({loggedUser}) {
             key={user.id} 
             user={user} 
             loggedUser={loggedUser} 
+          
             />
             })
         return renderUsers

@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  skip_before_action :authorize, only: [:create]
+  skip_before_action :authorize, only: [:create, :index, :show]
 
   # GET /users
   def index
@@ -9,10 +9,13 @@ class Api::UsersController < ApplicationController
   end
 
   # GET /users/1
+
   def show
-    user = User.find_by(id: session[:user_id])
+    user = set_user
     render json: user, status: :ok
   end
+
+
 
   # POST /users
   def create

@@ -10,7 +10,7 @@ class RoundsController < ApplicationController
 
   # GET /rounds/1
   def show
-    render json: @round
+    render json: set_round
   end
 
   # POST /rounds
@@ -35,7 +35,7 @@ class RoundsController < ApplicationController
 
   # DELETE /rounds/1
   def destroy
-    @round.destroy
+    set_round.destroy
   end
 
   private
@@ -46,6 +46,6 @@ class RoundsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def round_params
-      params.require(:round).permit(:date, :course, :description, :user_id)
+      params.permit(:date, :course, :description, :user_id)
     end
 end

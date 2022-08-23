@@ -4,31 +4,25 @@ import {
     Typography,
     Menu,
     MenuItem,
-    Input,
   } from "@mui/material";
   import { useState } from "react";
   import { Box } from "@mui/system";
   import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
   import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+  import ArrowBackIcon from "@mui/icons-material/ArrowBack";
   import FavoriteIcon from "@mui/icons-material/Favorite";
   import { Link } from "react-router-dom";
-  import { useEffect } from "react";
+  import { useHistory, useParams } from "react-router";
 
-  import Modal from "./Modal";
+  export default function RoundDetails({ currentUser, post, deletePost, updatePost }) {
 
-  const defaultValues = {
-    user_id: undefined,
-    round_id: undefined,
-    comment: "",
-  }
+    const [commentText, setCommentText] = useState("");
+    const { id } = useParams();
+    const history = useHistory();
 
-  
-  export default function Rounds({ currentUser, post, deletePost, updatePost }) {
-
-  const [commentText, setCommentText] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openIcon = Boolean(anchorEl);
-  
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openIcon = Boolean(anchorEl);
+    
   
   const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
@@ -36,7 +30,6 @@ import {
   const handleCloseIcon = () => {
     setAnchorEl(null);
   };
-
 
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
@@ -53,10 +46,8 @@ import {
   const handleEditOpen = () => setEditOpen(true);
   const handleEditClose = () => setEditOpen(false);
 
-  const { description, date, course} = post
+  const { description, date, course } = post
   const {first_name, last_name, username, profile_pic} = currentUser
-
-  console.log(post)
   
   //DELETE
   function handleDeleteRound () {
@@ -74,7 +65,6 @@ import {
         [name]: value
     })
   }
-
 
   // const handleEditSubmit = (e) => {
   //   e.preventDefault()
@@ -94,39 +84,23 @@ import {
   //     setEditOpen(false)
   //   })
   // }
-
-  const [openModal, setOpenModal] = useState(false);
-  const handleModalClose = () => {
-    setOpenModal(false);
-  };
-
-  const handleModalOpen = () => {
-    setOpenModal(true);
-  };
-
-  // const addComment = (newComment) => setCommentText(posts => [...posts, newPost])
-
-  const handleSubmit = () => {
-    
-    const configObj = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: JSON.stringify({...commentText, user_id: currentUser.id, round_id: post.id}),
-      };
-      fetch("/comments", configObj)
-      .then(res => res.json())
-      // .then((newComment) => addComment(newComment))
-      setCommentText(defaultValues);
-}
-
- 
     
     
     return (
       <>
+      <Box>
+      <Box borderBottom="1px solid #ccc" padding="8px 20px">
+        <Grid container alignItems="center">
+          <Grid item sx={{ mr: "10px" }}>
+            <IconButton onClick={() => history.push("/")}>
+              <ArrowBackIcon />
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <Typography variant="h6">Post</Typography>
+          </Grid>
+        </Grid>
+      </Box>
         <Link
           to="/"
           style={{ textDecoration: "none", color: "inherit" }}
@@ -219,10 +193,6 @@ import {
                     marginTop=".8rem"
                   >
                     <IconButton
-                    onClick={(e) => {
-                      e.preventDefault();
-                      handleModalOpen();
-                    }}
                       size="small"
                     >
                       <ChatBubbleOutlineIcon fontSize="small" />
@@ -240,40 +210,9 @@ import {
             </Grid>
           </Box>
         </Link>
-        {openModal && (
-        <Modal
-          open={openModal}
-          handleClose={handleModalClose}
-          saveText={"Comment"}
-          len={commentText.trimStart().length}
-          post={post}
-          handleSave={handleSubmit}
-        >
-          <Box>
-            <Grid container>
-              <Grid item>
-                <img src={currentUser.profile_pic} alt="logo" width="60px" />
-              </Grid>
-              <Grid item flexGrow="1">
-                <Box padding=".5rem 0">
-                  <Input
-                    onChange={(e) => setCommentText(e.target.value)}
-                    value={commentText}
-                    multiline
-                    rows="2"
-                    disableUnderline
-                    type="text"
-                    placeholder="Post your comment"
-                    sx={{ width: "100%" }}
-                  />
-                </Box>
-              </Grid>
-            </Grid>
-          </Box>
-        </Modal>
-        )}
+        </Box>
+        
       </>
     );
   }
  
-  

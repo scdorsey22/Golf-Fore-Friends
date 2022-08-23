@@ -2,6 +2,11 @@ class User < ApplicationRecord
     has_many :golf_buddies
     has_many :friends, through: :golf_buddies
 
+    has_many :rounds
+
+    has_many :comments
+    has_many :commented_posts, through: :comments, source: :rounds
+
 
     has_secure_password
     validates :username, uniqueness: true
