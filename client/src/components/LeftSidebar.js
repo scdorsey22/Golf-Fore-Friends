@@ -64,7 +64,7 @@ function LeftSidebar({loggedUser, onLogOut}) {
             </ListItem>
             </NavLink>
             <NavLink
-            to='/profile'
+            to={`/profile/${loggedUser.id}`}
             style={{
               textDecoration: "none",
               color: "inherit",

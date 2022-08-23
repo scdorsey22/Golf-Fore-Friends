@@ -9,21 +9,39 @@ import {
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-
+import { useEffect, useState } from "react";
 import Rounds from "../components/Rounds";
-
-
-
 import { Link as RouteLink } from "react-router-dom";
+import { useParams } from "react-router";
 
 
  function Profile({loggedUser}) {
     const theme = useTheme();
+    const [posts, setPosts] = useState([])
+    const [user, setUser] =useState([])
+    const { id } = useParams();
+
+  
+    useEffect(() => {
+      fetch(`/api/users/${id}`)
+          .then((r) => {
+              if (r.ok) {
+                r.json().then((res) => 
+                setUser(res)
+                );
+              }
+      });
+   }, [id])
+
+  
+    useEffect(() => {
+    if (user) {
+      setPosts(user.rounds)
+    }
+  }, [user]);
 
 
-    
-    
-    console.log(loggedUser)
+ console.log(user)
 
     return (
 
@@ -41,7 +59,7 @@ import { Link as RouteLink } from "react-router-dom";
            
               <Grid item>
                 <Typography variant="h6">
-                  {loggedUser.first_name} {loggedUser.last_name}
+                  {user.first_name} {user.last_name}
                 </Typography>
               </Grid>
           
@@ -66,7 +84,7 @@ import { Link as RouteLink } from "react-router-dom";
                 
                 }}
               >
-                <img width='150px' src={loggedUser.profile_pic} alt="profile" />
+                <img width='150px' src={user.profile_pic} alt="profile" />
               </Box>
             </Box>
             <Box textAlign="right" padding="10px 20px">
@@ -76,13 +94,13 @@ import { Link as RouteLink } from "react-router-dom";
             </Box>
             <Box padding="10px 20px">
               <Typography variant="h6" sx={{ fontWeight: "500" }}>
-              {loggedUser.first_name} {loggedUser.last_name}
+              {user.first_name} {user.last_name}
               </Typography>
               <Typography sx={{ fontSize: "14px", color: "#555" }}>
-                @{loggedUser.username}
+                @{user.username}
               </Typography>
               <Typography fontSize="16px" color="#333" padding="10px 0">
-                {loggedUser.handicap} HDCP
+                {user.handicap} HDCP
               </Typography>
               <Box
                 display="flex"
@@ -93,7 +111,7 @@ import { Link as RouteLink } from "react-router-dom";
                 <Box display="flex">
                   <LocationOnIcon htmlColor="#555" />
                   <Typography sx={{ ml: "6px", color: "#555" }}>
-                    {loggedUser.city}, {loggedUser.state}
+                    {user.city}, {user.state}
                   </Typography>
                 </Box>
               </Box>
@@ -112,10 +130,9 @@ import { Link as RouteLink } from "react-router-dom";
                 Upcoming Rounds
               </Typography>
             </Box>
-            
-            <Rounds/>
-            <Rounds />
-            <Rounds />
+            {posts?.map((post) =>( 
+            <Rounds key={post.id} post={post}  currentUser={user} />
+            ))}
               
           </Box>
 

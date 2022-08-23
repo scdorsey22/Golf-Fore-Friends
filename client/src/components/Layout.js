@@ -3,7 +3,7 @@ import { useTheme } from "@mui/material";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
 
-function Layout ({ children, loggedUser, onLogOut }) {
+function Layout ({ children, loggedUser, onLogOut, user}) {
     const theme = useTheme();
 
 
@@ -34,7 +34,7 @@ function Layout ({ children, loggedUser, onLogOut }) {
             </Grid>
             <Hidden lgDown>
               <Grid item lg={4} sx={{ height: "100vh" }}>
-                <RightSidebar loggedUser={loggedUser}/>
+                <RightSidebar user={user} loggedUser={loggedUser}/>
               </Grid>
             </Hidden>
           </Grid>

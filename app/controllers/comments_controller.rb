@@ -3,14 +3,14 @@ class CommentsController < ApplicationController
 
   # GET /comments
   def index
-    @comments = Comment.all
+    comments = Comment.all
 
-    render json: @comments
+    render json: comments
   end
 
   # GET /comments/1
   def show
-    render json: @comment
+    render json: set_comment
   end
 
   # POST /comments
@@ -35,7 +35,7 @@ class CommentsController < ApplicationController
 
   # DELETE /comments/1
   def destroy
-    @comment.destroy
+    set_comment.destroy
   end
 
   private
@@ -46,6 +46,6 @@ class CommentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def comment_params
-      params.require(:comment).permit(:comment, :user_id, :round_id)
+      params.permit(:comment, :user_id, :round_id)
     end
 end

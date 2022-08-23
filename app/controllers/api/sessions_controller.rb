@@ -17,4 +17,11 @@ class Api::SessionsController < ApplicationController
         head :no_content
     end
 
+    # GET '/me'
+  def show
+    user = User.find(session[:user_id])
+    render json: user, serializer: UserShowSerializer, status: :ok
+  end
+
+
 end
