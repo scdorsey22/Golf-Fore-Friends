@@ -5,9 +5,11 @@ import React, { useEffect, useState } from "react";
 import FriendsSearch from "./FriendSearch";
 
 
-function RightSidebar({loggedUser, user}) {
+function RightSidebar({loggedUser, user, golfBuddies}) {
     const [search, setSearch]=useState("")
     const [users, setUsers] = useState([])
+
+
 
     useEffect(() => {
         fetch("/api/users")
@@ -34,13 +36,15 @@ function RightSidebar({loggedUser, user}) {
 
         allUsersArray = matchingUsers
 
-        const renderUsers = allUsersArray?.map(user => {
+        const renderUsers = allUsersArray?.map(user =>  {
+          if (user.id !== loggedUser.id) {
             return <FriendsSearch 
             key={user.id} 
             user={user} 
             loggedUser={loggedUser} 
-          
+            golfBuddies={golfBuddies}
             />
+          }
             })
         return renderUsers
         }
@@ -48,7 +52,7 @@ function RightSidebar({loggedUser, user}) {
 
 
 return (
-    <Box sx={{ height: "100%", width: '100%'
+    <Box sx={{ height: "100%", width: '105%'
     }}>
       <Box paddingTop="10px">
         <Box
@@ -62,6 +66,8 @@ return (
         >
           <Input
             type="text"
+            value={search}
+            onChange={handleChange}
             inputProps={{
               style: { padding: "10px" },
             }}
@@ -91,7 +97,7 @@ return (
           </Typography>
     
 
-          {allUsers()}
+          {allUsers().slice(0,5)}
   
         </Box>
       </Box>

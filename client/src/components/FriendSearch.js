@@ -7,12 +7,18 @@ import { useEffect, useState } from "react";
 
 
 
-function FriendsSearch({user, loggedUser}) {
+function FriendsSearch({user, loggedUser, golfBuddies}) {
   const { id } = useParams();
     const theme = useTheme();
     const [searchDisabled, setSearchDisabled] = useState(false)
     const [friendDisabled, setFriendDisabled] = useState(false)
 
+    const friendIdsArray = []
+    loggedUser.friends?.map(friend => {   
+        return friendIdsArray.push(friend.id)
+    })
+
+   
 
 
   return (
@@ -44,6 +50,36 @@ function FriendsSearch({user, loggedUser}) {
           </Grid>
         </Grid>
         <Grid item>
+        {friendIdsArray.includes(user.id) ? 
+        <Button
+        disabled={friendDisabled}
+        onClick={function handleDeleteFriend(){
+          const golfBuddyToDelete = golfBuddies?.find(golfBuddy => {
+            if ((golfBuddy.user_id === loggedUser.id) && (golfBuddy.friend_id === user.id)){
+                return golfBuddy.id
+            } else
+            return undefined
+        })
+        fetch(`/api/golf_buddies/${golfBuddyToDelete.id}`, {method: "DELETE"})
+            setSearchDisabled(currentState => !currentState)
+            setFriendDisabled(currentState => !currentState)
+        }}
+        size="small"
+        sx={{
+          borderRadius: theme.shape.borderRadius,
+          textTransform: "capitalize",
+          ml: "12px",
+          background: "success",
+          "&:hover": {
+            background: "#333",
+          },
+        }}
+        variant="contained"
+        color="error"
+      >
+         {friendDisabled ? "Friend Removed" : "Unfriend"}
+      </Button>
+      :
           <Button
             disabled={friendDisabled}
             onClick={function handleAddFriend(){
@@ -72,6 +108,7 @@ function FriendsSearch({user, loggedUser}) {
           >
             {friendDisabled ? "Added" : "Friend"}
           </Button>
+          }
         </Grid>
       </Grid>
     </Box>

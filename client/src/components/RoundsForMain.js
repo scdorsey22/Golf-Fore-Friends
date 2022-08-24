@@ -23,7 +23,7 @@ import {
   }
 
   
-  export default function Rounds({ user, post, deletePost, updatePost, loggedUser }) {
+  export default function RoundsForMain({ user, post, deletePost, updatePost, loggedUser }) {
 
   const [commentText, setCommentText] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
@@ -143,7 +143,7 @@ import {
       setCommentText("");
 }
 
- 
+ console.log(post)
     
     
     return (
@@ -163,7 +163,7 @@ import {
             <Grid container flexWrap="nowrap">
               <Grid item sx={{ paddingRight: "1rem" }}>
                 <Link to='/'>
-                  <img src={profile_pic} alt="lgoog" width="50px" />
+                  <img src={post.user.profile_pic} alt="lgoog" width="50px" />
                 </Link>
               </Grid>
               <Grid item flexGrow="1">
@@ -179,17 +179,22 @@ import {
                         <Typography
                           sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
                         >
-                          {first_name} {last_name}
+                          {post.user.first_name} {post.user.last_name}
                         </Typography>
                         <Typography
                           sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
                         >
-                          @{username}
+                          @{post.user.username}
+                        </Typography>
+                        <Typography
+                          sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
+                        >
+                          {post.created_at}
                         </Typography>
                       </Box>
                     </Grid>
                     <Grid item>
-                    {post.user_id === loggedUser.id && (
+                    {post.user.id === loggedUser.id && (
                         <IconButton
                         aria-expanded={open ? "true" : undefined}
                         onClick={(e) => {

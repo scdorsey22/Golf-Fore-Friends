@@ -7,8 +7,8 @@ import FriendsList from "../components/FriendsList";
 
 import { Link as RouteLink } from "react-router-dom";
 
-function GolfBuddies ( {loggedUser} ) {
-    const [golfBuddies, setGolfBuddies] =useState([])
+function GolfBuddies ( {loggedUser, golfBuddies, setGolfBuddies, addGolfBuddy, deleteGolfBuddy} ) {
+    
     const [search, setSearch] = useState("");
     const [users, setUsers] = useState([])
 
@@ -18,14 +18,7 @@ function GolfBuddies ( {loggedUser} ) {
         .then(setUsers)
     }, [])
 
-
-    useEffect(() => {
-        fetch("/api/golf_buddies")
-          .then(res => res.json())
-          .then(setGolfBuddies)
-      }, [])
-    
-    console.log(golfBuddies)
+   
 
     return (
         <Box>
@@ -49,6 +42,9 @@ function GolfBuddies ( {loggedUser} ) {
             friend={friend}
             loggedUser={loggedUser} 
             golfBuddies={golfBuddies} 
+            setGolfBuddies={setGolfBuddies}
+            addGolfBuddy={addGolfBuddy}
+            deleteGolfBuddy={deleteGolfBuddy}
             />
             ))}
         </Grid>

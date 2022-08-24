@@ -1,4 +1,4 @@
-import { Grid, IconButton, Typography } from "@mui/material";
+import { Grid, IconButton, Typography, Menu, MenuItem, } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -7,9 +7,22 @@ import {format} from 'date-fns'
 
 
 
-export default function Comment({ comment }) {
+export default function Comment({ comment, loggedUser }) {
     const {created_at, user_id} = comment
     const [user, setUser] = useState([])
+    const [anchorEl, setAnchorEl] = useState(null);
+    const openIcon = Boolean(anchorEl);
+    const [open, setOpen] = useState(false);
+  
+  
+  const handleClick = (event) => {
+  setAnchorEl(event.currentTarget);
+  };
+  const handleCloseIcon = () => {
+    setAnchorEl(null);
+  };
+
+ 
  
 
     useEffect(() => {
@@ -76,9 +89,31 @@ export default function Comment({ comment }) {
                 </Box>
               </Grid>
               <Grid item>
-                <IconButton>
+              {comment.user_id === loggedUser.id && (
+                <IconButton
+                aria-expanded={open ? "true" : undefined}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick(e);
+                }}
+                >
                   <MoreHorizIcon />
                 </IconButton>
+              )}
+                <Menu
+                        id="basic-menu"
+                        anchorEl={anchorEl}
+                        open={openIcon}
+                        onClose={handleCloseIcon}
+                        onClick={(e) => e.stopPropagation()}
+                        MenuListProps={{
+                          "aria-labelledby": "basic-button",
+                        }}
+                      >
+                        <MenuItem >
+                          Delete Post
+                        </MenuItem>
+                      </Menu>
               </Grid>
             </Grid>
           </Box>
