@@ -37,7 +37,7 @@ export default function AddRound({loggedUser, addPost}) {
           fetch("/rounds", configObj)
           .then(res => res.json())
           .then((newPost) => addPost(newPost))
-        setPostValues(defaultValues);
+          setPostValues(defaultValues);
     }
 
 
@@ -55,35 +55,37 @@ export default function AddRound({loggedUser, addPost}) {
             <Input
               
               multiline
-              rows="2"
+              rows="1"
               disableUnderline
               type="text"
-              placeholder="Round Date?"
+              placeholder="When are you playing?"
               sx={{ width: "100%" }}
               name="date"
               value={postValues.date}
               onChange={handleChange}
+              required
             />
-          </Box>
-          <Box padding=".5rem 0">
-            <Input
+            </Box>
+             <Box padding=".5rem 0">
+             <Input
               
               multiline
-              rows="2"
+              rows="1"
               disableUnderline
               type="text"
-              placeholder="Course?"
+              placeholder="Where are you playing?"
               sx={{ width: "100%" }}
               name="course"
               value={postValues.course}
               onChange={handleChange}
+              required
             />
           </Box>
           <Box padding=".5rem 0">
             <Input
               
               multiline
-              rows="2"
+              rows="1"
               disableUnderline
               type="text"
               placeholder="How many golfer do you need?"
@@ -91,6 +93,7 @@ export default function AddRound({loggedUser, addPost}) {
               name="description"
               value={postValues.description}
               onChange={handleChange}
+              required
             />
           </Box>
           <Box

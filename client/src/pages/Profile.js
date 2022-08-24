@@ -70,8 +70,8 @@ import { useParams } from "react-router";
             <Box position="relative">
               <img
                 width="100%"
-                height='10%'
-                src='https://static.vecteezy.com/system/resources/thumbnails/002/381/123/small/golf-club-realistic-background-free-vector.jpg'
+                height='100%'
+                src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQyrC3DKrS0GZ-_FJrsXoiIW5u4EMK-O_mZQQ&usqp=CAU'
                 alt="background"
               />
               <Box
@@ -88,9 +88,11 @@ import { useParams } from "react-router";
               </Box>
             </Box>
             <Box textAlign="right" padding="10px 20px">
+            {user.id === loggedUser.id && (
               <IconButton>
                 <MoreHorizIcon />
               </IconButton>
+              )}
             </Box>
             <Box padding="10px 20px">
               <Typography variant="h6" sx={{ fontWeight: "500" }}>
@@ -131,7 +133,7 @@ import { useParams } from "react-router";
               </Typography>
             </Box>
             {posts?.map((post) =>( 
-            <Rounds key={post.id} post={post}  currentUser={user} />
+            <Rounds key={post.id} post={post}  user={user} loggedUser={loggedUser} />
             ))}
               
           </Box>

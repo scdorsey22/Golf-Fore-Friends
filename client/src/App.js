@@ -12,6 +12,7 @@ import Profile from "./pages/Profile";
 import ForgotPasswordPage from './auth/ForgotPasswordPage'
 import ResetPasswordPage from "./auth/ResetPasswordPage";
 import RoundDetails from "./pages/RoundDetails";
+import MyAccount from "./pages/MyAccount";
 
 function App() {
   const [loggedUser, setLoggedUser] = useState(null);
@@ -35,18 +36,6 @@ function App() {
       }
     });
   }, []);
-
-//   useEffect(() => {
-//     fetch(`/api/users/${id}`)
-//         .then((r) => {
-//             if (r.ok) {
-//               r.json().then((user) => 
-//               setUser(user)
-//               );
-//             }
-//     });
-//  }, [id])
-
 
 
   useEffect(() => {
@@ -84,53 +73,74 @@ function App() {
     }, 1500);
   }
 
+  const [golfBuddies, setGolfBuddies] =useState([])
+  
+  useEffect(() => {
+    fetch("/api/golf_buddies")
+      .then(res => res.json())
+      .then(setGolfBuddies)
+  }, [])
+
+  const addGolfBuddy = (newGolfBuddy) => setGolfBuddies(golfBuddies => [...golfBuddies, newGolfBuddy])
+
+  const deleteGolfBuddy = (id) => setGolfBuddies(current => current.filter(g => g.id !== id)) 
+
   if (!authorize) {
     return <div></div>;
   }
+
 
 
   return (
     <div className="App">
       {loggedUser ? (
         <Switch>
-          <Route exact path="/">
-            <Layout 
+           <Layout 
             loggedUser={loggedUser}
             onLogOut={handleLogOut}
             user={user}
+            golfBuddies={golfBuddies}
+            setGolfBuddies={setGolfBuddies}
+            addGolfBuddy={addGolfBuddy}
+            deleteGolfBuddy={deleteGolfBuddy}
             >
+          <Route exact path="/">
+           
              <MainPage loggedUser={loggedUser}/>
-            </Layout>
+            
           </Route>
           <Route exact path="/friends">
-            <Layout 
-            loggedUser={loggedUser}
-            onLogOut={handleLogOut}
-            user={user}
-            >
-             <GolfBuddies loggedUser={loggedUser}/>
-            </Layout>
+          
+             <GolfBuddies 
+             loggedUser={loggedUser}
+             golfBuddies={golfBuddies}
+             setGolfBuddies={setGolfBuddies}
+             addGolfBuddy={addGolfBuddy}
+             deleteGolfBuddy={deleteGolfBuddy}
+             />
+            
+          </Route>
+          <Route exact path="/myaccount">
+           
+             <MyAccount 
+             currentUser={loggedUser}
+             setCurrentUser={setLoggedUser}
+             />
+            
           </Route>
           <Route exact path="/profile/:id">
-            <Layout 
-            loggedUser={loggedUser}
-            onLogOut={handleLogOut}
-            user={user}
-            >
+        
              <Profile 
              loggedUser={loggedUser}
              />
-            </Layout>
+           
           </Route>
           <Route exact path="/rounds/:id">
-            <Layout 
-            loggedUser={loggedUser}
-            onLogOut={handleLogOut}
-            user={user}
-            >
+        
              <RoundDetails loggedUser={loggedUser}/>
-            </Layout>
+           
           </Route>
+          </Layout>
           <Route exact path="*">
             <h2>404 Error Not Found</h2>
           </Route>

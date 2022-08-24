@@ -18,7 +18,8 @@ export default function Modal({
   handleSave,
   saveText,
   len,
-  post
+  comments,
+  loggedUser
 }) {
   const theme = useTheme();
   const handleClick = () => {
@@ -26,25 +27,9 @@ export default function Modal({
     handleClose();
   };
 
-  const [round, setRound] =useState([])
 
- 
+  
 
-  useEffect(() => {
-    fetch(`/rounds/${post.id}`).then((r) => {
-      if (r.ok) {
-        r.json().then((res) => {
-          setRound(res);
-        });
-      } 
-    });
-  }, []);
-
-  console.log(round)
-
-  const {comments} = round
-
-  console.log(comments)
 
 
   return (
@@ -74,7 +59,7 @@ export default function Modal({
         </Button>
       </DialogActions>
       {comments?.map((comment) =>( 
-                    <Comment key={comment.id} comment={comment}/>
+                    <Comment key={comment.id} comment={comment} loggedUser={loggedUser}/>
                 ))}
     </Dialog>
      </Box>

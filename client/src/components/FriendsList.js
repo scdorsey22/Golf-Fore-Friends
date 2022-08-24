@@ -5,7 +5,7 @@ import  { useState } from "react";
 import { Link } from "react-router-dom";
 
 
-function FriendsList ( {loggedUser, friend, golfBuddies}) {
+function FriendsList ( {loggedUser, friend, golfBuddies, setGolfBuddies, addGolfBuddy, deleteGolfBuddy}) {
     const theme = useTheme();
     const [disabled, setDisabled] = useState(false)
 
@@ -18,7 +18,10 @@ function FriendsList ( {loggedUser, friend, golfBuddies}) {
         })
         fetch(`/api/golf_buddies/${golfBuddyToDelete.id}`, {method: "DELETE"})
             setDisabled(currentState => !currentState)
+            deleteGolfBuddy(golfBuddyToDelete.id)
     }
+
+    console.log(friend)
 
 
     return (
@@ -26,7 +29,7 @@ function FriendsList ( {loggedUser, friend, golfBuddies}) {
                 <Grid container alignItems="center" justifyContent="space-between">
                     <Grid item>
                     <Grid container>
-                        <Link to='/profile'>
+                        <Link to={`/profile/${friend.id}`}>
                         <Grid item sx={{ paddingRight: "12px" }}>
                             <img src={friend.profile_pic} width="50px" alt="avatar" />
                         </Grid>
@@ -63,7 +66,7 @@ function FriendsList ( {loggedUser, friend, golfBuddies}) {
                         },
                         }}
                         variant="contained"
-                        color="success"
+                        color="error"
                         disabled={disabled}
                         onClick={handleDeleteFriend}>
                             {disabled ? "Friend Removed" : "Unfriend"}

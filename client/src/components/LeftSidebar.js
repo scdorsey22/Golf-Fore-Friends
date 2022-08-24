@@ -10,7 +10,8 @@ import {
   Hidden,
   useTheme,
 } from "@mui/material";
-import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
+import PersonIcon from '@mui/icons-material/Person';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LogoutIcon from "@mui/icons-material/Logout";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { Link, NavLink } from "react-router-dom";
@@ -21,7 +22,7 @@ function LeftSidebar({loggedUser, onLogOut}) {
     return (
         <>
       <Box sx={{ height: "100vh", maxWidth: "100%" }}>
-        <Box textAlign="center">
+        <Box textAlign="center" padding="15px">
           <Link
             to="/"
             style={{
@@ -30,7 +31,7 @@ function LeftSidebar({loggedUser, onLogOut}) {
               backgroundColor: "inherit",
             }}
           >
-            <img src="https://assets-global.website-files.com/6023f58bb7aff50d0eb641bf/607e4a753c46c0ed92197dbb_golf-ball.png" alt="logo" width="50px" />
+            <img src="https://cdn-icons-png.flaticon.com/512/1800/1800934.png" alt="logo" width="100px" />
           </Link>
         </Box>
         <List>
@@ -79,7 +80,7 @@ function LeftSidebar({loggedUser, onLogOut}) {
               }}
             >
               <ListItemIcon>
-                <PersonOutlineIcon fontSize="medium" color="action" />
+                <PersonIcon fontSize="medium" color="action" />
               </ListItemIcon>
               <Hidden lgDown>
                 <ListItemText
@@ -120,6 +121,34 @@ function LeftSidebar({loggedUser, onLogOut}) {
             </Hidden>
           </ListItem>
           </NavLink>
+          <NavLink  
+            to="/myaccount"
+            style={{
+              textDecoration: "none",
+              color: "inherit",
+              backgroundColor: "inherit",
+            }}>
+          <ListItem
+            button
+            sx={{
+              borderRadius: "28px",
+              margin: ".5rem 0",
+            }}
+          >
+            <ListItemIcon>
+              <ManageAccountsIcon fontSize="medium" color="action" />
+            </ListItemIcon>
+            <Hidden lgDown>
+              <ListItemText
+                primaryTypographyProps={{
+                  fontSize: "18px",
+                  color: theme.palette.action.active,
+                }}
+                primary="Manage Account"
+              />
+            </Hidden>
+          </ListItem>
+          </NavLink>
           <ListItem
             id="basic-button"
             button
@@ -143,7 +172,7 @@ function LeftSidebar({loggedUser, onLogOut}) {
             </Hidden>
           </ListItem>
           </List>
-          <NavLink  
+          {/* <NavLink  
             to="/"
             style={{
               textDecoration: "none",
@@ -165,7 +194,7 @@ function LeftSidebar({loggedUser, onLogOut}) {
             Post
           </Button>
         </Hidden>
-        </NavLink>
+        </NavLink> */}
       </Box>
         </>
     )
