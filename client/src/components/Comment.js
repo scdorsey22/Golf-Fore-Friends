@@ -22,8 +22,6 @@ export default function Comment({ comment, loggedUser }) {
     setAnchorEl(null);
   };
 
- 
- 
 
     useEffect(() => {
         fetch(`/api/users/${user_id}`).then((r) => {
@@ -111,7 +109,7 @@ export default function Comment({ comment, loggedUser }) {
                         }}
                       >
                         <MenuItem >
-                          Delete Post
+                          Delete Comment
                         </MenuItem>
                       </Menu>
               </Grid>

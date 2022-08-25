@@ -87,7 +87,7 @@ console.log(allPosts)
                 ))
                 : 
           <Box container style={{ display: "inline-block" }}>
-            <Link component={RouterLink} to="/mycatpanions">Add some catpanions to view meowposts!</Link>
+            <Link component={RouterLink} to="/friends">Add some friends to see when they are playing!</Link>
           </Box>
         
               }
