@@ -15,6 +15,7 @@ function MyAccount({currentUser, setCurrentUser}) {
       last_name: currentUser.last_name,
       profile_pic: currentUser.profile_pic,
       username: currentUser.username,
+      email: currentUser.email,
       city: currentUser.city,
       state: currentUser.state,
       handicap: currentUser.handicap,
@@ -127,6 +128,25 @@ function MyAccount({currentUser, setCurrentUser}) {
                         label="Username"
                         type="text"
                         value={updateUser.username}
+                        onChange={handleChange}
+                        
+                        />
+                    </Grid>
+                    <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }} >
+                        <TextField
+                        InputLabelProps={{ shrink: true }}
+                        InputProps={{
+                            startAdornment: (
+                            <InputAdornment position="start">
+                                <ContactPageIcon/>
+                            </InputAdornment>
+                            ),
+                        }}
+                        id="email"
+                        name="email"
+                        label="Email"
+                        type="text"
+                        value={updateUser.email}
                         onChange={handleChange}
                         
                         />
