@@ -51,7 +51,7 @@ To run this project: <ol>
 # Features
  
 <ul>
-  <li>Create an account, login into the app, logout</li>
+  <li>Create an account, login into the app, logout, use forgot password to receive a password reset token in your email</li>
   <li>update your account infomation and profile picture</li>
   <li>Search for Golfers and add them as Friends</li>
   <li>See when your friends are playing golf and if they need people to join</li>
