@@ -21,7 +21,7 @@ function MainPage ({loggedUser}) {
   }, [loggedUser]);
 
   useEffect(() => {
-    fetch("/rounds")
+    fetch("/api/rounds")
     .then(res => {
       if(res.ok){
           res.json().then(posts => {
