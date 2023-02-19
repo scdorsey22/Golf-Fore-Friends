@@ -1,4 +1,4 @@
-class RoundsController < ApplicationController
+class Api::RoundsController < ApplicationController
   skip_before_action :authorize , only: [:index, :show, :update, :destroy]
 
   # GET /rounds

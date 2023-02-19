@@ -34,7 +34,7 @@ export default function AddRound({loggedUser, addPost}) {
             },
             body: JSON.stringify({...postValues, user_id: loggedUser.id}),
           };
-          fetch("/rounds", configObj)
+          fetch("/api/rounds", configObj)
           .then(res => res.json())
           .then((newPost) => addPost(newPost))
           setPostValues(defaultValues);

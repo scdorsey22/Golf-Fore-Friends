@@ -1,11 +1,12 @@
 Rails.application.routes.draw do
   
 
-  resources :comments, only: [:index, :create, :show, :update, :destroy]
-  resources :rounds, only: [:index, :create, :show, :update, :destroy]
+
   namespace :api do
     resources :users, only: [:index, :create, :show, :update, :destroy]
     resources :golf_buddies, only: [:index, :create, :destroy, :show]
+    resources :comments, only: [:index, :create, :show, :update, :destroy]
+    resources :rounds, only: [:index, :create, :show, :update, :destroy]
 
 
     

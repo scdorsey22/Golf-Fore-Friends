@@ -61,7 +61,7 @@ import {
   //DELETE
   function handleDeleteRound () {
     // make a delete fetch request and update the backend as well as the post state
-    fetch(`/rounds/${post.id}`, {
+    fetch(`/api/rounds/${post.id}`, {
       method: 'DELETE'
     })
     deletePost(post.id)
@@ -109,7 +109,7 @@ import {
  
 
   useEffect(() => {
-    fetch(`/rounds/${post.id}`).then((r) => {
+    fetch(`/api/rounds/${post.id}`).then((r) => {
       if (r.ok) {
         r.json().then((res) => {
           setRound(res);
@@ -137,7 +137,7 @@ import {
         },
         body: JSON.stringify({ comment: commentText, user_id: loggedUser.id, round_id: post.id}),
       };
-      fetch("/comments", configObj)
+      fetch("/api/comments", configObj)
       .then(res => res.json())
       // .then((newComment) => addComment(newComment))
       setCommentText("");

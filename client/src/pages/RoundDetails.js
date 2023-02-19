@@ -52,7 +52,7 @@ import {
   //DELETE
   function handleDeleteRound () {
     // make a delete fetch request and update the backend as well as the post state
-    fetch(`/rounds/${post.id}`, {
+    fetch(`/api/rounds/${post.id}`, {
       method: 'DELETE'
     })
     deletePost(post.id)

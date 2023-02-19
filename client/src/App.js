@@ -39,7 +39,7 @@ function App() {
 
 
   useEffect(() => {
-    fetch("/rounds").then((r) => {
+    fetch("/api/rounds").then((r) => {
       if (r.ok) {
         r.json().then((res) => {
           setRounds(res);
