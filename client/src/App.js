@@ -14,9 +14,6 @@ import ResetPasswordPage from "./auth/ResetPasswordPage";
 import RoundDetails from "./pages/RoundDetails";
 import MyAccount from "./pages/MyAccount";
 
-import { useSelector, useDispatch } from 'react-redux';
-import { setUser, logoutUser } from './actions/userActions';
-
 function App() {
   const [loggedUser, setLoggedUser] = useState(null);
   const [responseFromAccountOrLogged, setResponseFromAccountOrLogged] = useState(false);
