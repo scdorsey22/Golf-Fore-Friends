@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useMemo } from "react";
+
 import { Grid, Typography, Link } from "@mui/material";
 import { Box } from "@mui/system";
-import { ConstructionOutlined } from "@mui/icons-material";
+
 import { Link as RouterLink } from 'react-router-dom';
+
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchRounds, selectRounds } from '../features/roundsSlice';
-import Rounds from "../components/Rounds";
-import RoundsForMain from "../components/RoundsForMain";
-import AddRound from "../components/AddRound";
+import { selectRounds, addPost, deletePost, updatePost } from '../slices/roundsSlice';
+import { selectUser } from "../slices/userSlice";
 
-function MainPage ({loggedUser}) {
+import RoundsForMain1 from "../redux_components/RoundsForMain1";
+import AddRound1 from "../redux_components/AddRound1";
+
+function MainPage1 () {
   const dispatch = useDispatch();
-  const { data: rounds, loading } = useSelector(selectRounds);
-  const [errors, setErrors] = useState([]);
-
-  useEffect(() => {
-    dispatch(fetchRounds());
-  }, [dispatch]);
-
+  const user = useSelector(selectUser)
+  const rounds = useSelector(selectRounds);
+ 
   function handleAddPost(newPost) {
     dispatch(addPost(newPost));
   }
@@ -30,6 +30,25 @@ function MainPage ({loggedUser}) {
     dispatch(updatePost(updatedPost));
   }
 
+console.log(rounds.data)
+
+function friendsPosts() {
+  let idsArray = []
+  const pluck = (arr, key) => arr.map(i => i[key]);
+  const friendIds = pluck(user.data.friends, 'id')
+  idsArray = [...friendIds, user.data.id]
+
+  const postsArray = []
+  for ( let i = 0; i < idsArray.length; i++ ) {
+    const eachPostsArray = rounds.data.filter(round => round.user.id === idsArray[i])
+    postsArray.push(eachPostsArray)
+  }
+  return postsArray.flat()
+}
+
+console.log(user.data)
+
+
   return (
     <Box>
       <Box borderBottom="1px solid #ccc" padding="20px 20px">
@@ -40,16 +59,14 @@ function MainPage ({loggedUser}) {
         </Grid>
       </Box>
       <Box height="92vh" sx={{ overflowY: "scroll" }}>
-        <AddRound loggedUser={loggedUser} addPost={handleAddPost}/>
+        <AddRound1 loggedUser={user.data} addPost={handleAddPost}/>
         <Box textAlign="center" marginTop="1rem">
-          {loading && <p>Loading...</p>}
-          {!loading && rounds.length > 0 ? rounds
-            .filter(post => post.user.id === loggedUser.id || loggedUser.friends.some(friend => friend.id === post.user.id))
-            .sort((a, b) => b.id - a.id)
-            .map(post => (
-              <RoundsForMain key={post.id} post={post} deletePost={handleDeletePost} user={loggedUser} loggedUser={loggedUser} updatePost={handleUpdatePost}/>
-            )) :
-            <Box container style={{ display: "inline-block" }}>
+        {user.data.friends.length > 0 ? friendsPosts().sort((a, b) => b.id - a.id)
+          ?.map(post => (
+                    <RoundsForMain1 key={post.id} post={post} deletePost={handleDeletePost} user={user.data} loggedUser={user.data} updatePost={handleUpdatePost}/>
+                ))
+                : 
+          <Box container style={{ display: "inline-block" }}>
               <Link component={RouterLink} to="/friends">Add some friends to see when they are playing!</Link>
             </Box>
           }
@@ -59,4 +76,4 @@ function MainPage ({loggedUser}) {
   );
 }
 
-export default MainPage;
+export default MainPage1;
