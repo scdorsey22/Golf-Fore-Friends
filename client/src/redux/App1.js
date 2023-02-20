@@ -1,126 +1,106 @@
+// Import dependencies
 import React, { useEffect } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUser, selectUser } from "./slices/userSlice";
+import { fetchUser, selectUser, fetchAllUsers} from "./slices/userSlice";
 import { fetchRounds, selectRounds } from "./slices/roundsSlice";
 import { fetchGolfBuddies, selectGolfBuddies } from "./slices/golfBuddiesSlice";
 
-import LoginPage from '../auth/LoginPage'
-import RegisterPage from "../auth/RegisterPage";
-import MainPage from "../pages/MainPage";
-import Layout from "../components/Layout";
-import GolfBuddies from "../pages/GolfBuddies";
-import Profile from "../pages/Profile";
-import ForgotPasswordPage from '../auth/ForgotPasswordPage'
-import ResetPasswordPage from "../auth/ResetPasswordPage";
-import RoundDetails from "../pages/RoundDetails";
-import MyAccount from "../pages/MyAccount";
+// Import components
+import MainPage1 from "../redux/redux_pages/MainPage1";
+import GolfBuddies1 from "./redux_pages/GolfBuddies1";
+import Profile1 from "./redux_pages/Profile1";
+import MyAccount1 from "./redux_pages/MyAccount1";
+import RoundDetails1 from "./redux_pages/RoundDetails1";
+import Layout1 from "./redux_components/Layout1";
 
+//Import Auth
+import LoginPage1 from "../redux/redux_auth/LoginPage1";
+import RegisterPage1 from "./redux_auth/RegisterPage1";
+import ForgotPasswordPage1 from "./redux_auth/ForgotPasswordPage1";
+import ResetPasswordPage1 from "./redux_auth/ResetPasswordPage1";
 
-function App1() {
-  const history = useHistory();
+// Define functional component "App1"
+export default function App1() {
+  // Define useDispatch hook
   const dispatch = useDispatch();
 
+  // Call the useEffect hook to dispatch actions to fetch user, rounds and golfBuddies data
   useEffect(() => {
     dispatch(fetchUser());
+    dispatch(fetchAllUsers())
     dispatch(fetchRounds());
     dispatch(fetchGolfBuddies());
   }, [dispatch]);
 
+  // Use useSelector hook to select user, rounds and golfBuddies data
   const user = useSelector(selectUser);
   const rounds = useSelector(selectRounds);
   const golfBuddies = useSelector(selectGolfBuddies);
 
-  function handleLogOut(e) {
-    fetch("/api/logout", {
-      method: "DELETE",
-    }).then((r) => {
-      if (r.ok) {
-        history.push("/");
-        console.log('click')
-      }
-    });
-  }
+  console.log(golfBuddies)
 
-  console.log(user)
-
-  function handleCreateOrLog(user) {
-    history.push("/");
-  }
-
+  // Handle cases when data is still loading
   if (user.loading || rounds.loading || golfBuddies.loading) {
     return <div>Loading...</div>;
   }
 
+  // If user is not logged in, display login pages
+  if (!user.data) {
+  return (
+    <Switch>
+      <Route path="/login">
+        <LoginPage1 />
+      </Route>
+      <Route path="/register">
+        <RegisterPage1 />
+      </Route>
+      <Route path="/forgot_password">
+        <ForgotPasswordPage1 />
+      </Route>
+      <Route path="/reset_password">
+        <ResetPasswordPage1 />
+      </Route>
+      <Route path="*">
+        <h2>404 Error Not Found</h2>
+      </Route>
+    </Switch>
+  );
+}
+
+  // If user is logged in, display appropriate pages
   return (
     <div className="App">
-      {user.data ? (
         <Switch>
-          <Layout 
-            loggedUser={user.data}
-            onLogOut={handleLogOut}
-            user={user}
-            golfBuddies={golfBuddies.data}
-          >
+          <Layout1 >
             <Route exact path="/">
-              <MainPage loggedUser={user.data}/>
+              <MainPage1 loggedUser={user.data}/>
             </Route>
             <Route exact path="/friends">
-              <GolfBuddies 
+              <GolfBuddies1 
                 loggedUser={user.data}
                 golfBuddies={golfBuddies.data}
               />
             </Route>
             <Route exact path="/myaccount">
-              <MyAccount 
+              <MyAccount1 
                 currentUser={user.data}
               />
             </Route>
             <Route exact path="/profile/:id">
-              <Profile 
+              <Profile1
                 loggedUser={user.data}
               />
             </Route>
             <Route exact path="/rounds/:id">
-              <RoundDetails loggedUser={user.data}/>
+              <RoundDetails1 loggedUser={user.data}/>
             </Route>
-          </Layout>
+          </Layout1>
           <Route exact path="*">
             <h2>404 Error Not Found</h2>
           </Route>
         </Switch>
-      ) : (
-        <Switch>
-          <Route exact path="/login">
-            <LoginPage
-              onCreateOrLog={handleCreateOrLog}
-            />
-          </Route>
-          <Route exact path="/">
-            <LoginPage
-              onCreateOrLog={handleCreateOrLog}
-            />
-          </Route>
-          <Route exact path="/regsiter">
-            <RegisterPage
-              onCreateOrLog={handleCreateOrLog}
-            />
-          </Route>
-          <Route exact path="/forgot_password">
-            <ForgotPasswordPage/>
-          </Route>
-          <Route exact path="/reset_password">
-            <ResetPasswordPage
-              onCreateOrLog={handleCreateOrLog}
-            />
-          </Route>
-          <Route exact path="*">
-              <h2>404 Error Not Found</h2>
-            </Route>
-          </Switch>
-        )}
-</div>
-  );
+    </div>
+  )
 }
 
-export default App1;
