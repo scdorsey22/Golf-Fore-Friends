@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, selectUser, fetchAllUsers} from "./slices/userSlice";
 import { fetchRounds, selectRounds } from "./slices/roundsSlice";
 import { fetchGolfBuddies, selectGolfBuddies } from "./slices/golfBuddiesSlice";
+import { fetchComments } from "./slices/commentsSlice";
 
 // Import components
 import MainPage1 from "../redux/redux_pages/MainPage1";
@@ -38,7 +39,6 @@ export default function App1() {
   const rounds = useSelector(selectRounds);
   const golfBuddies = useSelector(selectGolfBuddies);
 
-  console.log(golfBuddies)
 
   // Handle cases when data is still loading
   if (user.loading || rounds.loading || golfBuddies.loading) {
