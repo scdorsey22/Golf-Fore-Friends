@@ -276,7 +276,7 @@ import Modal1 from "./Modal1";
                     value={commentText}
                     multiline
                     rows="2"
-                    disableUnderline
+                   
                     type="text"
                     placeholder="Post your comment"
                     sx={{ width: "100%" }}

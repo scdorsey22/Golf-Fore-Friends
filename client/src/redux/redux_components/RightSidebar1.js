@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Input, Typography} from "@mui/material";
+import { Grid, Input, Typography} from "@mui/material";
 import { Box } from "@mui/system";
 import React, { useState } from "react";
 
@@ -35,54 +35,60 @@ function RightSidebar1() {
       />
     ));
 
-  return (
-    <Box sx={{ height: "100%", width: "105%" }}>
-      <Box paddingTop="10px">
-        <Box
-          width="100%"
-          borderRadius="28px"
-          border="1px solid #eee"
-          position="relative"
-          sx={{
-            background: "#eee",
-          }}
-        >
-          <Input
-            type="text"
-            value={search}
-            onChange={handleChange}
-            inputProps={{
-              style: { padding: "10px" },
-            }}
-            disableUnderline
-            fullWidth
-            placeholder="Search"
-            startAdornment={
-              <Search
+    return (
+      <Box sx={{ height: "100%" }}>
+        <Grid container direction="column" sx={{ height: "100%" }}>
+          <Grid item>
+            <Box paddingTop="10px">
+              <Box
+                width="100%"
+                borderRadius="28px"
+                border="1px solid #eee"
+                position="relative"
                 sx={{
-                  paddingLeft: "20px",
-                  color: "#777",
+                  background: "#eee",
                 }}
-              />
-            }
-          />
-        </Box>
-        <Box
-          sx={{
-            background: "#eee",
-            borderRadius: "28px",
-            padding: "10px 20px",
-            margin: "1rem 0",
-          }}
-        >
-          <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-            Friends Search
-          </Typography>
-          {renderUsers}
-        </Box>
+              >
+                <Input
+                  type="text"
+                  value={search}
+                  onChange={handleChange}
+                  inputProps={{
+                    style: { padding: "10px" },
+                  }}
+                 disableUnderline
+                  fullWidth
+                  placeholder="Search"
+                  startAdornment={
+                    <Search
+                      sx={{
+                        paddingLeft: "20px",
+                        color: "#777",
+                      }}
+                    />
+                  }
+                />
+              </Box>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box
+              sx={{
+                background: "#eee",
+                borderRadius: "28px",
+                padding: "10px 20px",
+                margin: "1rem 0",
+              }}
+            >
+              <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                Friends Search
+              </Typography>
+              {renderUsers}
+            </Box>
+          </Grid>
+        </Grid>
       </Box>
-    </Box>
-  );
-}
-
-export default RightSidebar1;
+    );
+  }
+  
+  export default RightSidebar1;

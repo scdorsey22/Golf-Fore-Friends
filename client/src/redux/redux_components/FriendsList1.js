@@ -1,6 +1,5 @@
 import { Typography, useTheme } from "@mui/material";
-import { Button, Grid } from "@mui/material";
-import { Box } from "@mui/system";
+import { Button, Grid, Box } from "@mui/material";
 import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -75,6 +74,7 @@ function FriendsList1 ( {loggedUser, friend, golfBuddies, setGolfBuddies, addGol
                     </Button>
                     </Grid>
                 </Grid>
+            
     </Box>
   );
 }

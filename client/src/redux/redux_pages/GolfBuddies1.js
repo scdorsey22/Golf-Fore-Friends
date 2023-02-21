@@ -31,6 +31,7 @@ function GolfBuddies1 () {
             </Grid>
           </Grid>
         </Box>
+        <Box height="90vh" sx={{ overflowY: "scroll" }}>
         <Grid container style={{ display: "inline-block", width: "80%", margin: "auto", justifyContent: "space-evenly" }}>
             {loggedUser.data.friends?.map(friend => (
             <FriendsList1 
@@ -38,6 +39,7 @@ function GolfBuddies1 () {
             />
             ))}
         </Grid>
+        </Box>
         </Box>
 
 

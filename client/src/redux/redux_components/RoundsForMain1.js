@@ -1,207 +1,119 @@
-import {
-    Grid,
-    IconButton,
-    Typography,
-    Menu,
-    MenuItem,
-    Input,
-  } from "@mui/material";
-  import { useState } from "react";
-  import { Box } from "@mui/system";
-  import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-  import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
-  import FavoriteIcon from "@mui/icons-material/Favorite";
-  import { Link } from "react-router-dom";
-  import { useEffect } from "react";
+import { Grid, IconButton, Typography, Menu, MenuItem, Input, Box } from "@mui/material";
+import { useState } from "react";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectRounds, deletePost } from "../slices/roundsSlice";
+import { addComment, selectComments } from "../slices/commentsSlice";
+import moment from 'moment'
 
+import Modal1 from "./Modal1";
 
-  import Modal1 from "./Modal1";
+const defaultValues = {
+  user_id: undefined,
+  round_id: undefined,
+  comment: "",
+};
 
-  const defaultValues = {
-    user_id: undefined,
-    round_id: undefined,
-    comment: "",
-  }
-
-  
-  export default function RoundsForMain1({ user, post, deletePost, updatePost, loggedUser }) {
-
+export default function RoundsForMain1({ user, post, loggedUser }) {
+  const dispatch = useDispatch();
+  const rounds = useSelector(selectRounds);
+  const comments = useSelector(selectComments);
   const [commentText, setCommentText] = useState("");
-  const [anchorEl, setAnchorEl] = useState(null);
-  const openIcon = Boolean(anchorEl);
-  
-  
-  const handleClick = (event) => {
-  setAnchorEl(event.currentTarget);
-  };
-  const handleCloseIcon = () => {
-    setAnchorEl(null);
-  };
+  const [menuAnchorEl, setMenuAnchorEl] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
+  const openMenu = Boolean(menuAnchorEl);
 
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  // Extract the fields from the post object for easier access.
+  const { description, date, course, created_at } = post;
+  const { first_name, last_name, username, profile_pic, id: userId } = post.user;
 
-  //edit button
-  const [editPostValues, setEditPostValues] = useState({
-    description: post.description, 
-    image: post.course,
-    like: post.date,
-    user_id: loggedUser.id,
-  })
-  const [editOpen, setEditOpen] = useState(false);
-  const handleEditOpen = () => setEditOpen(true);
-  const handleEditClose = () => setEditOpen(false);
-
-  const { description, date, course} = post
-  const {first_name, last_name, username, profile_pic} = user
-
-  
-  
-  //DELETE
-  function handleDeleteRound () {
-    // make a delete fetch request and update the backend as well as the post state
-    fetch(`/api/rounds/${post.id}`, {
-      method: 'DELETE'
-    })
-    deletePost(post.id)
+  // Handler for opening the menu.
+  const handleMenuOpen = (e) => {
+    e.preventDefault();
+    setMenuAnchorEl(e.currentTarget);
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setEditPostValues({
-        ...editPostValues,
-        [name]: value
-    })
-  }
-
-
-  // const handleEditSubmit = (e) => {
-  //   e.preventDefault()
-  //   const configObj = {
-  //     method: "PATCH",
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //       "Accept": "application/json",
-  //     },
-  //     body: JSON.stringify({ ...editPostValues}),
-  //   };
-  //   fetch(`/meow_posts/${post.id}`, configObj)
-  //   .then(resp => resp.json())
-  //   .then(updatedPost => {
-  //     setEditPostValues(updatedPost)
-  //     updatePost(updatedPost)
-  //     setEditOpen(false)
-  //   })
-  // }
-
-  const [openModal, setOpenModal] = useState(false);
-  const handleModalClose = () => {
-    setOpenModal(false);
+  // Handler for closing the menu.
+  const handleMenuClose = () => {
+    setMenuAnchorEl(null);
   };
 
+  // Handler for opening the comment modal.
   const handleModalOpen = () => {
-    setOpenModal(true);
+    setModalOpen(true);
   };
 
-  const [round, setRound] =useState([])
+  // Handler for closing the comment modal.
+  const handleModalClose = () => {
+    setModalOpen(false);
+  };
 
- 
+  // Handler for deleting the post.
+  const handleDeletePost = () => {
+    dispatch(deletePost(post.id));
+  };
 
-  useEffect(() => {
-    fetch(`/api/rounds/${post.id}`).then((r) => {
-      if (r.ok) {
-        r.json().then((res) => {
-          setRound(res);
-        });
-      } 
-    });
-  }, []);
+  // Handler for submitting a comment.
+  const handleSubmitComment = () => {
+    dispatch(addComment({ commentText, userId, postId: post.id }));
+    setCommentText("");
+  };
 
- 
+  const formattedCreatedAt = moment(created_at).format("MM/DD/YYYY LT");
+  const formattedDate = moment(date).format("MMMM DD, YYYY [at] LT");
 
-  const {comments} = round
+  // Find the round object that matches the current post and get its comments array.
+  const round = rounds.data.find((round) => round.id === post.id);
+  const { comments: roundComments = [] } = round || {};
 
-  
-
-
-  // const addComment = (newComment) => setCommentText(posts => [...posts, newPost])
-
-  const handleSubmit = () => {
-  
-    const configObj = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: JSON.stringify({ comment: commentText, user_id: loggedUser.id, round_id: post.id}),
-      };
-      fetch("/api/comments", configObj)
-      .then(res => res.json())
-      // .then((newComment) => addComment(newComment))
-      setCommentText("");
-}
-
- console.log(post)
-    
-    
-    return (
-      <>
-        <Link
-          to="/"
-          style={{ textDecoration: "none", color: "inherit" }}
+  return (
+    <>
+      <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+        <Box
+          padding="1rem"
+          sx={{
+            "&:hover": {
+              backgroundColor: "#eee",
+            },
+          }}
         >
-          <Box
-            padding="1rem"
-            sx={{
-              "&:hover": {
-                backgroundColor: "#eee",
-              },
-            }}
-          >
-            <Grid container flexWrap="nowrap">
-              <Grid item sx={{ paddingRight: "1rem" }}>
-                <Link to='/'>
-                  <img src={post.user.profile_pic} alt="lgoog" width="50px" />
-                </Link>
-              </Grid>
-              <Grid item flexGrow="1">
-                <Box>
-                  <Grid
-                    container
-                    justifyContent="space-between"
-                    alignItems="center"
-                    flexWrap="nowrap"
-                  >
-                    <Grid item>
-                      <Box display="flex">
-                        <Typography
-                          sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}
-                        >
-                          {post.user.first_name} {post.user.last_name}
-                        </Typography>
+          <Grid container flexWrap="nowrap">
+            <Grid item sx={{ paddingRight: "1rem" }}>
+              <Link to="/">
+                <img src={profile_pic} alt="logo" width="50px" />
+              </Link>
+            </Grid>
+            <Grid item flexGrow="1">
+              <Box>
+                <Grid
+                  container
+                  justifyContent="space-between"
+                  alignItems="center"
+                  flexWrap="nowrap"
+                >
+                  <Grid item>
+                    <Box display="flex">
+                      <Typography sx={{ fontSize: "16px", fontWeight: 500, mr: "6px" }}>
+                        {first_name} {last_name}
+                      </Typography>
+                      <Typography sx={{ fontSize: "15px", mr: "6px", color: "#555" }}>
+                        @{username}
+                      </Typography>
                         <Typography
                           sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
                         >
-                          @{post.user.username}
-                        </Typography>
-                        <Typography
-                          sx={{ fontSize: "15px", mr: "6px", color: "#555" }}
-                        >
-                          {post.created_at}
+                          {formattedCreatedAt}
                         </Typography>
                       </Box>
                     </Grid>
                     <Grid item>
                     {post.user.id === loggedUser.id && (
                         <IconButton
-                        aria-expanded={open ? "true" : undefined}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          handleClick(e);
-                        }}
+                        // aria-expanded={open ? "true" : undefined}
+                        onClick={handleMenuOpen}
                           
                         >
                           <MoreHorizIcon />
@@ -209,15 +121,15 @@ import {
                       )}
                       <Menu
                         id="basic-menu"
-                        anchorEl={anchorEl}
-                        open={openIcon}
-                        onClose={handleCloseIcon}
+                        anchorEl={menuAnchorEl}
+                        open={openMenu}
+                        onClose={handleMenuClose}
                         onClick={(e) => e.stopPropagation()}
                         MenuListProps={{
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={(e) => handleDeleteRound(e)}>
+                        <MenuItem onClick={(e) => handleDeletePost(e)}>
                           Delete Post
                         </MenuItem>
                       </Menu>
@@ -225,18 +137,12 @@ import {
                   </Grid>
                   <Box display="flex" padding="1rem 0">
                     <Typography sx={{ fontSize: "20px" }}>
-                      {description}
+                      Looking for {description} golfers to play at {course}
                     </Typography>
                   </Box>
                     <Box display="flex" padding="1rem 0" borderBottom="1px solid #ccc">
-                    <Typography sx={{ fontSize: "14px", mr: "6px", color: "#555" }}>
-                      {date}
-                    </Typography>
-                    <Typography sx={{ fontSize: "14px", mr: "6px", color: "#555" }}>
-                      .
-                    </Typography>
-                    <Typography sx={{ fontSize: "14px", mr: "6px", color: "#555" }}>
-                      {course}
+                    <Typography sx={{ fontSize: "20px", }}>
+                      Tee Time on {formattedDate}
                     </Typography>
                   </Box>
                   <Box
@@ -260,14 +166,14 @@ import {
             </Grid>
           </Box>
         </Link>
-        {openModal && (
+        {modalOpen && (
         <Modal1
-          open={openModal}
+          open={modalOpen}
           handleClose={handleModalClose}
           saveText={"Comment"}
           len={commentText.trimStart().length}
           comments={comments}
-          handleSave={handleSubmit}
+          handleSave={handleSubmitComment}
           loggedUser={loggedUser}
         >
           <Box>
@@ -282,7 +188,7 @@ import {
                     value={commentText}
                     multiline
                     rows="2"
-                    disableUnderline
+                    
                     type="text"
                     placeholder="Post your comment"
                     sx={{ width: "100%" }}
