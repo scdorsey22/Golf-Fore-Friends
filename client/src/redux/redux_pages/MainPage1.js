@@ -17,6 +17,7 @@ export default function MainPage1() {
   const user = useSelector(selectUser);
   const rounds = useSelector(selectRounds);
 
+
   // Function to add a new post to the Redux store
   function handleAddPost(newPost) {
     dispatch(addPost(newPost));
@@ -46,6 +47,7 @@ export default function MainPage1() {
     }
     return postsArray.flat()
   }
+
 
   return (
     // Main container for the page

@@ -14,9 +14,6 @@ function RightSidebar1() {
     const allUsers = useSelector(selectAllUsers);
     const loggedUser = useSelector(selectUser)
 
-    console.log(allUsers)
-
-
     function handleChange(e){
         setSearch(e.target.value)
     }

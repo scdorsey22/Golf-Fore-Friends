@@ -18,14 +18,15 @@ function FriendsSearch1({user}) {
     const [searchDisabled, setSearchDisabled] = useState(false)
     const [friendDisabled, setFriendDisabled] = useState(false)
 
+
     const friendIdsArray = []
-    loggedUser.friends?.map(friend => {   
+    loggedUser.data.friends?.map(friend => {   
         return friendIdsArray.push(friend.id)
     })
 
     const handleDeleteFriend = () => {
-      const golfBuddyToDelete = golfBuddies?.find(golfBuddy => {
-        if ((golfBuddy.user_id === loggedUser.id) && (golfBuddy.friend_id === user.id)) {
+      const golfBuddyToDelete = golfBuddies.data?.find(golfBuddy => {
+        if ((golfBuddy.user_id === loggedUser.data.id) && (golfBuddy.friend_id === user.id)) {
           return golfBuddy.id
         } else
           return undefined
@@ -37,14 +38,13 @@ function FriendsSearch1({user}) {
   
     const handleAddFriend = async () => {
       try {
-        await dispatch(addGolfBuddy({ user_id: loggedUser.id, friend_id: user.id }));
+        await dispatch(addGolfBuddy({ user_id: loggedUser.data.id, friend_id: user.id }));
         setFriendDisabled(currentState => !currentState);
       } catch (error) {
       console.error(error);
       // handle error here
     }
   }
-
 
   return (
     <Box key={user.id} margin="1rem 0">

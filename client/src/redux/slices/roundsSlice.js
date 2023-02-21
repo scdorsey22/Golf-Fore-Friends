@@ -19,7 +19,7 @@ export const addPost = createAsyncThunk('rounds/addPost', async (newPost) => {
 });
 
 export const deletePost = createAsyncThunk('rounds/deletePost', async (id) => {
-  const response = await fetch(`/api/posts/${id}`, {
+  const response = await fetch(`/api/rounds/${id}`, {
     method: 'DELETE',
   });
   const data = await response.json();
@@ -27,7 +27,7 @@ export const deletePost = createAsyncThunk('rounds/deletePost', async (id) => {
 });
 
 export const updatePost = createAsyncThunk('rounds/updatePost', async (updatedPost) => {
-  const response = await fetch(`/api/posts/${updatedPost.id}`, {
+  const response = await fetch(`/api/rounds/${updatedPost.id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

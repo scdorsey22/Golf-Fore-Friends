@@ -1,13 +1,17 @@
 import { Box, Grid, Hidden } from "@mui/material";
 import { useTheme } from "@mui/material";
 
+// Import custom components
 import LeftSidebar1 from "./LeftSidebar1";
 import RightSidebar1 from "./RightSidebar1";
 
-function Layout1 ({ children, loggedUser, user, golfBuddies}) {
+// Component for the Main Layout
+export default function Layout1 ({ children, loggedUser, user, golfBuddies}) {
+
+    // This line uses the MUI theme to get breakpoints
     const theme = useTheme();
 
-
+  
     return (
         <Box
           sx={{
@@ -35,8 +39,11 @@ function Layout1 ({ children, loggedUser, user, golfBuddies}) {
                       { children }
                   </Box>
                 </Grid>
+
+                {/* This is a Hidden component that only renders on larger screens */}
                 <Hidden lgDown>
                   <Grid item lg={4} sx={{ height: "100vh" }}>
+                    {/* This is the RightSidebar1 component, which has the Friends Search Bar*/}
                     <RightSidebar1 user={user} loggedUser={loggedUser} golfBuddies={golfBuddies}/>
                   </Grid>
                 </Hidden>
@@ -47,4 +54,4 @@ function Layout1 ({ children, loggedUser, user, golfBuddies}) {
     )
 }
 
-export default Layout1;
+
