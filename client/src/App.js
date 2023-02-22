@@ -135,11 +135,6 @@ function App() {
              />
            
           </Route>
-          <Route exact path="/rounds/:id">
-        
-             <RoundDetails loggedUser={loggedUser}/>
-           
-          </Route>
           </Layout>
           <Route exact path="*">
             <h2>404 Error Not Found</h2>

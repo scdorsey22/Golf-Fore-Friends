@@ -22,7 +22,7 @@ ReactDOM.render(
   <React.StrictMode>
   <Provider store={store}>
     <BrowserRouter>
-    <App1 />
+    <App />
     </BrowserRouter>
     </Provider>
   </React.StrictMode>,

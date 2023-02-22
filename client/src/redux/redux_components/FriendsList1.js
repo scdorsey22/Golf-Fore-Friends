@@ -7,21 +7,23 @@ import { selectUser } from "../slices/userSlice";
 import { selectGolfBuddies, deleteGolfBuddy } from "../slices/golfBuddiesSlice";
 
 
-function FriendsList1 ( {loggedUser, friend, golfBuddies, setGolfBuddies, addGolfBuddy, deleteGolfBuddy}) {
+function FriendsList1 ( {friend}) {
     const theme = useTheme();
+    const dispatch = useDispatch();
+    const loggedUser = useSelector(selectUser);
+    const golfBuddies = useSelector(selectGolfBuddies);
     const [disabled, setDisabled] = useState(false)
 
-    function handleDeleteFriend(){
-        const golfBuddyToDelete = golfBuddies?.find(golfBuddy => {
-            if ((golfBuddy.user_id === loggedUser.id) && (golfBuddy.friend_id === friend.id)){
-                return golfBuddy.id
-            } else
+    const handleDeleteFriend = () => {
+        const golfBuddyToDelete = golfBuddies.data?.find(golfBuddy => {
+          if ((golfBuddy.user_id === loggedUser.data.id) && (golfBuddy.friend_id === friend.id)) {
+            return golfBuddy.id
+          } else
             return undefined
         })
-        fetch(`/api/golf_buddies/${golfBuddyToDelete.id}`, {method: "DELETE"})
-            setDisabled(currentState => !currentState)
-            deleteGolfBuddy(golfBuddyToDelete.id)
-    }
+        dispatch(deleteGolfBuddy(golfBuddyToDelete.id))
+        setDisabled(currentState => !currentState)
+      }
 
 
 

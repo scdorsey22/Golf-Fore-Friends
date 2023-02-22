@@ -1,11 +1,5 @@
 
-import { Box } from "@mui/system";
-import {
-  Grid,
-  IconButton,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Grid, IconButton,Typography, useTheme } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
@@ -13,6 +7,8 @@ import { useEffect, useState } from "react";
 import Rounds1 from "../redux_components/Rounds1";
 import { Link as RouteLink } from "react-router-dom";
 import { useParams } from "react-router";
+import {useSelector, useDispatch} from 'react-redux'
+import { selectAllUsers } from '../slices/userSlice'
 
 
  function Profile1({loggedUser}) {
@@ -41,13 +37,11 @@ import { useParams } from "react-router";
   }, [user]);
 
 
- console.log(user)
-
     return (
 
         <Box>
         <Box borderBottom="1px solid #ccc" padding="8px 20px">
-          <Grid container alignItems="center">
+          <Grid container alignItems="center" justifyContent="space-between">
             <Grid item sx={{ mr: "10px" }}>
               <RouteLink to="/">
                 <IconButton>

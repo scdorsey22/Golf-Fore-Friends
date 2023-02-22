@@ -13,7 +13,7 @@ import { Link as RouteLink } from "react-router-dom";
 function GolfBuddies1 () {
     const loggedUser = useSelector(selectUser);
    
-  console.log(loggedUser)
+  console.log(loggedUser.data.friends)
 
     return (
         <Box>
@@ -35,6 +35,7 @@ function GolfBuddies1 () {
         <Grid container style={{ display: "inline-block", width: "80%", margin: "auto", justifyContent: "space-evenly" }}>
             {loggedUser.data.friends?.map(friend => (
             <FriendsList1 
+            key={friend.id}
             friend={friend}
             />
             ))}

@@ -14,10 +14,11 @@ function LeftSidebar1() {
     const user = useSelector(selectUser);
     const history = useHistory();
     const isSmallerScreen = useMediaQuery(theme.breakpoints.down("lg"));
-
+    const [loggingOut, setLoggingOut] = React.useState(false);
 
     function handleLogOut(e) {
-      e.preventDefault();
+      e.stopPropagation();
+      setLoggingOut(true);
       dispatch(logOut())
         .then(() => {
           history.push("/login");

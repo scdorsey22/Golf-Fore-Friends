@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchComments = createAsyncThunk('comments/fetchComments', async () => {
-  const response = await fetch('https://example.com/comments');
-  const comments = await response.json();
-  return comments;
+  const response = await fetch('/api/comments');
+  const data = await response.json();
+  return data;
 });
 
 export const addComment = createAsyncThunk('comments/addComment', async (newComment) => {
-  const response = await fetch('https://example.com/comments', {
+  const response = await fetch('/api/comments', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(newComment),
@@ -17,7 +17,7 @@ export const addComment = createAsyncThunk('comments/addComment', async (newComm
 });
 
 export const updateComment = createAsyncThunk('comments/updateComment', async ({ id, updatedComment }) => {
-  const response = await fetch(`https://example.com/comments/${id}`, {
+  const response = await fetch(`/api/comments/${id}`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(updatedComment),
@@ -27,7 +27,7 @@ export const updateComment = createAsyncThunk('comments/updateComment', async ({
 });
 
 export const deleteComment = createAsyncThunk('comments/deleteComment', async (id) => {
-  await fetch(`https://example.com/comments/${id}`, {
+  await fetch(`/api/comments/${id}`, {
     method: 'DELETE',
   });
   return id;
@@ -35,27 +35,23 @@ export const deleteComment = createAsyncThunk('comments/deleteComment', async (i
 
 const commentsSlice = createSlice({
   name: 'comments',
-  initialState: {
-    comments: [],
-    status: 'idle',
-    error: null,
-  },
+  initialState: { data: [], loading: true },
   reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchComments.pending, (state) => {
-        state.status = 'loading';
+        state.loading = true;
       })
       .addCase(fetchComments.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.comments = action.payload;
+        state.loading = false;
+        state.data = action.payload;
       })
-      .addCase(fetchComments.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.error.message;
+      .addCase(fetchComments.rejected, (state) => {
+        state.loading = false;
+        state.data = [];
       })
       .addCase(addComment.fulfilled, (state, action) => {
-        state.comments.push(action.payload);
+        state.data.unshift(action.payload);
       })
       .addCase(updateComment.fulfilled, (state, action) => {
         const { id, ...updatedComment } = action.payload;

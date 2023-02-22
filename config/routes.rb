@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     post '/forgot_password', to: 'passwords#forgot'
     post '/reset_password', to: "passwords#reset"
     get "/me", to: "sessions#show"
+    put '/me', to: 'users#update'
 
   end 
 

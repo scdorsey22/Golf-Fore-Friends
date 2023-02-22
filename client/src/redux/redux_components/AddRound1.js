@@ -16,7 +16,7 @@ const defaultValues = {
   description: "",
 };
 
-export default function AddRound1({ loggedUser }) {
+export default function AddRound1({ loggedUser, setPosts }) {
   const theme = useTheme();
   const [postValues, setPostValues] = useState(defaultValues);
   const dispatch = useDispatch();
@@ -54,8 +54,6 @@ export default function AddRound1({ loggedUser }) {
     dispatch(addPost(newPost));
     setPostValues(defaultValues);
   };
-
-  console.log(theme.palette)
 
   return (
     <>
