@@ -1,11 +1,10 @@
 import { Grid, IconButton, Typography, Menu, MenuItem, Input, Box } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { selectRounds, deletePost } from "../slices/roundsSlice";
-import { addComment, selectComments } from "../slices/commentsSlice";
 import moment from 'moment'
 
 import Modal1 from "./Modal1";
@@ -16,10 +15,9 @@ const defaultValues = {
   comment: "",
 };
 
-export default function RoundsForMain1({ user, post, loggedUser }) {
+export default function RoundsForMain1({ user, post, loggedUser, onDeletePost }) {
   const dispatch = useDispatch();
   const rounds = useSelector(selectRounds);
-  const comments = useSelector(selectComments);
   const [commentText, setCommentText] = useState("");
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -28,7 +26,8 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
 
   // Extract the fields from the post object for easier access.
   const { description, date, course, created_at } = post;
-  const { first_name, last_name, username, profile_pic, id: userId } = post.user;
+  const { first_name, last_name, username, profile_pic } = post.user;
+
 
   // Handler for opening the menu.
   const handleMenuOpen = (e) => {
@@ -52,26 +51,54 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
   };
 
   // Handler for deleting the post.
-  const handleDeletePost = () => {
-    dispatch(deletePost(post.id));
+  const handleDeletePost = (e) => {
+    e.preventDefault()
+    onDeletePost(post.id);
   };
 
+  const [round, setRound] =useState([])
+
+ 
+
+  useEffect(() => {
+    fetch(`/api/rounds/${post.id}`).then((r) => {
+      if (r.ok) {
+        r.json().then((res) => {
+          setRound(res);
+        });
+      } 
+    });
+  }, []);
+
   // Handler for submitting a comment.
-  const handleSubmitComment = () => {
-    dispatch(addComment({ commentText, userId, postId: post.id }));
-    setCommentText("");
-  };
+  const {comments} = round
+
+  
+
+
+  // const addComment = (newComment) => setCommentText(posts => [...posts, newPost])
+  const handleSubmit = () => {
+  
+    const configObj = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Accept": "application/json",
+        },
+        body: JSON.stringify({ comment: commentText, user_id: loggedUser.id, round_id: post.id}),
+      };
+      fetch("/api/comments", configObj)
+      .then(res => res.json())
+      // .then((newComment) => addComment(newComment))
+      setCommentText("");
+}
 
   const formattedCreatedAt = moment(created_at).format("MM/DD/YYYY LT");
   const formattedDate = moment(date).format("MMMM DD, YYYY [at] LT");
 
-  // Find the round object that matches the current post and get its comments array.
-  const round = rounds.data.find((round) => round.id === post.id);
-  const { comments: roundComments = [] } = round || {};
-
   return (
     <>
-      <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+      
         <Box
           padding="1rem"
           sx={{
@@ -129,7 +156,7 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem onClick={(e) => handleDeletePost(e)}>
+                        <MenuItem onClick={handleDeletePost}>
                           Delete Post
                         </MenuItem>
                       </Menu>
@@ -165,7 +192,7 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
               </Grid>
             </Grid>
           </Box>
-        </Link>
+     
         {modalOpen && (
         <Modal1
           open={modalOpen}
@@ -173,7 +200,7 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
           saveText={"Comment"}
           len={commentText.trimStart().length}
           comments={comments}
-          handleSave={handleSubmitComment}
+          handleSave={handleSubmit}
           loggedUser={loggedUser}
         >
           <Box>

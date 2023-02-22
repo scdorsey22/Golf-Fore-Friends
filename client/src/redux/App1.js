@@ -5,15 +5,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, selectUser, fetchAllUsers} from "./slices/userSlice";
 import { fetchRounds, selectRounds } from "./slices/roundsSlice";
 import { fetchGolfBuddies, selectGolfBuddies } from "./slices/golfBuddiesSlice";
-import { fetchComments } from "./slices/commentsSlice";
+import { fetchComments, selectComments } from "./slices/commentsSlice";
 
 // Import components
 import MainPage1 from "../redux/redux_pages/MainPage1";
 import GolfBuddies1 from "./redux_pages/GolfBuddies1";
 import Profile1 from "./redux_pages/Profile1";
 import MyAccount1 from "./redux_pages/MyAccount1";
-import RoundDetails1 from "./redux_pages/RoundDetails1";
 import Layout1 from "./redux_components/Layout1";
+
+//Import MaterialUI for loading
+import { Box, LinearProgress } from "@mui/material";
 
 //Import Auth
 import LoginPage1 from "../redux/redux_auth/LoginPage1";
@@ -29,20 +31,25 @@ export default function App1() {
   // Call the useEffect hook to dispatch actions to fetch user, rounds and golfBuddies data
   useEffect(() => {
     dispatch(fetchUser());
-    dispatch(fetchAllUsers())
+    dispatch(fetchAllUsers());
     dispatch(fetchRounds());
     dispatch(fetchGolfBuddies());
+    dispatch(fetchComments());
   }, [dispatch]);
 
   // Use useSelector hook to select user, rounds and golfBuddies data
   const user = useSelector(selectUser);
   const rounds = useSelector(selectRounds);
   const golfBuddies = useSelector(selectGolfBuddies);
+  const comments = useSelector(selectComments)
+
 
 
   // Handle cases when data is still loading
-  if (user.loading || rounds.loading || golfBuddies.loading) {
-    return <div>Loading...</div>;
+  if (user.loading || rounds.loading || golfBuddies.loading || comments.loading) {
+    return <Box sx={{width: '100%'}}>
+      <LinearProgress color="success"/>
+    </Box>;
   }
 
   // If user is not logged in, display login pages
@@ -74,13 +81,10 @@ export default function App1() {
         <Switch>
           <Layout1 >
             <Route exact path="/">
-              <MainPage1 loggedUser={user.data}/>
+              <MainPage1 />
             </Route>
             <Route exact path="/friends">
-              <GolfBuddies1 
-                loggedUser={user.data}
-                golfBuddies={golfBuddies.data}
-              />
+              <GolfBuddies1 />
             </Route>
             <Route exact path="/myaccount">
               <MyAccount1 
@@ -91,9 +95,6 @@ export default function App1() {
               <Profile1
                 loggedUser={user.data}
               />
-            </Route>
-            <Route exact path="/rounds/:id">
-              <RoundDetails1 loggedUser={user.data}/>
             </Route>
           </Layout1>
           <Route exact path="*">

@@ -6,6 +6,18 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   return data;
 });
 
+export const updateUser = createAsyncThunk('user/updateUser', async (updatedData) => {
+  const response = await fetch('/api/me', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedData),
+  });
+  const data = await response.json();
+  return data;
+});
+
 export const fetchAllUsers = createAsyncThunk('user/fetchAllUsers', async () => {
   const response = await fetch('/api/users');
   const data = await response.json();
@@ -61,6 +73,10 @@ export const userSlice = createSlice({
       .addCase(fetchUser.rejected, (state) => {
         state.loading = false;
         state.data = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.data = action.payload;
       })
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.allUsers = action.payload;

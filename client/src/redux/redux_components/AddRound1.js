@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Button, Grid, TextField, InputLabel } from "@mui/material";
-import { Box, useTheme } from "@mui/system";
+import { Button, Grid, TextField, InputLabel, Box, useTheme } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addPost } from "../slices/roundsSlice";
 
@@ -17,7 +16,7 @@ const defaultValues = {
   description: "",
 };
 
-export default function AddRound1({ loggedUser }) {
+export default function AddRound1({ loggedUser, setPosts }) {
   const theme = useTheme();
   const [postValues, setPostValues] = useState(defaultValues);
   const dispatch = useDispatch();
@@ -136,7 +135,7 @@ export default function AddRound1({ loggedUser }) {
                   color="success"
                   sx={{
                     borderRadius: theme.shape.borderRadius,
-                    fontSize: "12px",
+                    fontSize: "14px",
                   }}
                   type="submit"
                 >

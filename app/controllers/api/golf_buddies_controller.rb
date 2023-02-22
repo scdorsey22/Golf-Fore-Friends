@@ -15,10 +15,12 @@ class Api::GolfBuddiesController < ApplicationController
 
   # POST /golf_buddies
   def create
-    golf_buddy = GolfBuddy.create!(golf_buddy_params)
-
+    golf_buddy = GolfBuddy.new(golf_buddy_params)
+    if golf_buddy.save
       render json: golf_buddy, status: :created
-   
+    else
+      render json: golf_buddy.errors, status: :unprocessable_entity
+    end
   end
 
 

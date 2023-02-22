@@ -2,6 +2,7 @@ import { Grid, Typography, Link } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import { useState } from "react";
 
 // Import Redux actions and selectors
 import { selectRounds, addPost, deletePost, updatePost } from '../slices/roundsSlice';
@@ -17,35 +18,43 @@ export default function MainPage1() {
   const user = useSelector(selectUser);
   const rounds = useSelector(selectRounds);
 
-  // Function to add a new post to the Redux store
-  function handleAddPost(newPost) {
-    dispatch(addPost(newPost));
-  }
+  // Initialize state for posts
+  const [posts, setPosts] = useState(friendsPosts().sort((a, b) => b.id - a.id));
+
+
+  // // Function to add a new post to the Redux store
+  // function handleAddPost(newPost) {
+  //   dispatch(addPost(newPost));
+  //   setPosts([newPost, ...posts])
+  // }
 
   // Function to delete a post from the Redux store
-  function handleDeletePost(id) {
-    dispatch(deletePost(id));
+  function handleDeletePost(postId) {
+    dispatch(deletePost(postId));
+    setPosts(posts.filter(post => post.id !== postId));
   }
 
-  // Function to update a post in the Redux store
-  function handleUpdatePost(updatedPost) {
-    dispatch(updatePost(updatedPost));
-  }
+  // // Function to update a post in the Redux store
+  // function handleUpdatePost(updatedPost) {
+  //   dispatch(updatePost(updatedPost));
+  // }
 
-  // Function to retrieve all posts by the user's friends and the user
-  function friendsPosts() {
-    let idsArray = [];
-    const pluck = (arr, key) => arr.map(i => i[key]);
-    const friendIds = pluck(user.data.friends, 'id')
-    idsArray = [...friendIds, user.data.id]
+// Function to retrieve all posts by the user's friends and the user
+function friendsPosts() {
+  let idsArray = [];
+  const pluck = (arr, key) => arr.map(i => i[key]);
+  const friendIds = pluck(user.data.friends, 'id')
+  idsArray = [...friendIds, user.data.id]
 
-    const postsArray = []
-    for ( let i = 0; i < idsArray.length; i++ ) {
-      const eachPostsArray = rounds.data.filter(round => round.user.id === idsArray[i])
-      postsArray.push(eachPostsArray)
-    }
-    return postsArray.flat()
+  const postsArray = []
+  for ( let i = 0; i < idsArray.length; i++ ) {
+    const eachPostsArray = rounds.data.filter(round => round.user.id === idsArray[i])
+    postsArray.push(eachPostsArray)
   }
+  console.log(postsArray.flat())
+  return postsArray.flat()
+}
+
 
   return (
     // Main container for the page
@@ -62,12 +71,17 @@ export default function MainPage1() {
         {/* Main content section */}
         <Box padding="1rem" marginX="auto" maxWidth="900px">
           {/* Add post form */}
-          <AddRound1 loggedUser={user.data} addPost={handleAddPost}/>
+          <AddRound1 loggedUser={user.data} setPosts={setPosts}/>
           {/* Conditional rendering for posts */}
           <Box textAlign="center" marginTop="1rem">
-            {user.data.friends.length > 0 ? friendsPosts().sort((a, b) => b.id - a.id)
-              ?.map(post => (
-                <RoundsForMain1 key={post.id} post={post} deletePost={handleDeletePost} user={user.data} loggedUser={user.data} updatePost={handleUpdatePost}/>
+          {user.data.friends.length > 0 ? posts
+              .map(post => (
+                <RoundsForMain1
+                  key={post.id}
+                  post={post}
+                  loggedUser={user.data}
+                  onDeletePost={handleDeletePost}
+                />
               ))
               : 
               <Box container style={{ display: "inline-block" }}>

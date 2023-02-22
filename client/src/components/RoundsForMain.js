@@ -142,9 +142,6 @@ import {
       // .then((newComment) => addComment(newComment))
       setCommentText("");
 }
-
- console.log(post)
-    
     
     return (
       <>

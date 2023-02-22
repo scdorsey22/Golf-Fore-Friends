@@ -6,7 +6,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import HomeIcon from "@mui/icons-material/Home";
 import {
-  Button,
   Hidden,
   useTheme,
 } from "@mui/material";

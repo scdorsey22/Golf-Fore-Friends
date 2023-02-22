@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Grid, TextField, Button, InputAdornment, Typography, useTheme } from "@mui/material"
+import { Box, Grid, TextField, Button, InputAdornment, Typography} from "@mui/material"
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link as RouteLink } from "react-router-dom";
@@ -8,48 +8,43 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import HomeIcon from '@mui/icons-material/Home';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 
-function MyAccount1({currentUser, setCurrentUser}) {
-    const theme = useTheme();
-    const [updateUser, setUpdateUser] = useState({
-      first_name: currentUser.first_name,
-      last_name: currentUser.last_name,
-      profile_pic: currentUser.profile_pic,
-      username: currentUser.username,
-      email: currentUser.email,
-      city: currentUser.city,
-      state: currentUser.state,
-      handicap: currentUser.handicap,
+import { updateUser, selectUser } from '../slices/userSlice';
+import { useDispatch, useSelector } from 'react-redux';
+
+export default function MyAccount1() {
+
+    const dispatch = useDispatch()
+    const currentUser = useSelector(selectUser)
+    
+    // Set the initial form values to the current user data
+    const [updateUserForm, setUpdateUserForm] = useState({
+      first_name: currentUser.data.first_name,
+      last_name: currentUser.data.last_name,
+      profile_pic: currentUser.data.profile_pic,
+      username: currentUser.data.username,
+      email: currentUser.data.email,
+      city: currentUser.data.city,
+      state: currentUser.data.state,
+      handicap: currentUser.data.handicap,
     });
 
-  
+    // Handle changes to the form fields
     const handleChange = (e) => {
       const { name, value } = e.target;
-      setUpdateUser({
-        ...updateUser,
+      setUpdateUserForm({
+        ...updateUserForm,
         [name]: value,
       });
     };
-    // console.log(formValues)
 
+    // Handle form submission
     const handleSubmit = (e) => {
-        e.preventDefault();
-        const configObj = {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify({...updateUser})
-        };
-        fetch(`/api/users/${currentUser.id}`, configObj)
-          .then((res) => res.json())
-          .then((data) => {
-            setCurrentUser(data)
-           
-          } 
-        )
-        setUpdateUser(updateUser);
-      };
+      e.preventDefault();
+      dispatch(updateUser(updateUserForm))
+        .catch((error) => {
+          console.log(error);
+        });
+    };
     
     return (
         <Box>
@@ -89,7 +84,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                             name="first_name"
                             label="First Name"
                             type="text"
-                            value={updateUser.first_name}
+                            value={updateUserForm.first_name}
                             onChange={handleChange}
                             
                         />
@@ -108,7 +103,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                             name="last_name"
                             label="Last Name"
                             type="text"
-                            value={updateUser.last_name}
+                            value={updateUserForm.last_name}
                             onChange={handleChange}
                             
                         />
@@ -127,7 +122,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                         name="username"
                         label="Username"
                         type="text"
-                        value={updateUser.username}
+                        value={updateUserForm.username}
                         onChange={handleChange}
                         
                         />
@@ -146,7 +141,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                         name="email"
                         label="Email"
                         type="text"
-                        value={updateUser.email}
+                        value={updateUserForm.email}
                         onChange={handleChange}
                         
                         />
@@ -166,7 +161,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                         name="profile_pic"
                         label="Profile Picture"
                         type="text"
-                        value={updateUser.profile_pic}
+                        value={updateUserForm.profile_pic}
                         onChange={handleChange}
                         
                     />
@@ -185,7 +180,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                         name="handicap"
                         label="Handicap"
                         type="text"
-                        value={updateUser.handicap}
+                        value={updateUserForm.handicap}
                         onChange={handleChange}
                         
                         />
@@ -204,7 +199,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                         name="city"
                         label="City"
                         type="text"
-                        value={updateUser.city}
+                        value={updateUserForm.city}
                         onChange={handleChange}
                         
                         />
@@ -223,7 +218,7 @@ function MyAccount1({currentUser, setCurrentUser}) {
                         name="state"
                         label="State"
                         type="text"
-                        value={updateUser.state}
+                        value={updateUserForm.state}
                         onChange={handleChange}
                         
                         />
@@ -241,5 +236,3 @@ function MyAccount1({currentUser, setCurrentUser}) {
         </Box>
   )
 }
-
-export default MyAccount1

@@ -30,7 +30,7 @@ const initialForm = {
     password: "",
 };
 
-function LoginForm1() {
+export default function LoginForm1() {
     const [showPassword, setShowPassword] = useState(false);
     const [loginAccount, setLoginAccount] = useState(initialForm);
     const [errors, setErrors] = useState(null);
@@ -146,4 +146,3 @@ function LoginForm1() {
 
 }
 
-export default LoginForm1
