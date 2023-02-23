@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 //material-ui
 
@@ -18,8 +18,9 @@ import {
 //third party
 
 import { Formik } from 'formik';
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../slices/userSlice';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, selectIsAuthenticated} from '../slices/userSlice';
 
 //assets
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -34,6 +35,8 @@ export default function LoginForm1() {
     const [showPassword, setShowPassword] = useState(false);
     const [loginAccount, setLoginAccount] = useState(initialForm);
     const [errors, setErrors] = useState(null);
+    const history = useHistory();
+    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
 
     const dispatch = useDispatch();
 
@@ -50,6 +53,7 @@ export default function LoginForm1() {
             if (loginUser.fulfilled.match(result)) {
                 setErrors(null);
                 setLoginAccount(initialForm);
+                history.push('/');
             } else if (loginUser.rejected.match(result)) {
                 setLoginAccount(initialForm);
                 setErrors(result.payload);

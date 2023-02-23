@@ -6,7 +6,7 @@ import LeftSidebar1 from "./LeftSidebar1";
 import RightSidebar1 from "./RightSidebar1";
 
 // Component for the Main Layout
-export default function Layout1 ({ children, loggedUser, user, golfBuddies}) {
+export default function Layout1 ({ children }) {
 
     // This line uses the MUI theme to get breakpoints
     const theme = useTheme();
@@ -44,7 +44,7 @@ export default function Layout1 ({ children, loggedUser, user, golfBuddies}) {
                 <Hidden lgDown>
                   <Grid item lg={4} sx={{ height: "100vh" }}>
                     {/* This is the RightSidebar1 component, which has the Friends Search Bar*/}
-                    <RightSidebar1 user={user} loggedUser={loggedUser} golfBuddies={golfBuddies}/>
+                    <RightSidebar1 />
                   </Grid>
                 </Hidden>
               </Grid>

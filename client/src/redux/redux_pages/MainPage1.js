@@ -2,11 +2,11 @@ import { Grid, Typography, Link } from "@mui/material";
 import { Box } from "@mui/system";
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Import Redux actions and selectors
-import { selectRounds, addPost, deletePost, updatePost } from '../slices/roundsSlice';
-import { selectUser } from "../slices/userSlice";
+import { selectRounds, deletePost, updatePost } from '../slices/roundsSlice';
+import { selectLoggedUser, fetchUser } from "../slices/userSlice";
 
 // Import custom components
 import RoundsForMain1 from "../redux_components/RoundsForMain1";
@@ -15,18 +15,23 @@ import AddRound1 from "../redux_components/AddRound1";
 export default function MainPage1() {
   // Initialize Redux dispatch and selector hooks
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const loggedUser = useSelector(selectLoggedUser);
   const rounds = useSelector(selectRounds);
 
   // Initialize state for posts
   const [posts, setPosts] = useState(friendsPosts().sort((a, b) => b.id - a.id));
 
 
-  // // Function to add a new post to the Redux store
-  // function handleAddPost(newPost) {
-  //   dispatch(addPost(newPost));
-  //   setPosts([newPost, ...posts])
-  // }
+  useEffect(() => {
+    dispatch(fetchUser());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (rounds.data.length > 0) {
+      setPosts(friendsPosts().sort((a, b) => b.id - a.id));
+    }
+  }, [rounds]);
+
 
   // Function to delete a post from the Redux store
   function handleDeletePost(postId) {
@@ -43,18 +48,16 @@ export default function MainPage1() {
 function friendsPosts() {
   let idsArray = [];
   const pluck = (arr, key) => arr.map(i => i[key]);
-  const friendIds = pluck(user.data.friends, 'id')
-  idsArray = [...friendIds, user.data.id]
+  const friendIds = pluck(loggedUser.friends, 'id')
+  idsArray = [...friendIds, loggedUser.id]
 
   const postsArray = []
   for ( let i = 0; i < idsArray.length; i++ ) {
     const eachPostsArray = rounds.data.filter(round => round.user.id === idsArray[i])
     postsArray.push(eachPostsArray)
   }
-  console.log(postsArray.flat())
   return postsArray.flat()
 }
-
 
   return (
     // Main container for the page
@@ -71,15 +74,15 @@ function friendsPosts() {
         {/* Main content section */}
         <Box padding="1rem" marginX="auto" maxWidth="900px">
           {/* Add post form */}
-          <AddRound1 loggedUser={user.data} setPosts={setPosts}/>
+          <AddRound1 loggedUser={loggedUser} setPosts={setPosts}/>
           {/* Conditional rendering for posts */}
           <Box textAlign="center" marginTop="1rem">
-          {user.data.friends.length > 0 ? posts
+          {loggedUser.friends.length > 0 ? posts
               .map(post => (
                 <RoundsForMain1
                   key={post.id}
                   post={post}
-                  loggedUser={user.data}
+                  loggedUser={loggedUser}
                   onDeletePost={handleDeletePost}
                 />
               ))

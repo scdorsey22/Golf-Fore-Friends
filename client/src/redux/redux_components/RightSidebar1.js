@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import React, { useState } from "react";
 
 import { useSelector } from "react-redux";
-import { selectAllUsers, selectUser } from "../slices/userSlice";
+import { selectAllUsers, selectLoggedUser } from "../slices/userSlice";
 
 import FriendsSearch1 from "./FriendSearch1";
 
@@ -12,7 +12,7 @@ import FriendsSearch1 from "./FriendSearch1";
 function RightSidebar1() {
     const [search, setSearch]=useState("")
     const allUsers = useSelector(selectAllUsers);
-    const loggedUser = useSelector(selectUser)
+    const loggedUser = useSelector(selectLoggedUser)
 
     function handleChange(e){
         setSearch(e.target.value)
