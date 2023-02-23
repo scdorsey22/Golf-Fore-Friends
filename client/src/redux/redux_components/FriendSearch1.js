@@ -4,8 +4,9 @@ import { Box } from "@mui/system"
 import { Link} from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser} from "../slices/userSlice"
+import { selectLoggedUser, fetchUser} from "../slices/userSlice"
 import { selectGolfBuddies, addGolfBuddy, deleteGolfBuddy } from "../slices/golfBuddiesSlice";
+import {useEffect} from 'react'
 
 
 
@@ -13,20 +14,25 @@ import { selectGolfBuddies, addGolfBuddy, deleteGolfBuddy } from "../slices/golf
 function FriendsSearch1({user}) {
     const theme = useTheme();
     const dispatch = useDispatch();
-    const loggedUser = useSelector(selectUser);
+    const loggedUser = useSelector(selectLoggedUser);
     const golfBuddies = useSelector(selectGolfBuddies);
     const [searchDisabled, setSearchDisabled] = useState(false)
     const [friendDisabled, setFriendDisabled] = useState(false)
+    const [addFriendDisabled, setAddFriendDisabled] = useState(false)
+    const [deleteFriendDisabled, setDeleteFriendDisabled] = useState(false)
 
+    useEffect(() => {
+      dispatch(fetchUser());
+    }, [dispatch]);
 
     const friendIdsArray = []
-    loggedUser.data.friends?.map(friend => {   
+    loggedUser.friends?.map(friend => {   
         return friendIdsArray.push(friend.id)
     })
 
     const handleDeleteFriend = () => {
       const golfBuddyToDelete = golfBuddies.data?.find(golfBuddy => {
-        if ((golfBuddy.user_id === loggedUser.data.id) && (golfBuddy.friend_id === user.id)) {
+        if ((golfBuddy.user_id === loggedUser.id) && (golfBuddy.friend_id === user.id)) {
           return golfBuddy.id
         } else
           return undefined
@@ -34,12 +40,16 @@ function FriendsSearch1({user}) {
       dispatch(deleteGolfBuddy(golfBuddyToDelete.id))
       setSearchDisabled(currentState => !currentState)
       setFriendDisabled(currentState => !currentState)
+      setDeleteFriendDisabled(true)
+      setAddFriendDisabled(false)
     }
   
     const handleAddFriend = async () => {
       try {
-        await dispatch(addGolfBuddy({ user_id: loggedUser.data.id, friend_id: user.id }));
+        await dispatch(addGolfBuddy({ user_id: loggedUser.id, friend_id: user.id }));
         setFriendDisabled(currentState => !currentState);
+        setAddFriendDisabled(true);
+        setDeleteFriendDisabled(false)
       } catch (error) {
       console.error(error);
       // handle error here
@@ -75,45 +85,24 @@ function FriendsSearch1({user}) {
           </Grid>
         </Grid>
         <Grid item>
-        {friendIdsArray.includes(user.id) ? 
         <Button
-        disabled={friendDisabled}
-        onClick={handleDeleteFriend}
-        size="small"
-        sx={{
-          borderRadius: theme.shape.borderRadius,
-          textTransform: "capitalize",
-          ml: "12px",
-          background: "success",
-          "&:hover": {
-            background: "#333",
-          },
-        }}
-        variant="contained"
-        color="error"
-      >
-         {friendDisabled ? "Friend Removed" : "Unfriend"}
-      </Button>
-      :
-          <Button
-            disabled={friendDisabled}
-            onClick={handleAddFriend}
-            size="small"
-            sx={{
-              borderRadius: theme.shape.borderRadius,
-              textTransform: "capitalize",
-              ml: "12px",
-              background: "success",
-              "&:hover": {
-                background: "#333",
-              },
-            }}
-            variant="contained"
-            color="success"
-          >
-            {friendDisabled ? "Added" : "Friend"}
-          </Button>
-          }
+          disabled={friendIdsArray.includes(user.id) ? deleteFriendDisabled : addFriendDisabled}
+          onClick={friendIdsArray.includes(user.id) ? handleDeleteFriend : handleAddFriend}
+          size="small"
+          sx={{
+            borderRadius: theme.shape.borderRadius,
+            textTransform: "capitalize",
+            ml: "12px",
+            background: "success",
+            "&:hover": {
+              background: "#333",
+            },
+          }}
+          variant="contained"
+          color={friendIdsArray.includes(user.id) ? "error" : "success"}
+        >
+          {friendIdsArray.includes(user.id) ? deleteFriendDisabled ? "Friend Removed" : "Unfriend" : addFriendDisabled ? "Added" : "Friend"}
+        </Button>
         </Grid>
       </Grid>
     </Box>

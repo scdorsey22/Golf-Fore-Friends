@@ -3,17 +3,23 @@ import { Grid, Box, Typography } from "@mui/material"
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FriendsList1 from "../redux_components/FriendsList1";
-import { useSelector } from "react-redux";
-import { selectUser} from "../slices/userSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { selectLoggedUser, fetchUser} from "../slices/userSlice";
+
 
 
 
 import { Link as RouteLink } from "react-router-dom";
+import { useEffect } from "react";
 
 function GolfBuddies1 () {
-    const loggedUser = useSelector(selectUser);
-   
-  console.log(loggedUser.data.friends)
+    const dispatch = useDispatch()
+    const loggedUser = useSelector(selectLoggedUser);
+
+    useEffect(() => {
+      dispatch(fetchUser());
+    }, [dispatch]);
+     
 
     return (
         <Box>
@@ -33,7 +39,7 @@ function GolfBuddies1 () {
         </Box>
         <Box height="90vh" sx={{ overflowY: "scroll" }}>
         <Grid container style={{ display: "inline-block", width: "80%", margin: "auto", justifyContent: "space-evenly" }}>
-            {loggedUser.data.friends?.map(friend => (
+            {loggedUser.friends?.map(friend => (
             <FriendsList1 
             key={friend.id}
             friend={friend}

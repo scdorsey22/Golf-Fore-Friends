@@ -61,7 +61,7 @@ function ResetPasswordForm1({ onCreateOrLog, responseFromAccountOrLogged }) {
                     r.json().then((user) => {
                     setErrors(null);
                     setResetPassword(initialForm);
-                    history.push("/");
+                    history.push("/login");
                 });
                 } else {
                   r.json().then((err) => {

@@ -8,24 +8,24 @@ import InsertPhotoIcon from '@mui/icons-material/InsertPhoto';
 import HomeIcon from '@mui/icons-material/Home';
 import GolfCourseIcon from '@mui/icons-material/GolfCourse';
 
-import { updateUser, selectUser } from '../slices/userSlice';
+import { updateUser, selectLoggedUser } from '../slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function MyAccount1() {
 
     const dispatch = useDispatch()
-    const currentUser = useSelector(selectUser)
+    const currentUser = useSelector(selectLoggedUser)
     
     // Set the initial form values to the current user data
     const [updateUserForm, setUpdateUserForm] = useState({
-      first_name: currentUser.data.first_name,
-      last_name: currentUser.data.last_name,
-      profile_pic: currentUser.data.profile_pic,
-      username: currentUser.data.username,
-      email: currentUser.data.email,
-      city: currentUser.data.city,
-      state: currentUser.data.state,
-      handicap: currentUser.data.handicap,
+      first_name: currentUser.first_name,
+      last_name: currentUser.last_name,
+      profile_pic: currentUser.profile_pic,
+      username: currentUser.username,
+      email: currentUser.email,
+      city: currentUser.city,
+      state: currentUser.state,
+      handicap: currentUser.handicap,
     });
 
     // Handle changes to the form fields

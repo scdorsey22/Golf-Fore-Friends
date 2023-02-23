@@ -6,28 +6,25 @@ import { Link, NavLink } from "react-router-dom";
 
 import {useHistory} from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
-import { selectUser, logOut } from '../slices/userSlice';
+import { selectLoggedUser, logOut } from '../slices/userSlice';
 
 function LeftSidebar1() {
     const theme = useTheme();
     const dispatch = useDispatch();
-    const user = useSelector(selectUser);
+    const loggedUser = useSelector(selectLoggedUser);
     const history = useHistory();
     const isSmallerScreen = useMediaQuery(theme.breakpoints.down("lg"));
-    const [loggingOut, setLoggingOut] = React.useState(false);
 
-    function handleLogOut(e) {
+    async function handleLogOut(e) {
       e.stopPropagation();
-      setLoggingOut(true);
-      dispatch(logOut())
-        .then(() => {
-          history.push("/login");
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      try {
+        await dispatch(logOut());
+        history.push("/login");
+      } catch (err) {
+        console.error(err);
+      }
     }
-  
+    
     return (
         <>
           {isSmallerScreen ? (
@@ -56,7 +53,7 @@ function LeftSidebar1() {
             <Home fontSize="medium" color="action" />
           </Link>
           <NavLink
-            to={`/profile/${user.data.id}`}
+            to={`/profile/${loggedUser.id}`}
             style={{
               textDecoration: "none",
               color: "inherit",
@@ -157,7 +154,7 @@ function LeftSidebar1() {
             </ListItem>
             </NavLink>
             <NavLink
-            to={`/profile/${user.data.id}`}
+            to={`/profile/${loggedUser.id}`}
             style={{
               textDecoration: "none",
               color: "inherit",

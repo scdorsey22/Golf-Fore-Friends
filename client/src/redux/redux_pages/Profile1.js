@@ -8,34 +8,26 @@ import Rounds1 from "../redux_components/Rounds1";
 import { Link as RouteLink } from "react-router-dom";
 import { useParams } from "react-router";
 import {useSelector, useDispatch} from 'react-redux'
-import { selectAllUsers } from '../slices/userSlice'
+import { selectFetchUserById, fetchUserById, selectLoggedUser } from '../slices/userSlice'
 
-
- function Profile1({loggedUser}) {
-    const theme = useTheme();
-    const [posts, setPosts] = useState([])
-    const [user, setUser] =useState([])
-    const { id } = useParams();
-
-  
-    useEffect(() => {
-      fetch(`/api/users/${id}`)
-          .then((r) => {
-              if (r.ok) {
-                r.json().then((res) => 
-                setUser(res)
-                );
-              }
-      });
-   }, [id])
+function Profile1() {
+  const theme = useTheme();
+  const dispatch = useDispatch();
+  const { id }  = useParams();
+  const user = useSelector(selectFetchUserById);
+  const loggedUser = useSelector(selectLoggedUser)
 
   
-    useEffect(() => {
-    if (user) {
-      setPosts(user.rounds)
+  console.log('Rendering Profile1 with id:', id);
+
+  useEffect(() => {
+    console.log('calling fetchUserById')
+    dispatch(fetchUserById(id)); // Update dummy state to force re-render
+  }, [dispatch, id]);
+ 
+    if (!user) {
+      return <div>Loading...</div>;
     }
-  }, [user]);
-
 
     return (
 
@@ -53,7 +45,7 @@ import { selectAllUsers } from '../slices/userSlice'
            
               <Grid item>
                 <Typography variant="h6">
-                  {user.first_name} {user.last_name}
+                  {user.data.first_name} {user.data.last_name}
                 </Typography>
               </Grid>
           
@@ -78,11 +70,11 @@ import { selectAllUsers } from '../slices/userSlice'
                 
                 }}
               >
-                <img width='150px' src={user.profile_pic} alt="profile" />
+                <img width='150px' src={user.data.profile_pic} alt="profile" />
               </Box>
             </Box>
             <Box textAlign="right" padding="10px 20px">
-            {user.id === loggedUser.id && (
+            {user.data.id === loggedUser.id && (
               <IconButton>
                 <MoreHorizIcon />
               </IconButton>
@@ -90,13 +82,13 @@ import { selectAllUsers } from '../slices/userSlice'
             </Box>
             <Box padding="10px 20px">
               <Typography variant="h6" sx={{ fontWeight: "500" }}>
-              {user.first_name} {user.last_name}
+              {user.data.first_name} {user.data.last_name}
               </Typography>
               <Typography sx={{ fontSize: "14px", color: "#555" }}>
-                @{user.username}
+                @{user.data.username}
               </Typography>
               <Typography fontSize="16px" color="#333" padding="10px 0">
-                {user.handicap} HDCP
+                {user.data.handicap} HDCP
               </Typography>
               <Box
                 display="flex"
@@ -107,7 +99,7 @@ import { selectAllUsers } from '../slices/userSlice'
                 <Box display="flex">
                   <LocationOnIcon htmlColor="#555" />
                   <Typography sx={{ ml: "6px", color: "#555" }}>
-                    {user.city}, {user.state}
+                    {user.data.city}, {user.data.state}
                   </Typography>
                 </Box>
               </Box>
@@ -126,8 +118,8 @@ import { selectAllUsers } from '../slices/userSlice'
                 Upcoming Rounds
               </Typography>
             </Box>
-            {posts?.map((post) =>( 
-            <Rounds1 key={post.id} post={post}  user={user} loggedUser={loggedUser} />
+            {user.data.rounds?.map((post) =>( 
+            <Rounds1 key={post.id} post={post}  user={user.data} loggedUser={loggedUser} />
             ))}
               
           </Box>

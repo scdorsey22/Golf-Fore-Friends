@@ -3,20 +3,20 @@ import { Button, Grid, Box } from "@mui/material";
 import  { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { selectUser } from "../slices/userSlice";
+import { selectLoggedUser } from "../slices/userSlice";
 import { selectGolfBuddies, deleteGolfBuddy } from "../slices/golfBuddiesSlice";
 
 
 function FriendsList1 ( {friend}) {
     const theme = useTheme();
     const dispatch = useDispatch();
-    const loggedUser = useSelector(selectUser);
+    const loggedUser = useSelector(selectLoggedUser);
     const golfBuddies = useSelector(selectGolfBuddies);
     const [disabled, setDisabled] = useState(false)
 
     const handleDeleteFriend = () => {
         const golfBuddyToDelete = golfBuddies.data?.find(golfBuddy => {
-          if ((golfBuddy.user_id === loggedUser.data.id) && (golfBuddy.friend_id === friend.id)) {
+          if ((golfBuddy.user_id === loggedUser.id) && (golfBuddy.friend_id === friend.id)) {
             return golfBuddy.id
           } else
             return undefined
