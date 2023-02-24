@@ -171,29 +171,6 @@ function LeftSidebar({loggedUser, onLogOut}) {
             </Hidden>
           </ListItem>
           </List>
-          {/* <NavLink  
-            to="/"
-            style={{
-              textDecoration: "none",
-              color: "inherit",
-              backgroundColor: "inherit",
-              padding: '0px'
-            }}>
-        <Hidden lgDown>
-          <Button
-            variant="contained"
-            color="success"
-            fullWidth
-            style={{
-              borderRadius: "28px",
-              padding: "10px",
-              textTransform: "capitalize",
-            }}
-          >
-            Post
-          </Button>
-        </Hidden>
-        </NavLink> */}
       </Box>
         </>
     )

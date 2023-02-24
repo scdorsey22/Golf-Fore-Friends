@@ -18,6 +18,7 @@ function RightSidebar1() {
         setSearch(e.target.value)
     }
 
+
     const matchingUsers = allUsers.filter((user) =>
     user.first_name.toLowerCase().includes(search.toLowerCase())
   );

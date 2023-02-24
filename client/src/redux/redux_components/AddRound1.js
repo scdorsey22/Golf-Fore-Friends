@@ -51,7 +51,6 @@ export default function AddRound1({ loggedUser, setPosts }) {
       date: postValues.date.toISOString(),
       description: postValues.description.toString()
     };
-    console.log(newPost)
     dispatch(addPost(newPost));
     setPostValues(defaultValues);
   };

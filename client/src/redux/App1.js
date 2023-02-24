@@ -22,7 +22,7 @@ import LoginPage1 from "../redux/redux_auth/LoginPage1";
 import RegisterPage1 from "./redux_auth/RegisterPage1";
 import ForgotPasswordPage1 from "./redux_auth/ForgotPasswordPage1";
 import ResetPasswordPage1 from "./redux_auth/ResetPasswordPage1";
-import PrivateRoute from "./PrivateRoute";
+
 
 
 // Define functional component "App1"

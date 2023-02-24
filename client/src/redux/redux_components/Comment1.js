@@ -2,14 +2,14 @@ import { Grid, IconButton, Typography, Menu, MenuItem, } from "@mui/material";
 import { Box } from "@mui/system";
 import React from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { useEffect, useState } from "react";
-
-
+import { useState } from "react";
+import { updateComment, deleteComment } from "../slices/commentsSlice";
+import { useDispatch } from "react-redux";
 
 
 export default function Comment1({ comment, loggedUser }) {
-    const {created_at, user_id} = comment
-    const [user, setUser] = useState([])
+    const dispatch = useDispatch()
+    const {created_at, user, id} = comment
     const [anchorEl, setAnchorEl] = useState(null);
     const openIcon = Boolean(anchorEl);
     const [open, setOpen] = useState(false);
@@ -18,23 +18,15 @@ export default function Comment1({ comment, loggedUser }) {
   const handleClick = (event) => {
   setAnchorEl(event.currentTarget);
   };
+
   const handleCloseIcon = () => {
     setAnchorEl(null);
   };
 
-
-    useEffect(() => {
-        fetch(`/api/users/${user_id}`).then((r) => {
-          if (r.ok) {
-            r.json().then((res) => {
-              setUser(res);
-            });
-          } 
-        });
-      }, []);
-
-      console.log(user)
-
+    const handleDeleteComment = () => {
+    dispatch(deleteComment(id));
+    setAnchorEl(null);
+  };
 
   return (
     <Box
@@ -87,7 +79,7 @@ export default function Comment1({ comment, loggedUser }) {
                 </Box>
               </Grid>
               <Grid item>
-              {comment.user_id === loggedUser.id && (
+              {user.id === loggedUser.id && (
                 <IconButton
                 aria-expanded={open ? "true" : undefined}
                 onClick={(e) => {
@@ -108,7 +100,10 @@ export default function Comment1({ comment, loggedUser }) {
                           "aria-labelledby": "basic-button",
                         }}
                       >
-                        <MenuItem >
+                        {/* <MenuItem>
+                          Edit Comment
+                        </MenuItem> */}
+                        <MenuItem onClick={handleDeleteComment} >
                           Delete Comment
                         </MenuItem>
                       </Menu>

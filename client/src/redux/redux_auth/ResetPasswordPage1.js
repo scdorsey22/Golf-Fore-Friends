@@ -6,7 +6,7 @@ import { Divider, Grid, Stack, Typography, useMediaQuery, Card, Box } from '@mui
 import ResetPasswordForm1 from './ResetPasswordForm1';
 import LoginWrapper from './LoginWrapper';
 
-function ResetPasswordPage1({onCreateOrLog, responseFromAccountOrLogged}) {
+function ResetPasswordPage1() {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -63,7 +63,7 @@ function ResetPasswordPage1({onCreateOrLog, responseFromAccountOrLogged}) {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <ResetPasswordForm1 onCreateOrLog={onCreateOrLog} responseFromAccountOrLogged={responseFromAccountOrLogged}/>
+                                        <ResetPasswordForm1 />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Divider />

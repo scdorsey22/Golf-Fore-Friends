@@ -42,7 +42,6 @@ export default function MyAccount1() {
       e.preventDefault();
       dispatch(updateUser(updateUserForm))
         .catch((error) => {
-          console.log(error);
         });
     };
     

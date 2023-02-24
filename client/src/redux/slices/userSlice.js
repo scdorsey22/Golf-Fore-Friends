@@ -30,9 +30,7 @@ export const updateUser = createAsyncThunk('user/updateUser', async (updatedData
 
 export const fetchUserById = createAsyncThunk('user/fetchUserById', async (userId) => {
   const response = await fetch(`/api/users/${userId}`);
-  console.log(userId)
   const data = await response.json();
-  console.log(data)
   return data;
 });
 
@@ -42,7 +40,7 @@ export const fetchAllUsers = createAsyncThunk('user/fetchAllUsers', async () => 
   return data;
 });
 
-export const loginUser = createAsyncThunk('user/loginUser', async (userData, { dispatch }) => {
+export const loginUser = createAsyncThunk('user/loginUser', async (userData, { rejectWithValue }) => {
   const response = await fetch('/api/login', {
     method: 'POST',
     headers: {
@@ -50,19 +48,32 @@ export const loginUser = createAsyncThunk('user/loginUser', async (userData, { d
     },
     body: JSON.stringify(userData),
   });
+
+  if (response.status === 401) {
+    const error = await response.json();
+    return rejectWithValue(error);
+  }
+
   const data = await response.json();
 
   return data;
 });
 
-export const registerUser = createAsyncThunk('user/registerUser', async (userData, { dispatch }) => {
-  const response = await fetch('/api/register', {
+export const registerUser = createAsyncThunk('user/registerUser', async (userData, { rejectWithValue }) => {
+  const response = await fetch('/api/users', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(userData),
   });
+
+  if (response.status === 422) {
+    const errors = await response.json();
+  
+    return rejectWithValue(errors);
+  }
+
   const data = await response.json();
   
   return data;
@@ -70,12 +81,11 @@ export const registerUser = createAsyncThunk('user/registerUser', async (userDat
 
 
 export const logOut = createAsyncThunk('user/logOut', async () => {
-  const response = await fetch('/api/logout', {
+  await fetch('/api/logout', {
     method: 'DELETE',
   });
-  const data = await response.json();
-
-  return data;
+  
+  return null;
 });
 
 export const userSlice = createSlice({
@@ -106,27 +116,36 @@ export const userSlice = createSlice({
       .addCase(fetchUserById.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
-        console.log('fetchUserById.fulfilled', action.payload);
       })
       .addCase(fetchAllUsers.fulfilled, (state, action) => {
         state.allUsers = action.payload;
       })
       .addCase(logOut.fulfilled, (state) => {
-        state.data = null;
         state.loggedUser = null
         state.isAuthenticated = false
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.loggedUser = action.payload
         state.isAuthenticated = true
         
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.error;
+        state.isAuthenticated = false;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
         state.data = action.payload;
+        state.loggedUser = action.payload
         state.isAuthenticated = true
-        
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload.errors;
+        state.isAuthenticated = false;
       })
   },
 });

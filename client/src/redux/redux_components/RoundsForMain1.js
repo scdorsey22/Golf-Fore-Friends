@@ -1,33 +1,31 @@
 import { Grid, IconButton, Typography, Menu, MenuItem, Input, Box } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { selectRounds, deletePost } from "../slices/roundsSlice";
+import { selectComments, addComment, updateComment, deleteComment } from "../slices/commentsSlice";
 import moment from 'moment'
 
 import Modal1 from "./Modal1";
 
-const defaultValues = {
-  user_id: undefined,
-  round_id: undefined,
-  comment: "",
-};
 
-export default function RoundsForMain1({ user, post, loggedUser, onDeletePost }) {
+export default function RoundsForMain1({ post, loggedUser, onDeletePost }) {
   const dispatch = useDispatch();
-  const rounds = useSelector(selectRounds);
+  const allcomments = useSelector(selectComments)
   const [commentText, setCommentText] = useState("");
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
-
-  const openMenu = Boolean(menuAnchorEl);
+   const openMenu = Boolean(menuAnchorEl);
 
   // Extract the fields from the post object for easier access.
   const { description, date, course, created_at } = post;
   const { first_name, last_name, username, profile_pic } = post.user;
 
+  const formattedCreatedAt = moment(created_at).format("MM/DD/YYYY LT");
+  const formattedDate = moment(date).format("MMMM DD, YYYY [at] LT");
+
+  const roundComments = allcomments.data.filter((comment) => comment.round.id === post.id);
 
   // Handler for opening the menu.
   const handleMenuOpen = (e) => {
@@ -56,45 +54,16 @@ export default function RoundsForMain1({ user, post, loggedUser, onDeletePost })
     onDeletePost(post.id);
   };
 
-  const [round, setRound] =useState([])
-
- 
-
-  useEffect(() => {
-    fetch(`/api/rounds/${post.id}`).then((r) => {
-      if (r.ok) {
-        r.json().then((res) => {
-          setRound(res);
-        });
-      } 
-    });
-  }, []);
 
   // Handler for submitting a comment.
-  const {comments} = round
-
-  
-
-
-  // const addComment = (newComment) => setCommentText(posts => [...posts, newPost])
-  const handleSubmit = () => {
-  
-    const configObj = {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Accept": "application/json",
-        },
-        body: JSON.stringify({ comment: commentText, user_id: loggedUser.id, round_id: post.id}),
-      };
-      fetch("/api/comments", configObj)
-      .then(res => res.json())
-      // .then((newComment) => addComment(newComment))
+ 
+  const handleSubmitComment = () => {
+    const newComment = { comment: commentText, user_id: loggedUser.id, round_id: post.id };
+    dispatch(addComment(newComment)).then(() => {
       setCommentText("");
-}
+    });
+  };
 
-  const formattedCreatedAt = moment(created_at).format("MM/DD/YYYY LT");
-  const formattedDate = moment(date).format("MMMM DD, YYYY [at] LT");
 
   return (
     <>
@@ -199,8 +168,8 @@ export default function RoundsForMain1({ user, post, loggedUser, onDeletePost })
           handleClose={handleModalClose}
           saveText={"Comment"}
           len={commentText.trimStart().length}
-          comments={comments}
-          handleSave={handleSubmit}
+          comments={roundComments}
+          handleSave={handleSubmitComment}
           loggedUser={loggedUser}
         >
           <Box>

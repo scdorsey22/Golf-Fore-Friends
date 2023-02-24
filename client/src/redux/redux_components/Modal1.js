@@ -7,9 +7,10 @@ import DialogTitle from "@mui/material/DialogTitle";
 import { IconButton } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import {useTheme } from "@mui/system";
-import { Typography, Box} from "@mui/material";
-import Comment from "../../components/Comment";
-import { useEffect, useState } from "react";
+import { Box} from "@mui/material";
+
+import Comment1 from "./Comment1";
+
 
 export default function Modal1({
   children,
@@ -26,11 +27,6 @@ export default function Modal1({
     handleSave();
     handleClose();
   };
-
-
-  
-
-
 
   return (
       <Box>
@@ -59,7 +55,7 @@ export default function Modal1({
         </Button>
       </DialogActions>
       {comments?.map((comment) =>( 
-                    <Comment key={comment.id} comment={comment} loggedUser={loggedUser}/>
+                    <Comment1 key={comment.id} comment={comment} loggedUser={loggedUser}/>
                 ))}
     </Dialog>
      </Box>

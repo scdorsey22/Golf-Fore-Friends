@@ -18,10 +18,8 @@ function Profile1() {
   const loggedUser = useSelector(selectLoggedUser)
 
   
-  console.log('Rendering Profile1 with id:', id);
 
   useEffect(() => {
-    console.log('calling fetchUserById')
     dispatch(fetchUserById(id)); // Update dummy state to force re-render
   }, [dispatch, id]);
  
