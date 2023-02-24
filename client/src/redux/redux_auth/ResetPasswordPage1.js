@@ -23,7 +23,7 @@ function ResetPasswordPage1() {
                                     flexGrow: 1,
                                     flexBasis: '50%'
                                 },
-                                border: '1px solid',
+                            
                                 borderColor: theme.palette.success[200] + 75,
                                 ':hover': {
                                     boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)'

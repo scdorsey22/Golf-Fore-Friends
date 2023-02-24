@@ -1,5 +1,5 @@
 class Api::UsersController < ApplicationController
-  skip_before_action :authorize, only: [:create, :index, :show]
+  skip_before_action :authorize, only: [:create, :update, :index, :show]
 
   # GET /users
   def index
@@ -30,11 +30,18 @@ end
 
   # PATCH/PUT /users/1
   def update
+   
     user = User.find_by(id: session[:user_id])
     user.update!(user_params)
     render json: user, status: :accepted
   end
 
+  def update_without_password
+  
+    user = User.find_by(id: session[:user_id])
+    user.update_columns(user_params.except(:password).to_unsafe_hash)
+    render json: user, status: :accepted
+  end
 
   # DELETE /users/1
   def destroy
@@ -51,6 +58,8 @@ end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.permit(:first_name, :last_name, :email, :city, :state, :handicap, :profile_pic, :username, :password)
+      params.require(:user).permit(:id, :first_name, :last_name, :email, :city, :state, :handicap, :profile_pic, :username, :password)
     end
+    
+    
 end

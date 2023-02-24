@@ -12,6 +12,7 @@ import { updateUser, selectLoggedUser } from '../slices/userSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function MyAccount1() {
+    const [error, setError] = useState(null);
 
     const dispatch = useDispatch()
     const currentUser = useSelector(selectLoggedUser)
@@ -30,23 +31,28 @@ export default function MyAccount1() {
 
     // Handle changes to the form fields
     const handleChange = (e) => {
-      const { name, value } = e.target;
-      setUpdateUserForm({
-        ...updateUserForm,
-        [name]: value,
-      });
-    };
+        const { name, value } = e.target;
+        console.log(currentUser); // Add this line to check the ID value
+        setUpdateUserForm({
+          ...updateUserForm,
+          [name]: value,
+        });
+      };
 
     // Handle form submission
     const handleSubmit = (e) => {
-      e.preventDefault();
-      dispatch(updateUser(updateUserForm))
-        .catch((error) => {
-        });
-    };
+        e.preventDefault();
+        console.log(updateUserForm); // Add this line to check the form data
+        dispatch(updateUser({...updateUserForm, id: currentUser.id}))
+          .catch((error) => {
+            console.error(error);
+            setError(error.message);
+          });
+      };
     
     return (
         <Box>
+        {error && <div>{error}</div>}
         <Box borderBottom="1px solid #ccc" padding="20px 20px">
           <Grid container alignItems="center">
             <Grid item sx={{ mr: "10px" }}>

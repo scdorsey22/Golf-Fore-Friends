@@ -9,15 +9,17 @@ class User < ApplicationRecord
 
 
     has_secure_password
-    validates :username, uniqueness: true
-    validates :email, presence: true
+    validates :username, presence: true, uniqueness: true
+    validates :email, presence: true, uniqueness: true
     validates :password, presence: true
+    
     # validates :password, length: {minimum: 5, wrong_length: "Password must be at least 5 characters."}
 
     def generate_password_token!
-      self.password_reset_token = generate_base64_token
-      self.password_reset_sent_at = Time.zone.now
-      save!
+        update_columns(
+            password_reset_token: generate_base64_token,
+            password_reset_sent_at: Time.zone.now
+          )
       UserMailer.password_reset(self).deliver_now
      end
      

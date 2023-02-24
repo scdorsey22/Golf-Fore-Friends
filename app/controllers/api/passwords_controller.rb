@@ -16,6 +16,10 @@ class Api::PasswordsController < ApplicationController
     else
       render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
     end
+
+    # Explicitly set the password field to an empty hash
+  # to bypass the presence validation
+  params[:password] = {}
   end
 
   def reset
