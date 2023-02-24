@@ -7,6 +7,7 @@ import { Divider, Grid, Stack, Typography, useMediaQuery, Card, Box } from '@mui
 
 import LoginForm1 from './LoginForm1';
 import LoginWrapper from './LoginWrapper';
+import Logo from './Logo';
 
 function LoginPage1() {
     const theme = useTheme();
@@ -25,7 +26,7 @@ function LoginPage1() {
                                     flexGrow: 1,
                                     flexBasis: '50%'
                                 },
-                                border: '1px solid',
+                            
                                 borderColor: theme.palette.success[200] + 75,
                                 ':hover': {
                                     boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)'

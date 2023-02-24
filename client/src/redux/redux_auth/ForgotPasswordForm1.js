@@ -60,6 +60,7 @@ function ForgotPasswordForm1() {
         <>
             <Formik>
                     <form>
+                    {errors ? <p style={{ color: "red" }}>{errors.error}</p> : null}
                         <FormControl fullWidth sx={{padding: '2px'}} >
                             <InputLabel htmlFor="outlined-adornment-email-login">Email</InputLabel>
                             <OutlinedInput
@@ -72,7 +73,6 @@ function ForgotPasswordForm1() {
                                 onChange={handleForgotPasswordChange} 
                             />
                         </FormControl>
-                        {errors ? <p>{errors.error}</p> : null}
                         <Box sx={{ mt: 2 }}>
                                 <Button
                                     disableElevation

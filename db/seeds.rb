@@ -29,11 +29,51 @@ User.create(
         city: 'San Diego', 
         state: 'CA', 
         handicap: '10',
-        profile_pic: 'https://i.imgur.com/KUJ5ZoO.jpg',
+        profile_pic: 'https://www.pngitem.com/pimgs/m/83-839341_golfing-clipart-golf-team-mens-golf-clip-art.png',
         username: 'scdorsey22', 
         password: 'golfer22' ,
 
 )
+
+User.create(
+    first_name: 'Tiger', 
+    last_name: 'Woods', 
+    email: 'tiger@pgatour.com', 
+    city: 'Jupiter', 
+    state: 'FL', 
+    handicap: '0',
+    profile_pic: 'https://cloudfront-us-east-2.images.arcpublishing.com/reuters/ZIAXKWQPIJNLRJZ2A7J5UKBSEQ.jpg',
+    username: 'eltigre', 
+    password: 'golfer22' ,
+
+)
+
+User.create(
+    first_name: 'Rickie', 
+    last_name: 'Fowler', 
+    email: 'ricke@fowler.com', 
+    city: 'Jupiter', 
+    state: 'FL', 
+    handicap: '0',
+    profile_pic: 'https://www.golfchannel.com/sites/default/files/2022/10/16/Fowler_1920_Zozo22_Sunglasses.jpg',
+    username: 'rickiebobby', 
+    password: 'golfer22' ,
+
+)
+
+User.create(
+    first_name: 'Phil', 
+    last_name: 'Mickleson', 
+    email: 'phil@phil.com', 
+    city: 'San Diego', 
+    state: 'CA', 
+    handicap: '0',
+    profile_pic: 'https://cdn.golfmagic.com/styles/scale_768/s3/user-content/2022-10-28T210335Z_1921049793_MT1USATODAY19313499_RTRMADP_3_GOLF-LIV-GOLF-FIRST-ROUND_3.JPG?itok=EptcLgkR',
+    username: 'philm', 
+    password: 'golfer22' ,
+
+)
+
 
 puts "seeding GolfBuddies"
 
