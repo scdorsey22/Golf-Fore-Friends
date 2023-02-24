@@ -16,10 +16,13 @@ function LeftSidebar1() {
     const isSmallerScreen = useMediaQuery(theme.breakpoints.down("lg"));
 
     async function handleLogOut(e) {
-      e.stopPropagation();
+      e.preventDefault();
       try {
-        await dispatch(logOut());
-        history.push("/login");
+        const resultAction = await dispatch(logOut());
+        if (logOut.fulfilled.match(resultAction)) {
+          history.push("/login");
+      
+        }
       } catch (err) {
         console.error(err);
       }

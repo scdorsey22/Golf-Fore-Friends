@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {useTheme} from '@mui/material/styles'
+import { useHistory } from "react-router-dom";
 
 //material-ui
 
@@ -19,6 +20,8 @@ import {
 
 import { Formik } from 'formik';
 
+import { useDispatch } from 'react-redux';
+import { registerUser} from '../slices/userSlice';
 
 //assets
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -33,11 +36,15 @@ const initialForm = {
   }
 
 
-function RegisterForm1({ onCreateOrLog, responseFromAccountOrLogged }) {
+function RegisterForm1() {
     const theme = useTheme();
     const [showPassword, setShowPassword] = useState(false);
     const [createAccountForm, setCreateAccountForm] = useState(initialForm);
     const [errors, setErrors] = useState(null);
+    const history = useHistory();
+    
+
+    const dispatch = useDispatch();
   
     
 
@@ -55,38 +62,33 @@ function RegisterForm1({ onCreateOrLog, responseFromAccountOrLogged }) {
         setCreateAccountForm({ ...createAccountForm, [target]: value });
       }
 
-    function handleCreateSubmit(e) {
+      function handleCreateSubmit(e) {
         e.preventDefault();
-    
-        fetch("/api/users", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-          },
-          body: JSON.stringify(createAccountForm),
-        }).then((r) => {
-          if (r.ok) {
-            r.json().then((user) => {
-              setErrors(null);
-              setCreateAccountForm(initialForm);
-              onCreateOrLog(user);
-            });
-          } else {
-            r.json().then((err) => {
-              setCreateAccountForm(initialForm);
-              setErrors(err);
-            });
+      
+        dispatch(registerUser(createAccountForm)).then((result) => {
+          if (registerUser.fulfilled.match(result)) {
+            setErrors(null);
+            setCreateAccountForm(initialForm);
+            history.push('/');
+          } else if (registerUser.rejected.match(result)) {
+            setCreateAccountForm(initialForm);
+            setErrors(result.payload.errors);
           }
         });
       }
-    
+
    
     return (
         <>
             
             <Formik>
                     <form noValidate onSubmit={handleCreateSubmit} >
+                    {errors &&
+                    errors.map((error, index) => (
+                        <p key={index} style={{ color: "red" }}>
+                            {error}
+                        </p>
+                        ))}
                     <Grid container spacing={1} sx={{padding: '4px'}}>
                             <Grid item xs={12} sm={6} >
                                 <TextField
@@ -166,8 +168,6 @@ function RegisterForm1({ onCreateOrLog, responseFromAccountOrLogged }) {
                                 onChange={handleCreateChange}
                             />
                             </FormControl>
-                            {errors ? <p>{errors.error}</p> : null}
-                        
                         <Box sx={{ mt: 2 }}>
                             
                                 <Button

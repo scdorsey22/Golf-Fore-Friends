@@ -55,16 +55,16 @@ const commentsSlice = createSlice({
       })
       .addCase(updateComment.fulfilled, (state, action) => {
         const { id, ...updatedComment } = action.payload;
-        const existingComment = state.comments.find((comment) => comment.id === id);
+        const existingComment = state.data.find((comment) => comment.id === id);
         if (existingComment) {
           Object.assign(existingComment, updatedComment);
         }
       })
       .addCase(deleteComment.fulfilled, (state, action) => {
         const id = action.payload;
-        const existingCommentIndex = state.comments.findIndex((comment) => comment.id === id);
+        const existingCommentIndex = state.data.findIndex((comment) => comment.id === id);
         if (existingCommentIndex !== -1) {
-          state.comments.splice(existingCommentIndex, 1);
+          state.data.splice(existingCommentIndex, 1);
         }
       });
   },

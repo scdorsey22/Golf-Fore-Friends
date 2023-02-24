@@ -6,7 +6,7 @@ import { Divider, Grid, Stack, Typography, useMediaQuery, Card, Box } from '@mui
 import RegisterForm1 from './RegisterForm1';
 import LoginWrapper from './LoginWrapper';
 
-function RegisterPage1({ onCreateOrLog, responseFromAccountOrLogged }) {
+function RegisterPage1() {
     const theme = useTheme();
     const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -63,7 +63,7 @@ function RegisterPage1({ onCreateOrLog, responseFromAccountOrLogged }) {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <RegisterForm1 onCreateOrLog={onCreateOrLog} responseFromAccountOrLogged={responseFromAccountOrLogged}/>
+                                        <RegisterForm1 />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Divider />

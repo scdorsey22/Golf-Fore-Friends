@@ -10,6 +10,8 @@ class User < ApplicationRecord
 
     has_secure_password
     validates :username, uniqueness: true
+    validates :email, presence: true
+    validates :password, presence: true
     # validates :password, length: {minimum: 5, wrong_length: "Password must be at least 5 characters."}
 
     def generate_password_token!

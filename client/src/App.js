@@ -59,7 +59,7 @@ function App() {
         setLoggedUser(null);
         setResponseFromAccountOrLogged(false);
         history.push("/");
-        console.log('click')
+
       }
     });
   }

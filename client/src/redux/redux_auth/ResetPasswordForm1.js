@@ -25,7 +25,7 @@ const initialForm = {
   }
 
 
-function ResetPasswordForm1({ onCreateOrLog, responseFromAccountOrLogged }) {
+function ResetPasswordForm1() {
     const [showPassword, setShowPassword] = useState(false);
     const[resetPassword, setResetPassword]=useState(initialForm)
     const [errors, setErrors] = useState(null);

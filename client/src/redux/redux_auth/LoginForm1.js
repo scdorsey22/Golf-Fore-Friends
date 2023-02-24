@@ -20,7 +20,7 @@ import {
 import { Formik } from 'formik';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, selectIsAuthenticated} from '../slices/userSlice';
+import { loginUser} from '../slices/userSlice';
 
 //assets
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -36,7 +36,7 @@ export default function LoginForm1() {
     const [loginAccount, setLoginAccount] = useState(initialForm);
     const [errors, setErrors] = useState(null);
     const history = useHistory();
-    const isAuthenticated = useSelector((state) => state.user.isAuthenticated);
+    
 
     const dispatch = useDispatch();
 
@@ -48,18 +48,20 @@ export default function LoginForm1() {
 
     function handleLoginSubmit(e) {
         e.preventDefault();
-
-        dispatch(loginUser(loginAccount)).then((result) => {
+      
+        dispatch(loginUser(loginAccount))
+          .then((result) => {
             if (loginUser.fulfilled.match(result)) {
-                setErrors(null);
-                setLoginAccount(initialForm);
-                history.push('/');
+              setErrors(null);
+              setLoginAccount(initialForm);
+              history.push('/');
             } else if (loginUser.rejected.match(result)) {
-                setLoginAccount(initialForm);
-                setErrors(result.payload);
+              setLoginAccount(initialForm);
+              setErrors(result.payload.error);
             }
-        });
-    }
+          })
+      }
+
 
     const handleClickShowPassword = () => {
         setShowPassword(!showPassword);
@@ -73,6 +75,7 @@ export default function LoginForm1() {
         <>
             <Formik>
                 <form>
+                {errors ? <p style={{ color: "red" }}>{errors}</p> : null}
                     <FormControl fullWidth sx={{padding: '2px'}} >
                         <InputLabel htmlFor="outlined-adornment-username-login">Username</InputLabel>
                         <OutlinedInput
@@ -110,7 +113,6 @@ export default function LoginForm1() {
                             inputProps={{}}
                         />
                     </FormControl>
-                    {errors ? <p>{errors.error}</p> : null}
                     <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={1}>
                         <Typography 
                             component={Link}

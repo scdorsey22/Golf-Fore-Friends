@@ -10,11 +10,6 @@ import moment from 'moment'
 
 import Modal1 from "./Modal1";
 
-const defaultValues = {
-  user_id: undefined,
-  round_id: undefined,
-  comment: "",
-};
 
 export default function RoundsForMain1({ user, post, loggedUser }) {
   const dispatch = useDispatch();
@@ -29,6 +24,9 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
   // Extract the fields from the post object for easier access.
   const { description, date, course, created_at } = post;
   const { first_name, last_name, username, profile_pic, id: userId } = user;
+
+  const roundComments = comments.data.filter((comment) => comment.round.id === post.id);
+
 
   // Handler for opening the menu.
   const handleMenuOpen = (e) => {
@@ -58,23 +56,22 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
 
   // Handler for submitting a comment.
   const handleSubmitComment = () => {
-    dispatch(addComment({ commentText, userId, postId: post.id }));
-    setCommentText("");
+    const newComment = { comment: commentText, user_id: loggedUser.id, round_id: post.id };
+    dispatch(addComment(newComment)).then(() => {
+      setCommentText("");
+    });
   };
 
   const formattedCreatedAt = moment(created_at).format("MM/DD/YYYY LT");
   const formattedDate = moment(date).format("MMMM DD, YYYY [at] LT");
 
-  // Find the round object that matches the current post and get its comments array.
-  const round = rounds.data.find((round) => round.id === post.id);
-  const { comments: roundComments = [] } = round || {};
+  // // Find the round object that matches the current post and get its comments array.
+  // const round = rounds.data.find((round) => round.id === post.id);
+  // const { comments: roundComments = [] } = round || {};
     
     return (
       <>
-        <Link
-          to="/"
-          style={{ textDecoration: "none", color: "inherit" }}
-        >
+       
           <Box
             padding="1rem"
             sx={{
@@ -172,14 +169,14 @@ export default function RoundsForMain1({ user, post, loggedUser }) {
               </Grid>
             </Grid>
           </Box>
-        </Link>
+        
         {modalOpen && (
         <Modal1
           open={modalOpen}
           handleClose={handleModalClose}
           saveText={"Comment"}
           len={commentText.trimStart().length}
-          comments={comments}
+          comments={roundComments}
           handleSave={handleSubmitComment}
           loggedUser={loggedUser}
         >
