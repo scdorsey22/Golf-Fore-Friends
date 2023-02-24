@@ -66,6 +66,9 @@ export default function App1() {
           <Route exact path="/login">
             <LoginPage1 />
           </Route>
+          <Route exact path="/">
+            <LoginPage1 />
+          </Route>
           <Route path="/register">
             <RegisterPage1 />
           </Route>
