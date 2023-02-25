@@ -46,7 +46,7 @@ function RegisterPage1() {
                                             justifyContent="center"
                                         >
                                             <Grid item>
-                                                <Stack alignItems="center" justifyContent="center" spacing={1}>
+                                                <Stack alignItems="center" justifyContent="center" spacing={1} sx={{ marginTop: '-40px' }}>
                                                     <Typography
                                                         color={theme.palette.success.main}
                                                         gutterBottom

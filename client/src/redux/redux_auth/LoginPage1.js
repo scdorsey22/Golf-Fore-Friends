@@ -50,7 +50,7 @@ function LoginPage1() {
                                             justifyContent="center"
                                         >
                                             <Grid item>
-                                                <Stack alignItems="center" justifyContent="center" spacing={1}>
+                                                <Stack alignItems="center" justifyContent="center" spacing={1} sx={{ marginTop: '-20px' }}>
                                                     <Typography
                                                         color={theme.palette.success.main}
                                                         gutterBottom
