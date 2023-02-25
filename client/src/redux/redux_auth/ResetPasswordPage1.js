@@ -5,6 +5,8 @@ import { useTheme } from '@mui/material/styles';
 import { Divider, Grid, Stack, Typography, useMediaQuery, Card, Box } from '@mui/material';
 import ResetPasswordForm1 from './ResetPasswordForm1';
 import LoginWrapper from './LoginWrapper';
+import Logo from './Logo';
+import logo from '../../assets/images/golflogo.png';
 
 function ResetPasswordPage1() {
     const theme = useTheme();
@@ -12,6 +14,7 @@ function ResetPasswordPage1() {
 
     return(
         <LoginWrapper>
+         {!matchDownSM && <Logo component="img" src={logo} maxWidth={400} />}
             <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
                 <Grid item xs={12}>
                     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
@@ -23,7 +26,7 @@ function ResetPasswordPage1() {
                                     flexGrow: 1,
                                     flexBasis: '50%'
                                 },
-                            
+                                borderRadius: '12px',
                                 borderColor: theme.palette.success[200] + 75,
                                 ':hover': {
                                     boxShadow: '0 2px 14px 0 rgb(32 40 45 / 8%)'

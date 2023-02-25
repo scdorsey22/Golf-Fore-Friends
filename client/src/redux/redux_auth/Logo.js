@@ -5,9 +5,9 @@ const Logo = styled('img')(({ theme }) => ({
   width: '100%',
   height: 'auto',
   maxWidth: 400,
-  marginTop: theme.spacing(10),
-  marginBottom: theme.spacing(5),
-  display: 'block',
+  marginTop: theme.spacing(6),
+  marginBottom: theme.spacing(-6),
+  display: 'inline-block',
   marginLeft: 'auto',
   marginRight: 'auto',
 }));

@@ -78,115 +78,122 @@ function RegisterForm1() {
       }
 
    
-    return (
+      return (
         <>
-            
-            <Formik>
-                    <form noValidate onSubmit={handleCreateSubmit} >
-                    {errors &&
-                    errors.map((error, index) => (
-                        <p key={index} style={{ color: "red" }}>
-                            {error}
-                        </p>
-                        ))}
-                    <Grid container spacing={1} sx={{padding: '4px'}}>
-                            <Grid item xs={12} sm={6} >
-                                <TextField
-                                    fullWidth
-                                    label="First Name"
-                                    margin="normal"
-                                    name="first_name"
-                                    type="text"
-                                    defaultValue=""
-                                    sx={{ ...theme.typography.customInput }}
-                                    value={createAccountForm.first_name}
-                                    onChange={handleCreateChange}
-                    
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6} >
-                                <TextField
-                                    fullWidth
-                                    label="Last Name"
-                                    margin="normal"
-                                    name="last_name"
-                                    type="text"
-                                    defaultValue=""
-                                    sx={{ ...theme.typography.customInput }}
-                                    value={createAccountForm.last_name}
-                                    onChange={handleCreateChange}
-                                    />
-                            </Grid>
-                        </Grid>
-                        
-                            <FormControl fullWidth sx={{padding: '4px'}} >
-                             <InputLabel >Email</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-email-register"
-                                type="email"
-                                name="email"
-                                label="Email Address"
-                                value={createAccountForm.email}
-                                onChange={handleCreateChange}
-                                
-                            />
-                            </FormControl>
-
-                        <FormControl fullWidth sx={{padding: '4px'}}>
-                            <InputLabel htmlFor="outlined-adornment-email-register">Username</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-email-register"
-                                type="username"
-                                name="username"
-                                label="Username"
-                                value={createAccountForm.username}
-                                onChange={handleCreateChange}
-                                
-                            />
-                        </FormControl>
-                        <FormControl fullWidth sx={{padding: '4px'}}>
-                            <InputLabel htmlFor="outlined-adornment-password-register">Password</InputLabel>
-                            <OutlinedInput
-                                id="outlined-adornment-password-register"
-                                type={showPassword ? 'text' : 'password'}
-                                name="password"
-                                endAdornment={
-                                    <InputAdornment position="end">
-                                        <IconButton
-                                            aria-label="toggle password visibility"
-                                            onClick={handleClickShowPassword}
-                                            onMouseDown={handleMouseDownPassword}
-                                            edge="end"
-                                            size="small"
-                                        >
-                                            {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
-                                        </IconButton>
-                                    </InputAdornment>
-                                }
-                                label="Password"
-                                value={createAccountForm.password}
-                                onChange={handleCreateChange}
-                            />
-                            </FormControl>
-                        <Box sx={{ mt: 2 }}>
-                            
-                                <Button
-                                    disableElevation
-                                    fullWidth
-                                    size="large"
-                                    type="submit"
-                                    variant="contained"
-                                    color="success"
-                                >
-                                    Sign in
-                                </Button>
-
-                        </Box>
-                    </form>
-                    </Formik>
-          </>
-
-    )
+          <Formik>
+            <form noValidate onSubmit={handleCreateSubmit}>
+              {errors &&
+                errors.map((error, index) => (
+                  <p key={index} style={{ color: 'red' }}>
+                    {error}
+                  </p>
+                ))}
+              <Grid container spacing={2} sx={{ padding: '4px' }}>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="First Name"
+                    margin="normal"
+                    name="first_name"
+                    type="text"
+                    defaultValue=""
+                    sx={{ ...theme.typography.customInput }}
+                    value={createAccountForm.first_name}
+                    onChange={handleCreateChange}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={6}>
+                  <TextField
+                    fullWidth
+                    label="Last Name"
+                    margin="normal"
+                    name="last_name"
+                    type="text"
+                    defaultValue=""
+                    sx={{ ...theme.typography.customInput }}
+                    value={createAccountForm.last_name}
+                    onChange={handleCreateChange}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel>Email</InputLabel>
+                        <OutlinedInput
+                          id="outlined-adornment-email-register"
+                          type="email"
+                          name="email"
+                          label="Email Address"
+                          value={createAccountForm.email}
+                          onChange={handleCreateChange}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel htmlFor="outlined-adornment-email-register">
+                          Username
+                        </InputLabel>
+                        <OutlinedInput
+                          id="outlined-adornment-email-register"
+                          type="username"
+                          name="username"
+                          label="Username"
+                          value={createAccountForm.username}
+                          onChange={handleCreateChange}
+                        />
+                      </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                      <FormControl fullWidth>
+                        <InputLabel htmlFor="outlined-adornment-password-register">
+                          Password
+                        </InputLabel>
+                        <OutlinedInput
+                          id="outlined-adornment-password-register"
+                          type={showPassword ? 'text' : 'password'}
+                          name="password"
+                          endAdornment={
+                            <InputAdornment position="end">
+                              <IconButton
+                                aria-label="toggle password visibility"
+                                onClick={handleClickShowPassword}
+                                onMouseDown={handleMouseDownPassword}
+                                edge="end"
+                                size="small"
+                              >
+                                {showPassword ? <VisibilityIcon /> : <VisibilityOffIcon />}
+                              </IconButton>
+                            </InputAdornment>
+                          }
+                          label="Password"
+                          value={createAccountForm.password}
+                          onChange={handleCreateChange}
+                        />
+                      </FormControl>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+              <Box sx={{ mt: 2 }}>
+                <Button
+                  disableElevation
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  color="success"
+                >
+                  Sign in
+                </Button>
+              </Box>
+            </form>
+          </Formik>
+        </>
+      );
+      
+      
 
 
 

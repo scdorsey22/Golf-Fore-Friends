@@ -76,7 +76,7 @@ export default function LoginForm1() {
             <Formik>
                 <form>
                 {errors ? <p style={{ color: "red" }}>{errors}</p> : null}
-                    <FormControl fullWidth sx={{padding: '2px'}} >
+                    <FormControl fullWidth sx={{padding: '2px', mb: 2}} >
                         <InputLabel htmlFor="outlined-adornment-username-login">Username</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-username-login"

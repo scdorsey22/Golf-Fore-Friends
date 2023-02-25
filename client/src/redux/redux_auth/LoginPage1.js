@@ -8,6 +8,7 @@ import { Divider, Grid, Stack, Typography, useMediaQuery, Card, Box } from '@mui
 import LoginForm1 from './LoginForm1';
 import LoginWrapper from './LoginWrapper';
 import Logo from './Logo';
+import logo from '../../assets/images/golflogo.png';
 
 function LoginPage1() {
     const theme = useTheme();
@@ -15,6 +16,7 @@ function LoginPage1() {
 
     return (
        <LoginWrapper>
+        {!matchDownSM && <Logo component="img" src={logo}/>}
             <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
                 <Grid item xs={12}>
                     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>

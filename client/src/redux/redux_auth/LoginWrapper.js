@@ -9,13 +9,12 @@ const LoginWrapper = styled('div')(({ theme }) => ({
     backgroundImage: `url(${backgroundImage})`,
     backgroundSize: 'cover',
     backgroundPosition: 'center',
-    minHeight: '100vh'
+    minHeight: '100vh',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center'
 }));
 
-const Logo = styled('img')(({ theme }) => ({
-    height: '50px',
-    width: '50px',
-    marginBottom: '1rem',
-}));
 
 export default LoginWrapper;
