@@ -19,20 +19,19 @@ Our app uses open weather map api to provide you with the updated weather.
 # Technologies
  
 <ul>
-<li>React</li>
-<li>HTML</li>
-<li>CSS</li>
-<li>Javascript</li>
-<li>Rails</li>
-<li>Ruby</li>
-<li>Postgres</li>
 <li>Material UI</li>
+<li>React</li>
+<li>Redux</li>
+<li>Ruby on Rails</li>
+<li>ActionMailer</li>
+<li>Postgres</li>
 </ul>
 
 # Demo
 
 <ul>
 <li>Demo link:</li>
+<a href="https://www.loom.com/share/88d93a96de9a4918a673ff4b8881140a</a>
 <ul>
  
 # Setup
@@ -64,8 +63,9 @@ To run this project: <ol>
  
 
 <ul>
-<li>Refactoring the code: A better usage in the future will be to useContext or redux. There was a lot of props drilling.</li>
-<li>Inline styling: We used some inline styling rather than having it in a CSS file. An improvement will be to use styled components for cleaner more fluid code</li>
+<li>Improving UI/UX and some state issues</li>
+<li>Adding external API for golf courses</li>
+<li>Adding direct messages and notifcations</li>
 <li>Creating a more dynamic friend request system that requires acceptance</li>
 </ul>
  
