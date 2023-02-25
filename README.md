@@ -31,8 +31,8 @@ Our app uses open weather map api to provide you with the updated weather.
 
 <ul>
 <li>Demo links:</li>
-<a href="https://www.loom.com/share/88d93a96de9a4918a673ff4b8881140a">Loom</a>
-<a href="https://golf-buddies2022.herokuapp.com/">Heroku Deploy</a>
+  <li><a href="https://www.loom.com/share/88d93a96de9a4918a673ff4b8881140a">Loom</a></li>
+  <li><a href="https://golf-buddies2022.herokuapp.com/">Heroku Deploy</a></li>
 <ul>
  
 # Setup
