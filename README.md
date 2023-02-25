@@ -31,7 +31,7 @@ Our app uses open weather map api to provide you with the updated weather.
 
 <ul>
 <li>Demo link:</li>
-<a href="https://www.loom.com/share/88d93a96de9a4918a673ff4b8881140a</a>
+<a href="https://www.loom.com/share/88d93a96de9a4918a673ff4b8881140a"</a>
 <ul>
  
 # Setup
