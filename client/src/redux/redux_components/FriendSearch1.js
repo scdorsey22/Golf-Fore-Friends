@@ -9,8 +9,6 @@ import { selectGolfBuddies, addGolfBuddy, deleteGolfBuddy } from "../slices/golf
 import {useEffect} from 'react'
 
 
-
-
 function FriendsSearch1({user}) {
     const theme = useTheme();
     const dispatch = useDispatch();
@@ -65,9 +63,9 @@ function FriendsSearch1({user}) {
             <Grid item>
               <Grid container alignItems="center">
                 <Grid item>
-                  <Typography sx={{ fontSize: "16px", fontWeight: "500" }}>
-                    {user.first_name} {user.last_name}
-                  </Typography>
+                <Typography sx={{ fontSize: "14px", fontWeight: "500", maxWidth: "150px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  {user.first_name} {user.last_name}
+                </Typography>
                   <Box display="flex" alignItems="center">
                     <Typography
                       sx={{ fontSize: "14px", mr: "6px", color: "#555" }}

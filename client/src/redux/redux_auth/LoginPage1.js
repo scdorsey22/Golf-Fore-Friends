@@ -17,6 +17,7 @@ function LoginPage1() {
     return (
        <LoginWrapper>
         {!matchDownSM && <Logo component="img" src={logo}/>}
+
             <Grid container direction="column" justifyContent="flex-end" sx={{ minHeight: '100vh' }}>
                 <Grid item xs={12}>
                     <Grid container justifyContent="center" alignItems="center" sx={{ minHeight: 'calc(100vh - 68px)' }}>
@@ -93,6 +94,7 @@ function LoginPage1() {
                     </Grid>
                 </Grid>
             </Grid>
+            
             </LoginWrapper>
 
     )
