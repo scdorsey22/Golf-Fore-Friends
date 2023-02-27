@@ -9,6 +9,9 @@ import { Link as RouteLink } from "react-router-dom";
 import { useParams } from "react-router";
 import {useSelector, useDispatch} from 'react-redux'
 import { selectFetchUserById, fetchUserById, selectLoggedUser } from '../slices/userSlice'
+import { selectRounds, fetchRounds } from "../slices/roundsSlice";
+import { selectComments, fetchComments } from "../slices/commentsSlice";
+
 
 function Profile1() {
   const theme = useTheme();
@@ -16,12 +19,15 @@ function Profile1() {
   const { id }  = useParams();
   const user = useSelector(selectFetchUserById);
   const loggedUser = useSelector(selectLoggedUser)
+  const rounds = useSelector(selectRounds);
+  const comments = useSelector(selectComments)
 
   
 
   useEffect(() => {
     dispatch(fetchUserById(id)); // Update dummy state to force re-render
   }, [dispatch, id]);
+
  
     if (!user) {
       return <div>Loading...</div>;
@@ -60,15 +66,14 @@ function Profile1() {
               />
               <Box
                 sx={{
-                  position: "absolute",
-                  top: 200,
-                  left: 30,
-                  background: "#eee",
-                  borderRadius: "50%",
-                
-                }}
+              position: "absolute",
+              top: "25%",
+              left: "10%",
+              width: "30%",
+              maxWidth: "150px",
+            }}
               >
-                <img width='150px' src={user.data.profile_pic} alt="profile" />
+                <img style={{ width: "100%", height: "auto", borderRadius: "50%" }} src={user.data.profile_pic} alt="profile" />
               </Box>
             </Box>
             <Box textAlign="right" padding="10px 20px">

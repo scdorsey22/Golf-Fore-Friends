@@ -1,5 +1,6 @@
 // Import dependencies
 import React, { useEffect } from "react";
+import '../App.css';
 import { Route, Switch} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUser, fetchAllUsers, selectLoggedUser} from "./slices/userSlice";

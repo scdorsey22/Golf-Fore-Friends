@@ -65,6 +65,7 @@ export default function AddRound1({ loggedUser, setPosts }) {
                 src={loggedUser.profile_pic}
                 alt="lgogo"
                 width="50px"
+                style ={{borderRadius: "50%"}}
               />
             </Grid>
             <Grid item flexGrow="1">

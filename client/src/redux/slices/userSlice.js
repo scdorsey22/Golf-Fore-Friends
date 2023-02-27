@@ -18,7 +18,7 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
 
 export const updateUser = createAsyncThunk('user/updateUser', async (updatedData) => {
   const {id, password, ...data} = updatedData;
-  console.log(updatedData) // destructure the id and update the rest of the data
+ 
   const response = await fetch(`/api/users/${id}/update_without_password`, {
     method: 'PATCH',
     headers: {
@@ -113,7 +113,7 @@ export const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
         state.responseData = action.payload;
-        console.log(action.payload)
+       
       })
 
       .addCase(fetchUserById.fulfilled, (state, action) => {
