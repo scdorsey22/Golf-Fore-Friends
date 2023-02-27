@@ -6,8 +6,8 @@ import store from './redux/store/store';
 
 
 // Import the main app components
-import App from './App';
 import App1 from './redux/App1';
+
 
 // Import function to report web vitals
 import reportWebVitals from './reportWebVitals';

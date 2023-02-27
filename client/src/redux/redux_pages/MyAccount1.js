@@ -32,7 +32,6 @@ export default function MyAccount1() {
     // Handle changes to the form fields
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(currentUser); // Add this line to check the ID value
         setUpdateUserForm({
           ...updateUserForm,
           [name]: value,
@@ -42,7 +41,6 @@ export default function MyAccount1() {
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updateUserForm); // Add this line to check the form data
         dispatch(updateUser({...updateUserForm, id: currentUser.id}))
           .catch((error) => {
             console.error(error);

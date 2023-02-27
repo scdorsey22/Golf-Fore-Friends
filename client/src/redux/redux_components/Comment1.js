@@ -39,7 +39,12 @@ export default function Comment1({ comment, loggedUser }) {
     >
       <Grid container flexWrap="nowrap">
         <Grid item sx={{ paddingRight: "1rem" }}>
-          <img src={user.profile_pic} alt="lgoog" width="50px" />
+          <img src={user.profile_pic} alt="lgoog" 
+          style={{
+                width: "50px",
+                height: "50px",
+                borderRadius: "50%",
+              }} />
         </Grid>
         <Grid item flexGrow="1">
           <Box>
