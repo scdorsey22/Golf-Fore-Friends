@@ -44,10 +44,12 @@ function ForgotPasswordForm() {
                        
                     setErrors(null);
                     setForgotPassword(initialForm);
+                    console.log(initialForm)
                     history.push("/reset_password");
     
                 } else {
                   r.json().then((err) => {
+                    console.log(initialForm, err)
                     setForgotPassword(initialForm);
                     setErrors(err);
                   });
