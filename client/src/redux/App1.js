@@ -9,7 +9,7 @@ import { fetchGolfBuddies, selectGolfBuddies } from "./slices/golfBuddiesSlice";
 import { fetchComments, selectComments } from "./slices/commentsSlice";
 
 // Import components
-import MainPage1 from "../redux/redux_pages/MainPage1";
+import MainPage1 from "./redux_pages/MainPage1";
 import GolfBuddies1 from "./redux_pages/GolfBuddies1";
 import Profile1 from "./redux_pages/Profile1";
 import MyAccount1 from "./redux_pages/MyAccount1";
@@ -19,7 +19,7 @@ import Layout1 from "./redux_components/Layout1";
 import { Box, LinearProgress } from "@mui/material";
 
 //Import Auth
-import LoginPage1 from "../redux/redux_auth/LoginPage1";
+import LoginPage1 from "./redux_auth/LoginPage1";
 import RegisterPage1 from "./redux_auth/RegisterPage1";
 import ForgotPasswordPage1 from "./redux_auth/ForgotPasswordPage1";
 import ResetPasswordPage1 from "./redux_auth/ResetPasswordPage1";

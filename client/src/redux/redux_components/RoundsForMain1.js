@@ -15,8 +15,6 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   selectComments,
   addComment,
-  updateComment,
-  deleteComment,
 } from "../slices/commentsSlice";
 import moment from "moment";
 

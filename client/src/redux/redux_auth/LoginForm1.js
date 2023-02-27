@@ -19,7 +19,7 @@ import {
 
 import { Formik } from 'formik';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { loginUser} from '../slices/userSlice';
 
 //assets

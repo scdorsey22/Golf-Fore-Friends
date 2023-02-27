@@ -12,7 +12,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { selectRounds, deletePost } from "../slices/roundsSlice";
+import { deletePost } from "../slices/roundsSlice";
 import {
   addComment,
   selectComments,
@@ -23,7 +23,6 @@ import Modal1 from "./Modal1";
 
 export default function Rounds1({ user, post, loggedUser }) {
   const dispatch = useDispatch();
-  const rounds = useSelector(selectRounds);
   const comments = useSelector(selectComments);
   const [commentText, setCommentText] = useState("");
   const [menuAnchorEl, setMenuAnchorEl] = useState(null);
@@ -33,7 +32,7 @@ export default function Rounds1({ user, post, loggedUser }) {
 
   // Extract the fields from the post object for easier access.
   const { description, date, course, created_at } = post;
-  const { first_name, last_name, username, profile_pic, id: userId } = user;
+  const { first_name, last_name, username, profile_pic } = user;
 
   const roundComments = comments.data.filter(
     (comment) => comment.round.id === post.id

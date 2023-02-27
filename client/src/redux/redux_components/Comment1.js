@@ -3,7 +3,7 @@ import { Box } from "@mui/system";
 import React from "react";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { useState } from "react";
-import { updateComment, deleteComment } from "../slices/commentsSlice";
+import { deleteComment } from "../slices/commentsSlice";
 import { useDispatch } from "react-redux";
 
 

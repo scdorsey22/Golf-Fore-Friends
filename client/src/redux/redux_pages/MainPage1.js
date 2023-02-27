@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState, useEffect } from "react";
 
 // Import Redux actions and selectors
-import { selectRounds, deletePost, updatePost } from '../slices/roundsSlice';
+import { selectRounds, deletePost} from '../slices/roundsSlice';
 import { selectLoggedUser, fetchUser } from "../slices/userSlice";
 
 // Import custom components
