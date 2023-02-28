@@ -1,11 +1,12 @@
 
-import { Grid, Box, Typography } from "@mui/material"
+import { Grid, Box, Typography, Hidden } from "@mui/material"
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FriendsList1 from "../redux_components/FriendsList1";
+import FriendsListSearch1 from "../redux_components/FriendsListSearch1";
 import { useSelector, useDispatch } from "react-redux";
 import { selectLoggedUser, fetchUser} from "../slices/userSlice";
-
+import { useTheme } from "@mui/material";
 
 
 
@@ -13,6 +14,7 @@ import { Link as RouteLink } from "react-router-dom";
 import { useEffect } from "react";
 
 function GolfBuddies1 () {
+    const theme = useTheme()
     const dispatch = useDispatch()
     const loggedUser = useSelector(selectLoggedUser);
 
@@ -37,7 +39,18 @@ function GolfBuddies1 () {
             </Grid>
           </Grid>
         </Box>
-        <Box height="90vh" sx={{ overflowY: "scroll" }}>
+        <Box height="90vh" sx={{
+           overflowY: "scroll",
+           maxWidth: theme.breakpoints.values.lg,
+           margin: "0 auto",
+            }}>
+        <Hidden lgUp>
+        <Grid item lg={4} sx={{ height: "100vh" }}>
+        {/* This is the RightSidebar1 component, which has the Friends Search Bar*/}
+          <FriendsListSearch1 />
+        </Grid>
+      </Hidden>
+      <Hidden lgDown>
         <Grid container style={{ display: "inline-block", width: "80%", margin: "auto", justifyContent: "space-evenly" }}>
             {loggedUser.friends?.map(friend => (
             <FriendsList1 
@@ -46,6 +59,7 @@ function GolfBuddies1 () {
             />
             ))}
         </Grid>
+        </Hidden>
         </Box>
         </Box>
 

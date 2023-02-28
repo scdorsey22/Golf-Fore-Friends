@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box, Grid, TextField, Button, InputAdornment, Typography} from "@mui/material"
+import { Box, Grid, TextField, Button, InputAdornment, Typography, useTheme, Hidden} from "@mui/material"
 import { IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Link as RouteLink } from "react-router-dom";
@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 export default function MyAccount1() {
     const [error, setError] = useState(null);
-
+    const theme = useTheme()
     const dispatch = useDispatch()
     const currentUser = useSelector(selectLoggedUser)
     
@@ -49,114 +49,106 @@ export default function MyAccount1() {
       };
     
     return (
-        <Box>
-        {error && <div>{error}</div>}
-        <Box borderBottom="1px solid #ccc" padding="20px 20px">
-          <Grid container alignItems="center">
-            <Grid item sx={{ mr: "10px" }}>
-              <RouteLink to="/">
-                <IconButton>
-                  <ArrowBackIcon />
-                </IconButton>
-              </RouteLink>
-            </Grid>
-            <Grid item>
-              <Typography variant="h6">Edit My Account</Typography>
-            </Grid>
-          </Grid>
-        </Box>
-        <Grid container style={{ display: "inline-block", width: "80%", margin: "auto", justifyContent: "space-evenly" }}>
-            
-                <form onSubmit={handleSubmit}>
-                    <Grid container 
-                    alignItems="center"
-                    justify="center"
-                    direction="row"
-                    margin="auto">
-                    <Grid item margin="auto" marginTop="5%" marginBottom="2%">
-                    <TextField
-                            InputLabelProps={{ shrink: true }}
-                            InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                    <ContactPageIcon/>
-                                </InputAdornment>
-                            ),
-                            }}
-                            id="first_name"
-                            name="first_name"
-                            label="First Name"
-                            type="text"
-                            value={updateUserForm.first_name}
-                            onChange={handleChange}
-                            
-                        />
-                    </Grid>
-                    <Grid item margin="auto" marginTop="5%" marginBottom="2%">
-                    <TextField
-                            InputLabelProps={{ shrink: true }}
-                            InputProps={{
-                            startAdornment: (
-                                <InputAdornment position="start">
-                                <ContactPageIcon/>
-                                </InputAdornment>
-                            ),
-                            }}
-                            id="last_name"
-                            name="last_name"
-                            label="Last Name"
-                            type="text"
-                            value={updateUserForm.last_name}
-                            onChange={handleChange}
-                            
-                        />
-                    </Grid>
-                    <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }} >
-                        <TextField
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <ContactPageIcon/>
-                            </InputAdornment>
-                            ),
-                        }}
-                        id="username"
-                        name="username"
-                        label="Username"
-                        type="text"
-                        value={updateUserForm.username}
-                        onChange={handleChange}
-                        
-                        />
-                    </Grid>
-                    <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }} >
-                        <TextField
-                        InputLabelProps={{ shrink: true }}
-                        InputProps={{
-                            startAdornment: (
-                            <InputAdornment position="start">
-                                <ContactPageIcon/>
-                            </InputAdornment>
-                            ),
-                        }}
-                        id="email"
-                        name="email"
-                        label="Email"
-                        type="text"
-                        value={updateUserForm.email}
-                        onChange={handleChange}
-                        
-                        />
-                    </Grid>
-                    <Grid item margin="auto" marginBottom="2%">
+<Box>
+  {error && <div>{error}</div>}
+  <Hidden lgDown>
+  <Box borderBottom="1px solid #ccc" padding="20px 20px">
+    <Grid container alignItems="center">
+      <Grid item sx={{ mr: "10px" }}>
+        <RouteLink to="/">
+          <IconButton>
+            <ArrowBackIcon />
+          </IconButton>
+        </RouteLink>
+      </Grid>
+      <Grid item>
+        <Typography variant="h6">Edit My Account</Typography>
+      </Grid>
+    </Grid>
+  </Box>
+  </Hidden>
+  <Box marginTop="20px">
+    <form onSubmit={handleSubmit}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <ContactPageIcon />
+                </InputAdornment>
+              ),
+            }}
+            id="first_name"
+            name="first_name"
+            label="First Name"
+            type="text"
+            value={updateUserForm.first_name}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <ContactPageIcon />
+                </InputAdornment>
+              ),
+            }}
+            id="last_name"
+            name="last_name"
+            label="Last Name"
+            type="text"
+            value={updateUserForm.last_name}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <ContactPageIcon />
+                </InputAdornment>
+              ),
+            }}
+            id="username"
+            name="username"
+            label="Username"
+            type="text"
+            value={updateUserForm.username}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
+          <TextField
+            InputLabelProps={{ shrink: true }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <ContactPageIcon />
+                </InputAdornment>
+              ),
+            }}
+            id="email"
+            name="email"
+            label="Email"
+            type="text"
+            value={updateUserForm.email}
+            onChange={handleChange}
+          />
+        </Grid>
+        <Grid item xs={12} sm={6}>
                     <TextField
                         InputLabelProps={{ shrink: true }}
                         InputProps={{
                         startAdornment: (
                             <InputAdornment position="start">
                             <InsertPhotoIcon />
-                            
                             </InputAdornment>
                         ),
                         }}
@@ -169,7 +161,7 @@ export default function MyAccount1() {
                         
                     />
                     </Grid>
-                    <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }} >
+                    <Grid item xs={12} sm={6} >
                         <TextField
                         InputLabelProps={{ shrink: true }}
                         InputProps={{
@@ -188,7 +180,7 @@ export default function MyAccount1() {
                         
                         />
                     </Grid>
-                    <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }} >
+                    <Grid item xs={12} sm={6}>
                         <TextField
                         InputLabelProps={{ shrink: true }}
                         InputProps={{
@@ -207,7 +199,7 @@ export default function MyAccount1() {
                         
                         />
                     </Grid>
-                    <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }} >
+                    <Grid item xs={12} sm={6} >
                         <TextField
                         InputLabelProps={{ shrink: true }}
                         InputProps={{
@@ -226,16 +218,15 @@ export default function MyAccount1() {
                         
                         />
                     </Grid>
-                    </Grid>
-                    <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }}>
-                    <Button type="submit" variant="contained"  color='success'
-                        onSubmit={handleSubmit}>
-                        Submit Changes
-                    </Button>
-                    </Grid>
+                        <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }}>
+                        <Button type="submit" variant="contained"  color='success'
+                            onSubmit={handleSubmit}>
+                            Submit Changes
+                        </Button>
+                        </Grid>
+                </Grid>
                 </form>
-          
-            </Grid>
+          </Box>
         </Box>
   )
 }
