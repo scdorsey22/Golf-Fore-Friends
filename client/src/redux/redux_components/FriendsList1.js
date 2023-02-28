@@ -1,10 +1,11 @@
 import { Typography, useTheme } from "@mui/material";
-import { Button, Grid, Box } from "@mui/material";
+import { Button, Grid, Box, Hidden } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { selectLoggedUser } from "../slices/userSlice";
 import { selectGolfBuddies, deleteGolfBuddy } from "../slices/golfBuddiesSlice";
+import FriendsListSearch1 from "./FriendsListSearch1";
 
 function FriendsList1({ friend }) {
   const theme = useTheme();
@@ -27,7 +28,7 @@ function FriendsList1({ friend }) {
   };
 
   return (
-    <Box margin="1rem 0">
+    <Box margin="1rem 0" >
       <Grid container alignItems="center" justifyContent="space-between">
         <Grid item>
           <Grid container>
@@ -47,7 +48,7 @@ function FriendsList1({ friend }) {
                 <Grid item>
                   <Typography
                     sx={{
-                      fontSize: "14px",
+                      fontSize: "13px",
                       fontWeight: "500",
                       maxWidth: "150px",
                       overflow: "hidden",
@@ -59,7 +60,7 @@ function FriendsList1({ friend }) {
                   </Typography>
                   <Box display="flex" alignItems="center">
                     <Typography
-                      sx={{ fontSize: "14px", mr: "6px", color: "#555" }}
+                      sx={{ fontSize: "13px", mr: "6px", color: "#555" }}
                     >
                       {friend.username}
                     </Typography>

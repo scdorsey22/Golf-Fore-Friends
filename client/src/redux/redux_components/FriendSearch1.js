@@ -22,6 +22,7 @@ function FriendsSearch1({ user }) {
     loggedUser.friends?.some((friend) => friend.id === user.id)
   );
 
+
   useEffect(() => {
     dispatch(fetchUser());
   }, [dispatch]);
@@ -78,7 +79,7 @@ function FriendsSearch1({ user }) {
                 <Grid item>
                   <Typography
                     sx={{
-                      fontSize: "14px",
+                      fontSize: "13px",
                       fontWeight: "500",
                       maxWidth: "150px",
                       overflow: "hidden",
@@ -90,7 +91,7 @@ function FriendsSearch1({ user }) {
                   </Typography>
                   <Box display="flex" alignItems="center">
                     <Typography
-                      sx={{ fontSize: "14px", mr: "6px", color: "#555" }}
+                      sx={{ fontSize: "13px", mr: "6px", color: "#555" }}
                     >
                       {user.username}
                     </Typography>
