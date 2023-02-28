@@ -18,7 +18,8 @@ class Api::UsersController < ApplicationController
 
 
   # POST /users
-  def create
+  def create 
+    puts params.inspect
     user = User.create!(user_params)
     if user.save
     session[:user_id] = user.id
@@ -58,7 +59,7 @@ end
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:id, :first_name, :last_name, :email, :city, :state, :handicap, :profile_pic, :username, :password)
+      params.permit(:id, :first_name, :last_name, :email, :city, :state, :handicap, :profile_pic, :username, :password)
     end
     
     

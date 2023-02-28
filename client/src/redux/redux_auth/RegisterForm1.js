@@ -44,6 +44,7 @@ function RegisterForm1() {
 
   const dispatch = useDispatch();
 
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -56,6 +57,7 @@ function RegisterForm1() {
     const target = e.target.name;
     const value = e.target.value;
     setCreateAccountForm({ ...createAccountForm, [target]: value });
+    console.log(createAccountForm)
   }
 
   function handleCreateSubmit(e) {
@@ -63,6 +65,7 @@ function RegisterForm1() {
 
     dispatch(registerUser(createAccountForm)).then((result) => {
       if (registerUser.fulfilled.match(result)) {
+        
         setErrors(null);
         setCreateAccountForm(initialForm);
         history.push("/");

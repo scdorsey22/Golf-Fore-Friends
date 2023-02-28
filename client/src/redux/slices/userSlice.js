@@ -69,10 +69,10 @@ export const registerUser = createAsyncThunk('user/registerUser', async (userDat
     },
     body: JSON.stringify(userData),
   });
-
+  console.log(userData)
   if (response.status === 422) {
     const errors = await response.json();
-  
+    console.log(errors)
     return rejectWithValue(errors);
   }
 
