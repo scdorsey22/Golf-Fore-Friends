@@ -15,8 +15,6 @@ class Api::UsersController < ApplicationController
     render json: user, status: :ok
   end
 
-
-
   # POST /users
   def create 
     puts params.inspect
