@@ -55,3 +55,4 @@ gem 'faker'
 gem 'dotenv-rails', groups: [:development, :test]
 
 gem 'activerecord-reset-pk-sequence'
+

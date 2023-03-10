@@ -49,7 +49,7 @@ export default function MyAccount1() {
       };
     
     return (
-<Box>
+<Box sx={{ overflowY: "scroll" }}>
   {error && <div>{error}</div>}
   <Hidden lgDown>
   <Box borderBottom="1px solid #ccc" padding="20px 20px">
@@ -219,11 +219,20 @@ export default function MyAccount1() {
                         />
                     </Grid>
                         <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }}>
-                        <Button type="submit" variant="contained"  color='success'
-                            onSubmit={handleSubmit}>
-                            Submit Changes
-                        </Button>
+                        <Grid item padding='10px'>
+                          <Box display="flex" flexDirection="column" alignItems="center">
+                            <Button type="submit" variant="contained"  color='success'
+                                onSubmit={handleSubmit}>
+                                Submit Changes
+                            </Button>
+                            <Button type="submit" variant="contained"  color='warning'
+                                onSubmit={console.log('click')}>
+                                Delete Account
+                            </Button>
+                          </Box>
                         </Grid>
+                        </Grid>
+                       
                 </Grid>
                 </form>
           </Box>
