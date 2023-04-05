@@ -218,11 +218,11 @@ export default function MyAccount1() {
                         
                         />
                     </Grid>
-                        <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "2.5%" }}>
-                        <Grid item padding='10px'>
-                          <Box display="flex" flexDirection="column" alignItems="center">
+                        <Grid item margin="auto" style={{ marginTop: "2.5%", marginBottom: "17.5%" }}>
+                        <Grid item>
+                          <Box display="flex" flexDirection="column" alignItems="center" spacing={2}>
                             <Button type="submit" variant="contained"  color='success'
-                                onSubmit={handleSubmit}>
+                                onSubmit={handleSubmit} style={{ marginBottom: "8px" }}>
                                 Submit Changes
                             </Button>
                             <Button type="submit" variant="contained"  color='warning'

@@ -16,6 +16,14 @@ export const fetchUser = createAsyncThunk('user/fetchUser', async () => {
   return data;
 });
 
+export const deleteUser = createAsyncThunk('user/deleteUser', async () => {
+  const response = await fetch(`/api/me`, {
+    method: 'DELETE',
+  });
+  const data = await response.json();
+  return data;
+});
+
 export const updateUser = createAsyncThunk('user/updateUser', async (updatedData) => {
   const {id, password, ...data} = updatedData;
  
@@ -109,6 +117,9 @@ export const userSlice = createSlice({
         state.loading = false;
         state.data = null;
         state.loggedUser = null;
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         state.loading = false;
